@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<!-- GENERIERT von kurse/_build (javascript) – nicht direkt bearbeiten!
+     Quelle: kurse/_build/javascript/lessons/, bauen: python3 _build/build.py javascript -->
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3.3 &ndash; Browser APIs | JavaScript Kurs</title>
+  <script>(function () { var t = localStorage.getItem('kurs-theme') || 'dark'; document.documentElement.setAttribute('data-theme', t); })();</script>
+  <link rel="stylesheet" href="assets/kurs.css">
+  <link rel="stylesheet" id="hljs-theme"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+</head>
+
+<body>
+
+  <button class="hamburger" id="hamburger" aria-label="Navigation &ouml;ffnen">&#9776;</button>
+  <div class="sidebar-overlay" id="overlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="index.html">
+        <span class="brand-icon">JS</span>
+        <div>
+          <div class="brand-name">JavaScript</div>
+          <div class="brand-sub">Web- und Mobile Computing</div>
+        </div>
+      </a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Dark/Light Mode"
+        title="Theme wechseln">&#9728;</button>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-group">
+        <div class="nav-group-label js-label">Teil 1 &mdash; Sprachgrundlagen</div>
+        <a class="nav-link" href="1.1-einfuehrung.html"><span class="ln">1.1</span>Einf&uuml;hrung in JavaScript</a>
+        <a class="nav-link" href="1.2-funktionen.html"><span class="ln">1.2</span>Funktionen</a>
+        <a class="nav-link" href="1.3-arrays.html"><span class="ln">1.3</span>Arrays</a>
+        <a class="nav-link" href="1.4-objekte.html"><span class="ln">1.4</span>Objekte &amp; Klassen</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label html-label">Teil 2 &mdash; DOM &amp; WebApps</div>
+        <a class="nav-link" href="2.1-dom.html"><span class="ln">2.1</span>DOM</a>
+        <a class="nav-link" href="2.2-webapp.html"><span class="ln">2.2</span>Struktur einfacher WebApps</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label css-label">Teil 3 &mdash; Asynchron, Browser &amp; Daten</div>
+        <a class="nav-link" href="3.1-promises.html"><span class="ln">3.1</span>Promises &amp; async/await</a>
+        <a class="nav-link" href="3.2-eventloop.html"><span class="ln">3.2</span>Event Loop</a>
+        <a class="nav-link" href="3.3-browser-apis.html"><span class="ln">3.3</span>Browser APIs</a>
+        <a class="nav-link" href="3.4-cookies.html"><span class="ln">3.4</span>Cookies</a>
+        <a class="nav-link" href="3.5-prisma.html"><span class="ln">3.5</span>Prisma ORM</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="lesson-header">
+      <p class="lesson-eyebrow">Lektion 3.3 &mdash; Teil 3: Asynchron, Browser &amp; Daten</p>
+      <h1>Browser APIs</h1>
+      <div class="lesson-tags">
+        <span class="tag tag-js">JavaScript</span>
+        <span class="tag tag-time">ca. 90 min</span>
+        <span class="tag tag-level">Browser</span>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <section class="section section-lernziele">
+        <h2>Lernziele</h2>
+        <ul class="lernziele-list">
+          <li>Die wichtigsten Browser APIs kennen</li>
+          <li>Daten mit der Fetch API laden und senden &ndash; inklusive Fehlerbehandlung</li>
+          <li>Verstehen, was <strong>CORS</strong> ist und wie CORS-Fehler wirklich behoben werden</li>
+          <li>Daten mit <code>localStorage</code> und <code>sessionStorage</code> speichern</li>
+          <li>Standort mit der Geolocation API abfragen</li>
+          <li>Query-Parameter mit der URL-API lesen und die URL mit der History API &auml;ndern</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>1 &mdash; &Uuml;berblick: Wichtige Browser APIs</h2>
+        <ul>
+          <li>Der Browser stellt viele APIs direkt in JavaScript bereit.</li>
+          <li>H&auml;ufig gebraucht im Alltag:
+            <ul>
+              <li><strong>Fetch API</strong> (HTTP-Requests)</li>
+              <li><strong>Web Storage API</strong> (<code>localStorage</code>, <code>sessionStorage</code>)</li>
+              <li><strong>Geolocation API</strong> (Standort)</li>
+              <li><strong>URL / History API</strong> (Navigation, Query-Parameter)</li>
+            </ul>
+          </li>
+          <li>Fast alle APIs sind asynchron oder eventbasiert.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>2 &mdash; Fetch API</h2>
+        <h3>Daten vom Server laden</h3>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">GET</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">async function loadUsers() {
+  const response = await fetch('/api/users');
+  const users = await response.json();
+  console.log(users);
+}</code></pre>
+</div>
+        <ul>
+          <li><code>fetch(url)</code> liefert ein Promise.</li>
+          <li>Antwortdaten kommen h&auml;ufig als JSON: <code>response.json()</code></li>
+          <li>Standard f&uuml;r REST-APIs im Browser</li>
+        </ul>
+        <h3>Daten senden und Fehler behandeln</h3>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">POST</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">async function saveTodo(todo) {
+  try {
+    const res = await fetch('/api/todos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(todo)
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+  } catch (err) {
+    console.error('Speichern fehlgeschlagen:', err.message);
+  }
+}</code></pre>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>3 &mdash; CORS kurz erkl&auml;rt</h2>
+        <ul>
+          <li><strong>CORS</strong> = <em>Cross-Origin Resource Sharing</em></li>
+          <li>Browser-Schutzmechanismus f&uuml;r Requests von Origin A nach Origin B</li>
+          <li><strong>Origin</strong> = Schema + Host + Port</li>
+          <li>Bei einem Cross-Origin-Fetch entscheidet der <strong>Server</strong> &uuml;ber Header, ob der Zugriff erlaubt ist.</li>
+        </ul>
+        <h3>Wichtige Response-Header</h3>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Response-Header</span>
+    <span class="code-lang">HTTP</span>
+  </div>
+  <pre><code class="language-plaintext">Access-Control-Allow-Origin: https://meine-app.example
+Access-Control-Allow-Origin: *        (nur für öffentliche Daten)</code></pre>
+</div>
+        <p>Typische Browser-Fehlermeldung: <code>blocked by CORS policy</code></p>
+
+        <h3>CORS-Fehler beheben: Was wirklich hilft</h3>
+        <ul>
+          <li><strong>Hauptregel:</strong> CORS wird <strong>serverseitig</strong> gel&ouml;st, nicht im Frontend.</li>
+          <li>Der API-Server muss passende Header liefern (Origin, Methoden, Header).</li>
+          <li>Bei komplexen Requests sendet der Browser zus&auml;tzlich vorab einen <code>OPTIONS</code>-Preflight.</li>
+        </ul>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">mode</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">fetch('https://api.example.com/data', {
+  method: 'GET',
+  mode: 'cors' // Default im Browser
+});</code></pre>
+</div>
+        <ul>
+          <li><code>mode: 'no-cors'</code> macht Antworten meist <em>opaque</em> (praktisch nicht nutzbar).</li>
+          <li>F&uuml;r die Entwicklung sinnvoll: Dev-Proxy (Vite/Webpack) oder ein eigenes Backend als Proxy.</li>
+          <li>Browser-CORS-Plugins nur als Notl&ouml;sung f&uuml;r lokale Tests.</li>
+        </ul>
+        <div class="callout callout-info">
+  <div class="callout-icon">&#8505;</div>
+  <div class="callout-body">
+    <div class="callout-title">Zusammenhang mit der Same-Origin-Policy</div>
+    <p>CORS ist die kontrollierte Ausnahme von der Same-Origin-Policy (siehe HTML-&amp;-CSS-Kurs,
+          Lektion 1.3): Standardm&auml;&szlig;ig blockiert der Browser Cross-Origin-Antworten &ndash; per CORS-Header
+          kann der Server sie freigeben.</p>
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>4 &mdash; Web Storage API</h2>
+        <ul>
+          <li><code>localStorage</code>: Daten bleiben dauerhaft gespeichert.</li>
+          <li><code>sessionStorage</code>: Daten nur, bis Tab/Fenster geschlossen wird.</li>
+          <li>Speichert nur Strings &rarr; Objekte mit <code>JSON.stringify</code> / <code>JSON.parse</code> umwandeln.</li>
+        </ul>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">localStorage</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const settings = { darkMode: true, fontSize: 16 };
+localStorage.setItem('settings', JSON.stringify(settings));
+
+const raw = localStorage.getItem('settings');
+const loaded = raw ? JSON.parse(raw) : null;</code></pre>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>5 &mdash; Geolocation API</h2>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Standort</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">navigator.geolocation.getCurrentPosition(
+  (position) =&gt; {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+    console.log(lat, lon);
+  },
+  (error) =&gt; console.error(error.message)
+);</code></pre>
+</div>
+        <ul>
+          <li>Der Benutzer muss die Standortfreigabe erlauben.</li>
+          <li>N&uuml;tzlich f&uuml;r Karten, Wetter und ortsbezogene Dienste.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>6 &mdash; URL- und History-API</h2>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">URL / History</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const url = new URL(window.location.href);
+const page = url.searchParams.get('page');
+
+history.pushState({}, '', '?page=2');</code></pre>
+</div>
+        <ul>
+          <li><code>URLSearchParams</code> (&uuml;ber <code>url.searchParams</code>): Query-Parameter lesen/schreiben</li>
+          <li><code>history.pushState</code>: URL &auml;ndern ohne Seiten-Reload</li>
+          <li>Basis f&uuml;r Single-Page-Apps (Routing)</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>7 &mdash; Zusammenfassung</h2>
+        <ul>
+          <li><code>fetch</code> + <code>async/await</code> f&uuml;r die Serverkommunikation</li>
+          <li><code>localStorage</code>/<code>sessionStorage</code> f&uuml;r kleine, clientseitige Daten</li>
+          <li>Geolocation nur mit Benutzerzustimmung</li>
+          <li>URL/History wichtig f&uuml;r Navigation und Zustand in der URL</li>
+        </ul>
+      </section>
+
+      <section class="section section-fehler">
+        <h2>H&auml;ufige Fehler</h2>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: CORS im Frontend &bdquo;l&ouml;sen&ldquo; wollen</div>
+  <p><code>mode: 'no-cors'</code> oder eigene Request-Header beseitigen die Fehlermeldung nicht bzw. liefern eine unbrauchbare Antwort.</p>
+          <p class="fehler-fix">Der Server muss <code>Access-Control-Allow-Origin</code> senden &ndash; oder man verwendet einen Proxy.</p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: Objekte direkt in localStorage speichern</div>
+  <p><code>localStorage.setItem('s', settings)</code> speichert den Text <code>"[object Object]"</code>.</p>
+          <p class="fehler-fix">Vorher <code>JSON.stringify</code>, beim Lesen <code>JSON.parse</code>.</p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: Body-Format nicht angegeben</div>
+  <p>Der Server erh&auml;lt beim POST keine Daten oder kann sie nicht lesen.</p>
+          <p class="fehler-fix">Header <code>'Content-Type': 'application/json'</code> setzen und den Body mit <code>JSON.stringify</code> erzeugen.</p>
+</div>
+      </section>
+
+      <section class="section section-aufgaben">
+        <h2>Aufgaben</h2>
+        <div class="aufgaben-list">
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 1</span>
+    <span class="aufgabe-title">Benutzerliste</span>
+  </div>
+  <p>Laden Sie <code>https://jsonplaceholder.typicode.com/users</code> und zeigen Sie die Namen als Liste an. Bei einem Fehler erscheint eine Meldung auf der Seite.</p>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 2</span>
+    <span class="aufgabe-title">Todo-App speichern</span>
+  </div>
+  <p>Erweitern Sie die Todo-App aus Lektion 2.2 so, dass der State bei jeder &Auml;nderung in <code>localStorage</code> gespeichert und beim Start wieder geladen wird.</p>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 3</span>
+    <span class="aufgabe-title">Filter in der URL</span>
+  </div>
+  <p>Die Todo-App bekommt Buttons &bdquo;alle&ldquo;, &bdquo;offen&ldquo;, &bdquo;erledigt&ldquo;. Speichern Sie die Auswahl als <code>?filter=…</code> in der URL (<code>pushState</code>) und lesen Sie sie beim Laden wieder aus.</p>
+</div>
+          <div class="aufgabe aufgabe-bonus">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Bonus</span>
+    <span class="aufgabe-title">Wo bin ich?</span>
+  </div>
+  <p>Zeigen Sie die Koordinaten des Benutzers an und verlinken Sie auf <code>https://www.openstreetmap.org/?mlat=…&amp;mlon=…</code>.</p>
+</div>
+        </div>
+      </section>
+
+    </div>
+
+    <nav class="lesson-nav">
+      <a class="nav-btn" href="3.2-eventloop.html">&larr; Lektion 3.2: Event Loop</a>
+      <span class="nav-center-info">Lektion 3.3</span>
+      <a class="nav-btn primary" href="3.4-cookies.html">Lektion 3.4: Cookies &rarr;</a>
+    </nav>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    const ham = document.getElementById('hamburger');
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('overlay');
+    ham.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('visible'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('visible'); });
+    const cur = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-link').forEach(l => {
+      if (l.getAttribute('href') === cur) l.classList.add('active');
+    });
+    const themeBtn = document.getElementById('theme-toggle');
+    const applyTheme = (t) => {
+      document.documentElement.setAttribute('data-theme', t);
+      if (themeBtn) themeBtn.innerHTML = t === 'dark' ? '&#9728;' : '&#9790;';
+    };
+    applyTheme(localStorage.getItem('kurs-theme') || 'dark');
+    setTimeout(() => document.documentElement.classList.add('theme-transitions'), 50);
+    if (themeBtn) themeBtn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('kurs-theme', next);
+      applyTheme(next);
+    });
+    hljs.highlightAll();
+  </script>
+</body>
+
+</html>

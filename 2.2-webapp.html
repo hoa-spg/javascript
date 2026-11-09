@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<!-- GENERIERT von kurse/_build (javascript) – nicht direkt bearbeiten!
+     Quelle: kurse/_build/javascript/lessons/, bauen: python3 _build/build.py javascript -->
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2.2 &ndash; Struktur einfacher WebApps | JavaScript Kurs</title>
+  <script>(function () { var t = localStorage.getItem('kurs-theme') || 'dark'; document.documentElement.setAttribute('data-theme', t); })();</script>
+  <link rel="stylesheet" href="assets/kurs.css">
+  <link rel="stylesheet" id="hljs-theme"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+</head>
+
+<body>
+
+  <button class="hamburger" id="hamburger" aria-label="Navigation &ouml;ffnen">&#9776;</button>
+  <div class="sidebar-overlay" id="overlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="index.html">
+        <span class="brand-icon">JS</span>
+        <div>
+          <div class="brand-name">JavaScript</div>
+          <div class="brand-sub">Web- und Mobile Computing</div>
+        </div>
+      </a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Dark/Light Mode"
+        title="Theme wechseln">&#9728;</button>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-group">
+        <div class="nav-group-label js-label">Teil 1 &mdash; Sprachgrundlagen</div>
+        <a class="nav-link" href="1.1-einfuehrung.html"><span class="ln">1.1</span>Einf&uuml;hrung in JavaScript</a>
+        <a class="nav-link" href="1.2-funktionen.html"><span class="ln">1.2</span>Funktionen</a>
+        <a class="nav-link" href="1.3-arrays.html"><span class="ln">1.3</span>Arrays</a>
+        <a class="nav-link" href="1.4-objekte.html"><span class="ln">1.4</span>Objekte &amp; Klassen</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label html-label">Teil 2 &mdash; DOM &amp; WebApps</div>
+        <a class="nav-link" href="2.1-dom.html"><span class="ln">2.1</span>DOM</a>
+        <a class="nav-link" href="2.2-webapp.html"><span class="ln">2.2</span>Struktur einfacher WebApps</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label css-label">Teil 3 &mdash; Asynchron, Browser &amp; Daten</div>
+        <a class="nav-link" href="3.1-promises.html"><span class="ln">3.1</span>Promises &amp; async/await</a>
+        <a class="nav-link" href="3.2-eventloop.html"><span class="ln">3.2</span>Event Loop</a>
+        <a class="nav-link" href="3.3-browser-apis.html"><span class="ln">3.3</span>Browser APIs</a>
+        <a class="nav-link" href="3.4-cookies.html"><span class="ln">3.4</span>Cookies</a>
+        <a class="nav-link" href="3.5-prisma.html"><span class="ln">3.5</span>Prisma ORM</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="lesson-header">
+      <p class="lesson-eyebrow">Lektion 2.2 &mdash; Teil 2: DOM &amp; WebApps</p>
+      <h1>Struktur einfacher WebApps</h1>
+      <div class="lesson-tags">
+        <span class="tag tag-js">JavaScript</span>
+        <span class="tag tag-time">ca. 2 &times; 90 min</span>
+        <span class="tag tag-level">Browser</span>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <section class="section section-lernziele">
+        <h2>Lernziele</h2>
+        <ul class="lernziele-list">
+          <li>Eine Web-App in acht klar getrennte Bausteine gliedern</li>
+          <li>Den Grundsatz <strong>&bdquo;der Zustand steuert die Oberfl&auml;che&ldquo;</strong> verstehen</li>
+          <li>State, Mutatoren, DOM-Referenzen, Erzeugungs- und Render-Funktionen schreiben</li>
+          <li>Event-Handler nach dem Schema <code>on&lt;Event&gt;</code> anlegen und binden</li>
+          <li>Eine vollst&auml;ndige Todo-App nach diesem Muster nachvollziehen</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>1 &mdash; Einleitung</h2>
+        <ul>
+          <li>Diese Lektion zeigt den strukturierten Aufbau einer einfachen Webanwendung am Beispiel einer <strong>Todo-App</strong>.</li>
+          <li>Die Anwendung wird in acht Bausteine zerlegt: Zustand, Zustandszugriff, DOM-Referenzen, DOM-Erzeugung, Rendering, Event-Handling, Bindings und Initialisierung.</li>
+          <li>Ziel ist ein klarer Ablauf: <strong>Benutzerinteraktion &rarr; Zustands&auml;nderung &rarr; Neurendern der Oberfl&auml;che</strong>.</li>
+          <li>Die folgenden Abschnitte zeigen dazu den konkreten JavaScript-Code pro Baustein.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>2 &mdash; Struktur einfacher WebApps</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Baustein</th><th>Aufgabe</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td><strong>Application State</strong><br>Anwendungszustand</td><td>Enth&auml;lt den Zustand der Anwendung &ndash; die zentrale Quelle der Wahrheit.</td></tr>
+              <tr><td>2</td><td><strong>State Accessors/Mutators</strong></td><td>Funktionen zum Lesen und &Auml;ndern des Zustands; hier zum Hinzuf&uuml;gen, Umschalten und L&ouml;schen von Todos.</td></tr>
+              <tr><td>3</td><td><strong>DOM Node References</strong></td><td>Statische Referenzen auf DOM-Knoten, die nach dem Start ben&ouml;tigt werden.</td></tr>
+              <tr><td>4</td><td><strong>DOM Node Creation Functions</strong></td><td>Dynamische Erzeugung von DOM-Knoten bei Benutzerinteraktionen; hier f&uuml;r ein Todo-Listenelement.</td></tr>
+              <tr><td>5</td><td><strong>Render Functions</strong></td><td>Rendern den Zustand ins DOM; einfaches vollst&auml;ndiges Neurendern beider Listen. Der Zustand steuert die UI: Jede Zustands&auml;nderung l&ouml;st ein Neurendern aus.</td></tr>
+              <tr><td>6</td><td><strong>Event Handlers</strong></td><td>Behandeln Benutzerinteraktionen (Klick/&Auml;nderung), rufen State-Mutatoren auf und rendern danach. Namenskonvention: <code>on&lt;Event&gt;</code>.</td></tr>
+              <tr><td>7</td><td><strong>Initialization of Bindings</strong></td><td>Initiales Verbinden der Event-Handler.</td></tr>
+              <tr><td>8</td><td><strong>Initial Rendering</strong></td><td>Initialer Aufruf von <code>render()</code>, um den Startzustand anzuzeigen.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout callout-info">
+  <div class="callout-icon">&#8505;</div>
+  <div class="callout-body">
+    <div class="callout-title">Warum so viel Struktur?</div>
+    <p>Der Trick ist die Trennung: Event-Handler ver&auml;ndern <strong>nie direkt das DOM</strong>, sondern
+          nur den Zustand &ndash; danach zeichnet <code>render()</code> die Oberfl&auml;che neu. Genau dieses
+          Prinzip steckt auch in React und anderen Frameworks.</p>
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>3 &mdash; HTML-Struktur</h2>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">index.html (body)</span>
+    <span class="code-lang">HTML</span>
+  </div>
+  <pre><code class="language-xml">&lt;body&gt;
+  &lt;h1&gt;Todo List&lt;/h1&gt;
+  &lt;input id="todo-input" type="text" placeholder="What needs to be done"&gt;
+  &lt;button id="todo-add" type="button"&gt;Add&lt;/button&gt;
+
+  &lt;h2&gt;Pending Tasks&lt;/h2&gt;
+  &lt;ul id="todo-list"&gt;
+    &lt;!-- dynamic content goes here --&gt;
+    &lt;!--&lt;li&gt;
+      &lt;input type="checkbox" checked&gt;
+      CABS lernen
+      &lt;button&gt;remove&lt;/button&gt;
+    &lt;/li&gt;
+    --&gt;
+  &lt;/ul&gt;
+
+  &lt;h2&gt;Done&lt;/h2&gt;
+  &lt;ul id="todo-list-done"&gt;
+    &lt;!-- dynamic content goes here --&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;</code></pre>
+</div>
+        <p>Die beiden Listen sind im HTML leer &ndash; ihr Inhalt wird vollst&auml;ndig von JavaScript erzeugt. Der Kommentar zeigt, wie ein erzeugtes Listenelement aussehen soll.</p>
+      </section>
+
+      <section class="section">
+        <h2>4 &mdash; Die acht Bausteine im Code</h2>
+        <h3>1) Application State</h3>
+        <p>Der Anwendungszustand enth&auml;lt die Daten der App und ist die zentrale Quelle der Wahrheit.</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">app.js</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const state = {
+  todos: [
+    { text: 'CABS lernen', completed: false },
+    { text: 'NSCS lernen', completed: true },
+    { text: 'POS/Theorie lernen', completed: false },
+    { text: 'WMC programmieren', completed: false },
+  ],
+};</code></pre>
+</div>
+
+        <h3>2) State Accessors/Mutators</h3>
+        <p>Diese Funktionen lesen und &auml;ndern den Zustand; hier werden Todos hinzugef&uuml;gt, umgeschaltet und gel&ouml;scht.</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">app.js</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">function addNewTodoItemToState(text) {
+  state.todos.push({ text: text, completed: false });
+}
+
+function toggleTodoState(todoObject) {
+  todoObject.completed = !todoObject.completed;
+}
+
+function deleteTodoObjectFromState(todoObject) {
+  let idx = state.todos.indexOf(todoObject);
+  if (idx !== -1) {
+    state.todos.splice(idx, 1);
+  }
+}</code></pre>
+</div>
+
+        <h3>3) DOM Node References</h3>
+        <p>Statische Referenzen auf DOM-Knoten, die nach dem Start der Anwendung mehrfach ben&ouml;tigt werden.</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">app.js</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const todoList = document.getElementById('todo-list');
+const todoListDone = document.getElementById('todo-list-done');
+const addBtn = document.getElementById('todo-add');
+const newTodoText = document.getElementById('todo-input');</code></pre>
+</div>
+
+        <h3>4) DOM Node Creation Functions</h3>
+        <p>DOM-Knoten werden dynamisch erzeugt; hier wird ein Todo-Listenelement gebaut.</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">app.js</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">function createTodoElement(todo) {
+  const listItem = document.createElement('li');
+  listItem.textContent = todo.text;
+
+  const cb = document.createElement('input');
+  cb.type = 'checkbox';
+  cb.checked = todo.completed;
+  cb.addEventListener('change', (event) =&gt; onTodoStateChanged(todo));
+
+  const delBtn = document.createElement('button');
+  delBtn.textContent = 'delete';
+  delBtn.addEventListener('click', (event) =&gt; onTodoObjectDelete(todo));
+
+  listItem.prepend(cb);
+  listItem.append(delBtn);
+  return listItem;
+}</code></pre>
+</div>
+
+        <h3>5) Render Functions</h3>
+        <p>Render-Funktionen &uuml;bertragen den Zustand ins DOM. Hier wird einfach vollst&auml;ndig neu gerendert; jede Zustands&auml;nderung l&ouml;st ein Re-Render aus.</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">app.js</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">function render() {
+  todoList.innerHTML = '';
+  todoListDone.innerHTML = '';
+
+  for (let todoItem of state.todos) {
+    const li = createTodoElement(todoItem);
+    if (todoItem.completed) {
+      todoListDone.appendChild(li);
+    } else {
+      todoList.appendChild(li);
+    }
+  }
+}</code></pre>
+</div>
+        <div class="callout callout-info">
+  <div class="callout-icon">&#8505;</div>
+  <div class="callout-body">
+    <div class="callout-title">Erg&auml;nzt gegen&uuml;ber den Folien</div>
+    <p>Auf den Folien ist nur das Rendern der &bdquo;Done&ldquo;-Liste abgebildet. Hier steht die
+          vollst&auml;ndige Funktion, die beide Listen leert und jedes Todo der passenden Liste zuordnet.</p>
+  </div>
+</div>
+
+        <h3>6) Event Handlers</h3>
+        <p>Event-Handler verarbeiten Benutzeraktionen, rufen State-Mutatoren auf und rendern anschlie&szlig;end neu (Namensschema: <code>on&lt;Event&gt;</code>).</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">app.js</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">function onAddBtnPressed() {
+  addNewTodoItemToState(newTodoText.value);
+  render();
+}
+
+function onTodoStateChanged(todoObject) {
+  toggleTodoState(todoObject);
+  render();
+}
+
+function onTodoObjectDelete(todoObject) {
+  deleteTodoObjectFromState(todoObject);
+  render();
+}</code></pre>
+</div>
+
+        <h3>7) Initialization of Bindings</h3>
+        <p>Hier werden die Event-Handler initial mit den DOM-Elementen verbunden.</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">app.js</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">addBtn.addEventListener('click', (event) =&gt; onAddBtnPressed());</code></pre>
+</div>
+
+        <h3>8) Initial Rendering</h3>
+        <p>Zum Start wird <code>render()</code> einmal aufgerufen, um den Anfangszustand anzuzeigen.</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">app.js</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">render();</code></pre>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>5 &mdash; Live-Vorschau</h2>
+        <div class="demo">
+  <div class="demo-label">Die Todo-App aus dieser Lektion</div>
+  <div class="demo-body">
+          <h3 style="margin:0 0 .5rem">Todo List</h3>
+          <input id="demo-todo-input" type="text" placeholder="What needs to be done">
+          <button id="demo-todo-add" type="button">Add</button>
+          <h4 style="margin:.8rem 0 .2rem;text-transform:none;color:#1c2128">Pending Tasks</h4>
+          <ul id="demo-todo-list" style="color:#1c2128"></ul>
+          <h4 style="margin:.8rem 0 .2rem;text-transform:none;color:#1c2128">Done</h4>
+          <ul id="demo-todo-list-done" style="color:#1c2128"></ul>
+          <script>
+            (() => {
+              const state = { todos: [
+                { text: 'CABS lernen', completed: false },
+                { text: 'NSCS lernen', completed: true },
+                { text: 'POS/Theorie lernen', completed: false },
+                { text: 'WMC programmieren', completed: false } ] };
+              const todoList = document.getElementById('demo-todo-list');
+              const todoListDone = document.getElementById('demo-todo-list-done');
+              const input = document.getElementById('demo-todo-input');
+              function create(todo) {
+                const li = document.createElement('li');
+                li.textContent = ' ' + todo.text + ' ';
+                const cb = document.createElement('input');
+                cb.type = 'checkbox'; cb.checked = todo.completed;
+                cb.addEventListener('change', () => { todo.completed = !todo.completed; render(); });
+                const del = document.createElement('button');
+                del.textContent = 'delete';
+                del.addEventListener('click', () => { state.todos.splice(state.todos.indexOf(todo), 1); render(); });
+                li.prepend(cb); li.append(del);
+                return li;
+              }
+              function render() {
+                todoList.innerHTML = ''; todoListDone.innerHTML = '';
+                for (const t of state.todos) (t.completed ? todoListDone : todoList).appendChild(create(t));
+              }
+              document.getElementById('demo-todo-add').addEventListener('click', () => {
+                if (input.value.trim() === '') return;
+                state.todos.push({ text: input.value.trim(), completed: false });
+                input.value = ''; render();
+              });
+              render();
+            })();
+          </script>
+        </div>
+</div>
+      </section>
+
+      <section class="section section-fehler">
+        <h2>H&auml;ufige Fehler</h2>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: DOM direkt im Handler ver&auml;ndern</div>
+  <p>Der Handler h&auml;ngt ein neues <code>&lt;li&gt;</code> an, vergisst aber den State. Beim n&auml;chsten <code>render()</code> ist das Todo wieder weg.</p>
+          <p class="fehler-fix">Handler &auml;ndern nur den Zustand (Mutator) und rufen danach <code>render()</code> auf.</p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: Liste vor dem Rendern nicht geleert</div>
+  <p>Jedes <code>render()</code> h&auml;ngt alle Todos erneut an &ndash; die Liste w&auml;chst doppelt und dreifach.</p>
+          <p class="fehler-fix">Am Anfang von <code>render()</code> die Container mit <code>innerHTML = ''</code> leeren.</p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: render() beim Start vergessen</div>
+  <p>Die Seite zeigt beim Laden keine Todos, obwohl der State gef&uuml;llt ist.</p>
+          <p class="fehler-fix">Ganz am Ende einmal <code>render()</code> aufrufen (Baustein 8).</p>
+</div>
+      </section>
+
+      <section class="section section-aufgaben">
+        <h2>Aufgaben</h2>
+        <div class="aufgaben-list">
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 1</span>
+    <span class="aufgabe-title">Todo-App nachbauen</span>
+  </div>
+  <p>Baue die Todo-App mit <code>index.html</code> und <code>app.js</code> nach und kennzeichne im Code die acht Bausteine mit Kommentaren.</p>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 2</span>
+    <span class="aufgabe-title">Leere Eingaben und Enter-Taste</span>
+  </div>
+  <p>Verhindere leere Todos und leere das Eingabefeld nach dem Hinzuf&uuml;gen. Erm&ouml;gliche das Hinzuf&uuml;gen zus&auml;tzlich mit der Enter-Taste (<code>keydown</code>-Event, <code>event.key === 'Enter'</code>).</p>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 3</span>
+    <span class="aufgabe-title">Z&auml;hler</span>
+  </div>
+  <p>Zeige &uuml;ber den Listen &bdquo;3 offen, 1 erledigt&ldquo; an. Berechne die Zahlen in <code>render()</code> aus dem State (<code>filter</code>).</p>
+</div>
+          <div class="aufgabe aufgabe-bonus">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Bonus</span>
+    <span class="aufgabe-title">Eigene App nach dem Muster</span>
+  </div>
+  <p>W&auml;hle eine der Web-App-&Uuml;bungen (z.&nbsp;B. Snack-Bestellungen oder Flughafen-Board) und setze sie nach denselben acht Bausteinen um.</p>
+</div>
+        </div>
+      </section>
+
+    </div>
+
+    <nav class="lesson-nav">
+      <a class="nav-btn" href="2.1-dom.html">&larr; Lektion 2.1: DOM</a>
+      <span class="nav-center-info">Lektion 2.2</span>
+      <a class="nav-btn primary" href="3.1-promises.html">Lektion 3.1: Promises &amp; async/await &rarr;</a>
+    </nav>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    const ham = document.getElementById('hamburger');
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('overlay');
+    ham.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('visible'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('visible'); });
+    const cur = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-link').forEach(l => {
+      if (l.getAttribute('href') === cur) l.classList.add('active');
+    });
+    const themeBtn = document.getElementById('theme-toggle');
+    const applyTheme = (t) => {
+      document.documentElement.setAttribute('data-theme', t);
+      if (themeBtn) themeBtn.innerHTML = t === 'dark' ? '&#9728;' : '&#9790;';
+    };
+    applyTheme(localStorage.getItem('kurs-theme') || 'dark');
+    setTimeout(() => document.documentElement.classList.add('theme-transitions'), 50);
+    if (themeBtn) themeBtn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('kurs-theme', next);
+      applyTheme(next);
+    });
+    hljs.highlightAll();
+  </script>
+</body>
+
+</html>

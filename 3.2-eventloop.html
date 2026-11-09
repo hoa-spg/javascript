@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<!-- GENERIERT von kurse/_build (javascript) – nicht direkt bearbeiten!
+     Quelle: kurse/_build/javascript/lessons/, bauen: python3 _build/build.py javascript -->
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3.2 &ndash; Event Loop | JavaScript Kurs</title>
+  <script>(function () { var t = localStorage.getItem('kurs-theme') || 'dark'; document.documentElement.setAttribute('data-theme', t); })();</script>
+  <link rel="stylesheet" href="assets/kurs.css">
+  <link rel="stylesheet" id="hljs-theme"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+</head>
+
+<body>
+
+  <button class="hamburger" id="hamburger" aria-label="Navigation &ouml;ffnen">&#9776;</button>
+  <div class="sidebar-overlay" id="overlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="index.html">
+        <span class="brand-icon">JS</span>
+        <div>
+          <div class="brand-name">JavaScript</div>
+          <div class="brand-sub">Web- und Mobile Computing</div>
+        </div>
+      </a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Dark/Light Mode"
+        title="Theme wechseln">&#9728;</button>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-group">
+        <div class="nav-group-label js-label">Teil 1 &mdash; Sprachgrundlagen</div>
+        <a class="nav-link" href="1.1-einfuehrung.html"><span class="ln">1.1</span>Einf&uuml;hrung in JavaScript</a>
+        <a class="nav-link" href="1.2-funktionen.html"><span class="ln">1.2</span>Funktionen</a>
+        <a class="nav-link" href="1.3-arrays.html"><span class="ln">1.3</span>Arrays</a>
+        <a class="nav-link" href="1.4-objekte.html"><span class="ln">1.4</span>Objekte &amp; Klassen</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label html-label">Teil 2 &mdash; DOM &amp; WebApps</div>
+        <a class="nav-link" href="2.1-dom.html"><span class="ln">2.1</span>DOM</a>
+        <a class="nav-link" href="2.2-webapp.html"><span class="ln">2.2</span>Struktur einfacher WebApps</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label css-label">Teil 3 &mdash; Asynchron, Browser &amp; Daten</div>
+        <a class="nav-link" href="3.1-promises.html"><span class="ln">3.1</span>Promises &amp; async/await</a>
+        <a class="nav-link" href="3.2-eventloop.html"><span class="ln">3.2</span>Event Loop</a>
+        <a class="nav-link" href="3.3-browser-apis.html"><span class="ln">3.3</span>Browser APIs</a>
+        <a class="nav-link" href="3.4-cookies.html"><span class="ln">3.4</span>Cookies</a>
+        <a class="nav-link" href="3.5-prisma.html"><span class="ln">3.5</span>Prisma ORM</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="lesson-header">
+      <p class="lesson-eyebrow">Lektion 3.2 &mdash; Teil 3: Asynchron, Browser &amp; Daten</p>
+      <h1>Event Loop</h1>
+      <div class="lesson-tags">
+        <span class="tag tag-js">JavaScript</span>
+        <span class="tag tag-time">ca. 45 min</span>
+        <span class="tag tag-level">Asynchron</span>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <section class="section section-lernziele">
+        <h2>Lernziele</h2>
+        <ul class="lernziele-list">
+          <li>Erkl&auml;ren, wie single-threaded JavaScript trotzdem asynchron arbeiten kann</li>
+          <li>Call Stack, Web APIs, Task Queue und Microtask Queue unterscheiden</li>
+          <li>Die Ausgabereihenfolge von synchronem Code, Promises und Timern vorhersagen</li>
+          <li>Blockierenden Code erkennen und vermeiden</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>1 &mdash; Event Loop: Grundidee</h2>
+        <ul>
+          <li>JavaScript f&uuml;hrt Code im Browser bzw. in Node.js grunds&auml;tzlich <strong>single-threaded</strong> aus &ndash; es l&auml;uft immer nur eine Sache gleichzeitig.</li>
+          <li>Der <strong>Event Loop</strong> erm&ouml;glicht trotzdem asynchrones Verhalten (Timer, Netzwerk, Benutzerereignisse).</li>
+          <li>Ablauf: Der Stack wird abgearbeitet, dann werden wartende Aufgaben aus Queues eingeplant.</li>
+          <li>Ziel: Die Oberfl&auml;che bleibt reaktionsf&auml;hig, obwohl asynchrone Aufgaben im Hintergrund laufen.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>2 &mdash; Bausteine des Event Loops</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Baustein</th><th>Aufgabe</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Call Stack</strong></td><td>F&uuml;hrt die aktuell laufenden Funktionsaufrufe aus.</td></tr>
+              <tr><td><strong>Web APIs / Runtime APIs</strong></td><td>Bearbeiten Timer, I/O und Events au&szlig;erhalb des Stacks.</td></tr>
+              <tr><td><strong>Task Queue (Macrotasks)</strong></td><td>z.&nbsp;B. <code>setTimeout</code>, DOM-Events</td></tr>
+              <tr><td><strong>Microtask Queue</strong></td><td>z.&nbsp;B. Promise-<code>then</code>/<code>catch</code>, <code>queueMicrotask</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout callout-info">
+  <div class="callout-icon">&#8505;</div>
+  <div class="callout-body">
+    <div class="callout-title">Regel</div>
+    <p>Nach jedem Durchlauf des Stacks werden zuerst <strong>alle Microtasks</strong> abgearbeitet &ndash;
+          erst danach kommt die n&auml;chste Macrotask an die Reihe.</p>
+  </div>
+</div>
+        <svg viewBox="0 0 640 210" role="img" aria-label="Event Loop: Call Stack, Web APIs, Microtask Queue und Task Queue" style="width:100%;max-width:640px;display:block;margin:0 auto 1.5rem">
+          <g font-family="sans-serif" font-size="13" fill="currentColor">
+            <rect x="10" y="20" width="150" height="170" rx="8" fill="none" stroke="currentColor" opacity=".6"/>
+            <text x="85" y="42" text-anchor="middle" font-weight="bold">Call Stack</text>
+            <text x="85" y="110" text-anchor="middle" opacity=".7">synchroner Code</text>
+            <rect x="245" y="20" width="150" height="70" rx="8" fill="none" stroke="currentColor" opacity=".6"/>
+            <text x="320" y="48" text-anchor="middle" font-weight="bold">Web APIs</text>
+            <text x="320" y="70" text-anchor="middle" opacity=".7">Timer, fetch, Events</text>
+            <rect x="460" y="20" width="170" height="70" rx="8" fill="none" stroke="#58a6ff"/>
+            <text x="545" y="48" text-anchor="middle" font-weight="bold">Microtask Queue</text>
+            <text x="545" y="70" text-anchor="middle" opacity=".7">then / catch</text>
+            <rect x="460" y="120" width="170" height="70" rx="8" fill="none" stroke="#f0883e"/>
+            <text x="545" y="148" text-anchor="middle" font-weight="bold">Task Queue</text>
+            <text x="545" y="170" text-anchor="middle" opacity=".7">setTimeout, Klicks</text>
+            <path d="M160 55 H245" stroke="currentColor" fill="none" marker-end="url(#a)"/>
+            <path d="M395 55 H460" stroke="currentColor" fill="none" marker-end="url(#a)"/>
+            <path d="M395 70 Q430 150 460 155" stroke="currentColor" fill="none" marker-end="url(#a)"/>
+            <path d="M460 80 Q300 130 160 120" stroke="#58a6ff" fill="none" marker-end="url(#a)"/>
+            <path d="M460 170 Q300 200 160 165" stroke="#f0883e" fill="none" marker-end="url(#a)"/>
+            <text x="300" y="98" text-anchor="middle" fill="#58a6ff">1. zuerst alle</text>
+            <text x="300" y="205" text-anchor="middle" fill="#f0883e">2. dann eine</text>
+          </g>
+          <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
+        </svg>
+      </section>
+
+      <section class="section">
+        <h2>3 &mdash; Beispiel: Reihenfolge der Ausgabe</h2>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Reihenfolge</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">console.log('A');
+
+setTimeout(() =&gt; {
+  console.log('B (macrotask)');
+}, 0);
+
+Promise.resolve().then(() =&gt; {
+  console.log('C (microtask)');
+});
+
+console.log('D');</code></pre>
+</div>
+        <ul>
+          <li>Ausgabe: <code>A</code>, <code>D</code>, <code>C</code>, <code>B</code></li>
+          <li>Grund: Erst der synchrone Code, dann die Microtasks, dann die Macrotasks &ndash; auch bei <code>setTimeout(…, 0)</code>.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>4 &mdash; Praxis: Blockierenden Code vermeiden</h2>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Blockierender Code</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">function heavyWork(ms) {
+  const start = Date.now();
+  while (Date.now() - start &lt; ms) {
+    // blockiert den Thread
+  }
+}
+
+console.log('Start');
+setTimeout(() =&gt; console.log('Timer fertig'), 0);
+heavyWork(2000);
+console.log('Ende');</code></pre>
+</div>
+        <ul>
+          <li>Solange <code>heavyWork</code> l&auml;uft, kann der Event Loop nichts anderes ausf&uuml;hren.</li>
+          <li>Konsequenz: Timer, Klicks und Rendering werden verz&ouml;gert &ndash; die Seite &bdquo;friert ein&ldquo;.</li>
+          <li>L&ouml;sung: Arbeit aufteilen, asynchron planen oder in einen <strong>Web Worker</strong> auslagern.</li>
+        </ul>
+      </section>
+
+      <section class="section section-fehler">
+        <h2>H&auml;ufige Fehler</h2>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: setTimeout(…, 0) l&auml;uft &bdquo;sofort&ldquo;</div>
+  <p>Der Code im Timer wird erst ausgef&uuml;hrt, wenn der Stack leer ist und alle Microtasks erledigt sind.</p>
+          <p class="fehler-fix">0&nbsp;ms bedeutet &bdquo;so bald wie m&ouml;glich&ldquo;, nicht &bdquo;jetzt&ldquo;.</p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: Ergebnis au&szlig;erhalb des Callbacks verwenden</div>
+  <p><code>let daten; fetch(url).then(r =&gt; daten = r);</code> &ndash; direkt danach ist <code>daten</code> noch <code>undefined</code>.</p>
+          <p class="fehler-fix">Mit dem Ergebnis innerhalb von <code>then</code> bzw. nach <code>await</code> weiterarbeiten.</p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: Lange Schleifen im Event-Handler</div>
+  <p>Ein Klick l&ouml;st eine rechenintensive Schleife aus, und die Seite reagiert sekundenlang nicht.</p>
+          <p class="fehler-fix">Arbeit in kleinere St&uuml;cke teilen (z.&nbsp;B. mit <code>setTimeout</code>) oder einen Web Worker verwenden.</p>
+</div>
+      </section>
+
+      <section class="section section-aufgaben">
+        <h2>Aufgaben</h2>
+        <div class="aufgaben-list">
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 1</span>
+    <span class="aufgabe-title">Reihenfolge vorhersagen</span>
+  </div>
+  <p>Welche Ausgabe erzeugt dieser Code? Begr&uuml;nden Sie und pr&uuml;fen Sie in der Konsole.</p>
+            <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Rätsel</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">console.log(1);
+setTimeout(() =&gt; console.log(2), 0);
+Promise.resolve().then(() =&gt; console.log(3)).then(() =&gt; console.log(4));
+queueMicrotask(() =&gt; console.log(5));
+console.log(6);</code></pre>
+</div>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 2</span>
+    <span class="aufgabe-title">Einfrieren sichtbar machen</span>
+  </div>
+  <p>Erstellen Sie eine Seite mit einem Button &bdquo;Rechnen&ldquo;, der <code>heavyWork(3000)</code> aufruft, und einem Eingabefeld. Versuchen Sie w&auml;hrend der Berechnung zu tippen. Was beobachten Sie?</p>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 3</span>
+    <span class="aufgabe-title">async/await und die Microtask Queue</span>
+  </div>
+  <p>Wo erscheint &bdquo;nach await&ldquo; in der Ausgabe von <code>async function f() { console.log('in f'); await null; console.log('nach await'); } f(); console.log('ende');</code>? Erkl&auml;ren Sie mit Hilfe der Microtask Queue.</p>
+</div>
+          <div class="aufgabe aufgabe-bonus">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Bonus</span>
+    <span class="aufgabe-title">Loupe</span>
+  </div>
+  <p>Visualisieren Sie die Beispiele dieser Lektion mit dem Tool <a href="http://latentflip.com/loupe/" target="_blank" rel="noopener">Loupe</a> und beobachten Sie Stack und Queues Schritt f&uuml;r Schritt.</p>
+</div>
+        </div>
+      </section>
+
+    </div>
+
+    <nav class="lesson-nav">
+      <a class="nav-btn" href="3.1-promises.html">&larr; Lektion 3.1: Promises &amp; async/await</a>
+      <span class="nav-center-info">Lektion 3.2</span>
+      <a class="nav-btn primary" href="3.3-browser-apis.html">Lektion 3.3: Browser APIs &rarr;</a>
+    </nav>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    const ham = document.getElementById('hamburger');
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('overlay');
+    ham.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('visible'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('visible'); });
+    const cur = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-link').forEach(l => {
+      if (l.getAttribute('href') === cur) l.classList.add('active');
+    });
+    const themeBtn = document.getElementById('theme-toggle');
+    const applyTheme = (t) => {
+      document.documentElement.setAttribute('data-theme', t);
+      if (themeBtn) themeBtn.innerHTML = t === 'dark' ? '&#9728;' : '&#9790;';
+    };
+    applyTheme(localStorage.getItem('kurs-theme') || 'dark');
+    setTimeout(() => document.documentElement.classList.add('theme-transitions'), 50);
+    if (themeBtn) themeBtn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('kurs-theme', next);
+      applyTheme(next);
+    });
+    hljs.highlightAll();
+  </script>
+</body>
+
+</html>

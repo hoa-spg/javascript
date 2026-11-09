@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<!-- GENERIERT von kurse/_build (javascript) – nicht direkt bearbeiten!
+     Quelle: kurse/_build/javascript/lessons/, bauen: python3 _build/build.py javascript -->
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Kurs</title>
+  <script>(function () { var t = localStorage.getItem('kurs-theme') || 'dark'; document.documentElement.setAttribute('data-theme', t); })();</script>
+  <link rel="stylesheet" href="assets/kurs.css">
+  <link rel="stylesheet" id="hljs-theme"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+</head>
+
+<body>
+
+  <button class="hamburger" id="hamburger" aria-label="Navigation &ouml;ffnen">&#9776;</button>
+  <div class="sidebar-overlay" id="overlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="index.html">
+        <span class="brand-icon">JS</span>
+        <div>
+          <div class="brand-name">JavaScript</div>
+          <div class="brand-sub">Web- und Mobile Computing</div>
+        </div>
+      </a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Dark/Light Mode"
+        title="Theme wechseln">&#9728;</button>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-group">
+        <div class="nav-group-label js-label">Teil 1 &mdash; Sprachgrundlagen</div>
+        <a class="nav-link" href="1.1-einfuehrung.html"><span class="ln">1.1</span>Einf&uuml;hrung in JavaScript</a>
+        <a class="nav-link" href="1.2-funktionen.html"><span class="ln">1.2</span>Funktionen</a>
+        <a class="nav-link" href="1.3-arrays.html"><span class="ln">1.3</span>Arrays</a>
+        <a class="nav-link" href="1.4-objekte.html"><span class="ln">1.4</span>Objekte &amp; Klassen</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label html-label">Teil 2 &mdash; DOM &amp; WebApps</div>
+        <a class="nav-link" href="2.1-dom.html"><span class="ln">2.1</span>DOM</a>
+        <a class="nav-link" href="2.2-webapp.html"><span class="ln">2.2</span>Struktur einfacher WebApps</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label css-label">Teil 3 &mdash; Asynchron, Browser &amp; Daten</div>
+        <a class="nav-link" href="3.1-promises.html"><span class="ln">3.1</span>Promises &amp; async/await</a>
+        <a class="nav-link" href="3.2-eventloop.html"><span class="ln">3.2</span>Event Loop</a>
+        <a class="nav-link" href="3.3-browser-apis.html"><span class="ln">3.3</span>Browser APIs</a>
+        <a class="nav-link" href="3.4-cookies.html"><span class="ln">3.4</span>Cookies</a>
+        <a class="nav-link" href="3.5-prisma.html"><span class="ln">3.5</span>Prisma ORM</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="index-hero">
+      <p class="lesson-eyebrow">Kurs&uuml;bersicht</p>
+      <h1>JavaScript <span>Kurs</span></h1>
+      <p class="subtitle">
+        11 Lektionen &mdash; von Variablen, Funktionen und Objekten &uuml;ber DOM und Web-Apps bis zu
+        Promises, Browser APIs und Datenbankzugriff mit Prisma.
+      </p>
+      <div class="lesson-tags" style="margin-top:1.25rem">
+        <span class="tag tag-js">ECMAScript 2024</span>
+        <span class="tag tag-html">DOM</span>
+        <span class="tag tag-css">async/await</span>
+        <span class="tag tag-time">Web- und Mobile Computing &middot; 1. Jahr</span>
+      </div>
+    </div>
+
+    <div class="content-area">
+
+      <div class="section">
+        <h2 class="js-header" style="border-bottom:2px solid rgba(227,179,65,0.4);padding-bottom:.5rem">
+          Teil 1 &mdash; Sprachgrundlagen
+        </h2>
+        <div class="course-grid">
+          <a class="lesson-card js-card" href="1.1-einfuehrung.html">
+            <span class="lesson-card-num">1.1</span>
+            <div class="lesson-card-content"><h4>Einf&uuml;hrung in JavaScript</h4><p>Geschichte, Einbindung, Node.js &amp; npm, Variablen, Datentypen, Type Coercion</p></div>
+          </a>
+          <a class="lesson-card js-card" href="1.2-funktionen.html">
+            <span class="lesson-card-num">1.2</span>
+            <div class="lesson-card-content"><h4>Funktionen</h4><p>Methoden, Arrow-Functions, Callbacks, Argumente, Closures</p></div>
+          </a>
+          <a class="lesson-card js-card" href="1.3-arrays.html">
+            <span class="lesson-card-num">1.3</span>
+            <div class="lesson-card-content"><h4>Arrays</h4><p>Iteration, push/pop, splice/slice, Spread, forEach, map, reduce</p></div>
+          </a>
+          <a class="lesson-card js-card" href="1.4-objekte.html">
+            <span class="lesson-card-num">1.4</span>
+            <div class="lesson-card-content"><h4>Objekte &amp; Klassen</h4><p>class, private Felder, Vererbung, Object Literals, JSON</p></div>
+          </a>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="html-header" style="border-bottom:2px solid rgba(240,136,62,0.4);padding-bottom:.5rem">
+          Teil 2 &mdash; DOM &amp; WebApps
+        </h2>
+        <div class="course-grid">
+          <a class="lesson-card html-card" href="2.1-dom.html">
+            <span class="lesson-card-num">2.1</span>
+            <div class="lesson-card-content"><h4>DOM</h4><p>Selektieren, ver&auml;ndern, erzeugen, Events</p></div>
+          </a>
+          <a class="lesson-card html-card" href="2.2-webapp.html">
+            <span class="lesson-card-num">2.2</span>
+            <div class="lesson-card-content"><h4>Struktur einfacher WebApps</h4><p>State, Mutatoren, Render-Funktionen, Event-Handler &ndash; Todo-App</p></div>
+          </a>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="css-header" style="border-bottom:2px solid rgba(88,166,255,0.4);padding-bottom:.5rem">
+          Teil 3 &mdash; Asynchron, Browser &amp; Daten
+        </h2>
+        <div class="course-grid">
+          <a class="lesson-card css-card" href="3.1-promises.html">
+            <span class="lesson-card-num">3.1</span>
+            <div class="lesson-card-content"><h4>Promises &amp; async/await</h4><p>then/catch/finally, Chaining, Promise.all, fetch</p></div>
+          </a>
+          <a class="lesson-card css-card" href="3.2-eventloop.html">
+            <span class="lesson-card-num">3.2</span>
+            <div class="lesson-card-content"><h4>Event Loop</h4><p>Call Stack, Macro- und Microtasks, blockierender Code</p></div>
+          </a>
+          <a class="lesson-card css-card" href="3.3-browser-apis.html">
+            <span class="lesson-card-num">3.3</span>
+            <div class="lesson-card-content"><h4>Browser APIs</h4><p>Fetch, CORS, Web Storage, Geolocation, URL &amp; History</p></div>
+          </a>
+          <a class="lesson-card css-card" href="3.4-cookies.html">
+            <span class="lesson-card-num">3.4</span>
+            <div class="lesson-card-content"><h4>Cookies</h4><p>Setzen, lesen, l&ouml;schen, Attribute, Tracking, DSGVO</p></div>
+          </a>
+          <a class="lesson-card css-card" href="3.5-prisma.html">
+            <span class="lesson-card-num">3.5</span>
+            <div class="lesson-card-content"><h4>Prisma ORM</h4><p>Schema, Migrationen, Client, CRUD, Rename ohne Datenverlust</p></div>
+          </a>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Voraussetzungen &amp; Werkzeuge</h2>
+        <div class="callout callout-info">
+  <div class="callout-icon">&#8505;</div>
+  <div class="callout-body">
+    <div class="callout-title">Empfohlenes Vorwissen</div>
+    <p>Der <a href="../html_css/index.html">HTML-&amp;-CSS-Kurs</a> sowie Grundkenntnisse in Java
+          (Variablen, Schleifen, Klassen) &ndash; viele Abschnitte vergleichen JavaScript direkt mit Java.</p>
+  </div>
+</div>
+        <div class="callout callout-tip">
+  <div class="callout-icon">&#128161;</div>
+  <div class="callout-body">
+    <div class="callout-title">Empfohlene Tools</div>
+    <p>Visual Studio Code mit Live Server, ein aktueller Browser (Konsole: <kbd>F12</kbd>) und
+          <strong>Node.js</strong> (LTS) inklusive npm.</p>
+  </div>
+</div>
+        <div class="callout callout-info">
+  <div class="callout-icon">&#8505;</div>
+  <div class="callout-body">
+    <div class="callout-title">Wie geht es weiter?</div>
+    <p>Im zweiten Jahr folgt der <a href="../react/index.html">React-Kurs</a> mit TypeScript, React
+          und Next.js.</p>
+  </div>
+</div>
+      </div>
+
+      <div class="section">
+        <h2>Kurs lokal ansehen</h2>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Lokaler Test</span>
+    <span class="code-lang">Bash</span>
+  </div>
+  <pre><code class="language-bash">python3 -m http.server 8080
+# → http://localhost:8080/index.html</code></pre>
+</div>
+      </div>
+
+    </div><!-- /content-area -->
+
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    const ham = document.getElementById('hamburger');
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('overlay');
+    ham.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('visible'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('visible'); });
+    const cur = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-link').forEach(l => {
+      if (l.getAttribute('href') === cur) l.classList.add('active');
+    });
+    const themeBtn = document.getElementById('theme-toggle');
+    const applyTheme = (t) => {
+      document.documentElement.setAttribute('data-theme', t);
+      if (themeBtn) themeBtn.innerHTML = t === 'dark' ? '&#9728;' : '&#9790;';
+    };
+    applyTheme(localStorage.getItem('kurs-theme') || 'dark');
+    setTimeout(() => document.documentElement.classList.add('theme-transitions'), 50);
+    if (themeBtn) themeBtn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('kurs-theme', next);
+      applyTheme(next);
+    });
+    hljs.highlightAll();
+  </script>
+</body>
+
+</html>

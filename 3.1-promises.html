@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<!-- GENERIERT von kurse/_build (javascript) – nicht direkt bearbeiten!
+     Quelle: kurse/_build/javascript/lessons/, bauen: python3 _build/build.py javascript -->
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3.1 &ndash; Promises &amp; async/await | JavaScript Kurs</title>
+  <script>(function () { var t = localStorage.getItem('kurs-theme') || 'dark'; document.documentElement.setAttribute('data-theme', t); })();</script>
+  <link rel="stylesheet" href="assets/kurs.css">
+  <link rel="stylesheet" id="hljs-theme"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+</head>
+
+<body>
+
+  <button class="hamburger" id="hamburger" aria-label="Navigation &ouml;ffnen">&#9776;</button>
+  <div class="sidebar-overlay" id="overlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="index.html">
+        <span class="brand-icon">JS</span>
+        <div>
+          <div class="brand-name">JavaScript</div>
+          <div class="brand-sub">Web- und Mobile Computing</div>
+        </div>
+      </a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Dark/Light Mode"
+        title="Theme wechseln">&#9728;</button>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-group">
+        <div class="nav-group-label js-label">Teil 1 &mdash; Sprachgrundlagen</div>
+        <a class="nav-link" href="1.1-einfuehrung.html"><span class="ln">1.1</span>Einf&uuml;hrung in JavaScript</a>
+        <a class="nav-link" href="1.2-funktionen.html"><span class="ln">1.2</span>Funktionen</a>
+        <a class="nav-link" href="1.3-arrays.html"><span class="ln">1.3</span>Arrays</a>
+        <a class="nav-link" href="1.4-objekte.html"><span class="ln">1.4</span>Objekte &amp; Klassen</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label html-label">Teil 2 &mdash; DOM &amp; WebApps</div>
+        <a class="nav-link" href="2.1-dom.html"><span class="ln">2.1</span>DOM</a>
+        <a class="nav-link" href="2.2-webapp.html"><span class="ln">2.2</span>Struktur einfacher WebApps</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label css-label">Teil 3 &mdash; Asynchron, Browser &amp; Daten</div>
+        <a class="nav-link" href="3.1-promises.html"><span class="ln">3.1</span>Promises &amp; async/await</a>
+        <a class="nav-link" href="3.2-eventloop.html"><span class="ln">3.2</span>Event Loop</a>
+        <a class="nav-link" href="3.3-browser-apis.html"><span class="ln">3.3</span>Browser APIs</a>
+        <a class="nav-link" href="3.4-cookies.html"><span class="ln">3.4</span>Cookies</a>
+        <a class="nav-link" href="3.5-prisma.html"><span class="ln">3.5</span>Prisma ORM</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="lesson-header">
+      <p class="lesson-eyebrow">Lektion 3.1 &mdash; Teil 3: Asynchron, Browser &amp; Daten</p>
+      <h1>Promises &amp; async/await</h1>
+      <div class="lesson-tags">
+        <span class="tag tag-js">JavaScript</span>
+        <span class="tag tag-time">ca. 90 min</span>
+        <span class="tag tag-level">Asynchron</span>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <section class="section section-lernziele">
+        <h2>Lernziele</h2>
+        <ul class="lernziele-list">
+          <li>Das Problem verschachtelter Callbacks (&bdquo;Callback-Hell&ldquo;) erkennen</li>
+          <li>Die drei Zust&auml;nde eines Promise kennen und Promises selbst erzeugen</li>
+          <li>Ergebnisse und Fehler mit <code>then</code>, <code>catch</code> und <code>finally</code> verarbeiten</li>
+          <li>Promise-Ketten bilden und verstehen, wie Fehler darin weitergereicht werden</li>
+          <li>Mehrere Promises mit <code>Promise.all</code> und <code>Promise.allSettled</code> koordinieren</li>
+          <li>Daten mit <code>fetch</code> laden &ndash; mit <code>then</code> und mit <code>async/await</code></li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>1 &mdash; Einleitung</h2>
+        <ul>
+          <li>Promises sind ein Mechanismus f&uuml;r <strong>asynchrone Operationen</strong> in JavaScript.</li>
+          <li>Ein Promise repr&auml;sentiert ein <strong>zuk&uuml;nftiges Ergebnis</strong>: erfolgreich oder fehlgeschlagen.</li>
+          <li>Ziel: besser lesbarer und besser strukturierter asynchroner Code als mit verschachtelten Callbacks.</li>
+          <li>Typische Anwendungsf&auml;lle: API-Aufrufe, Datei-/Netzwerkzugriffe, Timer.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>2 &mdash; Problem ohne Promises (Callback-Hell)</h2>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Callback-Hell</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">setTimeout(() =&gt; {
+  console.log('Schritt 1');
+  setTimeout(() =&gt; {
+    console.log('Schritt 2');
+    setTimeout(() =&gt; {
+      console.log('Schritt 3');
+    }, 500);
+  }, 500);
+}, 500);</code></pre>
+</div>
+        <ul>
+          <li>Tiefe Verschachtelung macht den Code schwer lesbar.</li>
+          <li>Die Fehlerbehandlung verteilt sich auf viele Stellen.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>3 &mdash; Grundidee eines Promise</h2>
+        <p>Ein Promise hat drei Zust&auml;nde:</p>
+        <div class="table-wrap">
+          <table>
+            <tbody>
+              <tr><td><code>pending</code></td><td>wartend</td></tr>
+              <tr><td><code>fulfilled</code></td><td>erfolgreich abgeschlossen</td></tr>
+              <tr><td><code>rejected</code></td><td>mit Fehler abgelehnt</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout callout-info">
+  <div class="callout-icon">&#8505;</div>
+  <div class="callout-body">
+    <div class="callout-title">Wichtig</div>
+    <p>Ein Promise wechselt nur <strong>einmal</strong> von <code>pending</code> zu
+          <code>fulfilled</code> oder <code>rejected</code>. Danach bleibt der Zustand unver&auml;ndert.</p>
+  </div>
+</div>
+
+        <h3>Promise erzeugen</h3>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">new Promise</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const p = new Promise((resolve, reject) =&gt; {
+  const ok = true;
+  if (ok) {
+    resolve('Daten erfolgreich geladen');
+  } else {
+    reject(new Error('Laden fehlgeschlagen'));
+  }
+});</code></pre>
+</div>
+        <ul>
+          <li><code>resolve(wert)</code> markiert das Promise als erfolgreich.</li>
+          <li><code>reject(fehler)</code> markiert es als fehlgeschlagen.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>4 &mdash; <code>then()</code>, <code>catch()</code> und <code>finally()</code></h2>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">then / catch</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">p.then((result) =&gt; {
+    console.log('OK:', result);
+  })
+  .catch((err) =&gt; {
+    console.error('Fehler:', err.message);
+  });</code></pre>
+</div>
+        <ul>
+          <li><code>then()</code> verarbeitet den Erfolgsfall.</li>
+          <li><code>catch()</code> verarbeitet Fehler.</li>
+          <li>Beide geben wieder ein Promise zur&uuml;ck.</li>
+        </ul>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">finally</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">function ladeDaten() {
+  return new Promise((resolve) =&gt; {
+    setTimeout(() =&gt; resolve(['A', 'B', 'C']), 800);
+  });
+}
+
+ladeDaten()
+  .then((daten) =&gt; console.log(daten))
+  .catch((err) =&gt; console.error(err))
+  .finally(() =&gt; console.log('Ladevorgang beendet'));</code></pre>
+</div>
+        <ul>
+          <li><code>finally()</code> l&auml;uft immer &ndash; egal ob Erfolg oder Fehler.</li>
+          <li>Typisch f&uuml;r Aufr&auml;umarbeiten (z.&nbsp;B. Lade-Spinner ausblenden).</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>5 &mdash; Promise-Ketten (Chaining)</h2>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Chaining</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">Promise.resolve(2)
+  .then((x) =&gt; x * 3)
+  .then((x) =&gt; x + 1)
+  .then((x) =&gt; {
+    console.log(x); // 7
+    return x;
+  })
+  .catch((err) =&gt; console.error(err));</code></pre>
+</div>
+        <ul>
+          <li>Jeder <code>then()</code>-Schritt erh&auml;lt das Ergebnis des vorherigen Schritts.</li>
+          <li>R&uuml;ckgabewerte werden automatisch weitergereicht.</li>
+        </ul>
+        <h3>Fehler in Ketten</h3>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Fehler in Ketten</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">Promise.resolve('Start')
+  .then(() =&gt; {
+    throw new Error('Etwas ist schiefgelaufen');
+  })
+  .then(() =&gt; {
+    console.log('Wird nicht mehr ausgefuehrt');
+  })
+  .catch((err) =&gt; {
+    console.log('Gefangen:', err.message);
+  });</code></pre>
+</div>
+        <ul>
+          <li>Ein Fehler &uuml;berspringt die nachfolgenden <code>then()</code>-Bl&ouml;cke.</li>
+          <li>Der Fehler landet im n&auml;chsten passenden <code>catch()</code>.</li>
+        </ul>
+        <p>Die Callback-Hell von oben als Kette &ndash; flach statt verschachtelt:</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Callback-Hell aufgelöst</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const warte = (ms) =&gt; new Promise((resolve) =&gt; setTimeout(resolve, ms));
+
+warte(500)
+  .then(() =&gt; { console.log('Schritt 1'); return warte(500); })
+  .then(() =&gt; { console.log('Schritt 2'); return warte(500); })
+  .then(() =&gt; console.log('Schritt 3'));</code></pre>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>6 &mdash; Mehrere Promises koordinieren</h2>
+        <h3><code>Promise.all()</code> (parallel, alles muss klappen)</h3>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Promise.all</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const p1 = Promise.resolve('A');
+const p2 = new Promise((resolve) =&gt; setTimeout(() =&gt; resolve('B'), 300));
+const p3 = Promise.resolve('C');
+
+Promise.all([p1, p2, p3])
+  .then((werte) =&gt; console.log(werte)) // ['A', 'B', 'C']
+  .catch((err) =&gt; console.error(err));</code></pre>
+</div>
+        <ul>
+          <li>Erfolgreich nur, wenn <strong>alle</strong> Promises erfolgreich sind.</li>
+          <li>Bei einem Fehler wird sofort abgebrochen.</li>
+        </ul>
+        <h3><code>Promise.allSettled()</code> (alle Ergebnisse sammeln)</h3>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Promise.allSettled</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const p1 = Promise.resolve('OK');
+const p2 = Promise.reject(new Error('Netzwerkfehler'));
+
+Promise.allSettled([p1, p2])
+  .then((results) =&gt; {
+    console.log(results);
+    // [
+    //   { status: 'fulfilled', value: 'OK' },
+    //   { status: 'rejected', reason: Error(...) }
+    // ]
+  });</code></pre>
+</div>
+        <ul>
+          <li>Wartet auf <strong>alle</strong> Promises.</li>
+          <li>Praktisch, wenn Teilfehler erlaubt sind.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>7 &mdash; Praxisbeispiel mit <code>fetch()</code></h2>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">fetch mit then</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">fetch('https://some-url.com/api/1')
+  .then((response) =&gt; {
+    if (!response.ok) {
+      throw new Error('HTTP-Fehler: ' + response.status);
+    }
+    return response.json();
+  })
+  .then((todo) =&gt; {
+    console.log('Titel:', todo.title);
+  })
+  .catch((err) =&gt; {
+    console.error('Request fehlgeschlagen:', err.message);
+  });</code></pre>
+</div>
+        <div class="callout callout-warning">
+  <div class="callout-icon">&#9888;</div>
+  <div class="callout-body">
+    <div class="callout-title">CORS</div>
+    <p>Wenn im Browser <code>blocked by CORS policy</code> erscheint, siehe Lektion 3.3
+          (Browser APIs, Abschnitt CORS).</p>
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>8 &mdash; Promises und <code>async/await</code></h2>
+        <ul>
+          <li><code>async/await</code> ist &bdquo;Syntax-Zucker&ldquo; auf Basis von Promises.</li>
+          <li>Die Logik bleibt gleich, der Code wirkt oft linearer und lesbarer.</li>
+          <li>Die Fehlerbehandlung erfolgt mit <code>try/catch</code>.</li>
+        </ul>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">async / await</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">async function ladeTodo() {
+  try {
+    const response = await fetch('https://some-url.com/api/1');
+    const todo = await response.json();
+    console.log(todo.title);
+  } catch (err) {
+    console.error(err.message);
+  }
+}</code></pre>
+</div>
+        <p>
+          <code>await</code> wartet, bis das Promise erf&uuml;llt ist, und liefert dessen Wert. Es darf nur in
+          Funktionen stehen, die mit <code>async</code> markiert sind &ndash; eine <code>async</code>-Funktion
+          gibt selbst immer ein Promise zur&uuml;ck. CORS gilt auch hier bei Browser-Requests mit
+          <code>fetch</code>.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>9 &mdash; Zusammenfassung</h2>
+        <ul>
+          <li>Promises strukturieren asynchronen Code klar und robust.</li>
+          <li><code>then</code>/<code>catch</code>/<code>finally</code> decken Erfolg, Fehler und Aufr&auml;umen ab.</li>
+          <li>Mit <code>all</code> und <code>allSettled</code> k&ouml;nnen mehrere asynchrone Aufgaben koordiniert werden.</li>
+          <li><code>async/await</code> baut auf Promises auf und vereinfacht die Schreibweise.</li>
+        </ul>
+      </section>
+
+      <section class="section section-fehler">
+        <h2>H&auml;ufige Fehler</h2>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: return in der Kette vergessen</div>
+  <p>Im <code>then</code> wird <code>response.json()</code> aufgerufen, aber nicht zur&uuml;ckgegeben &ndash; der n&auml;chste Schritt bekommt <code>undefined</code>.</p>
+          <p class="fehler-fix">Promises in der Kette immer mit <code>return</code> weitergeben.</p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: await vergessen</div>
+  <p><code>const data = response.json();</code> liefert ein Promise statt der Daten.</p>
+          <p class="fehler-fix"><code>const data = await response.json();</code></p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: HTTP-Fehler werden nicht erkannt</div>
+  <p><code>fetch</code> wirft bei 404 oder 500 <strong>keinen</strong> Fehler &ndash; nur bei Netzwerkproblemen.</p>
+          <p class="fehler-fix"><code>response.ok</code> pr&uuml;fen und bei Bedarf selbst einen Error werfen.</p>
+</div>
+      </section>
+
+      <section class="section section-aufgaben">
+        <h2>Aufgaben</h2>
+        <div class="aufgaben-list">
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 1</span>
+    <span class="aufgabe-title">warte(ms)</span>
+  </div>
+  <p>Schreiben Sie eine Funktion <code>warte(ms)</code>, die ein Promise zur&uuml;ckgibt, das nach <code>ms</code> Millisekunden erf&uuml;llt wird. Geben Sie damit &bdquo;3&ldquo;, &bdquo;2&ldquo;, &bdquo;1&ldquo;, &bdquo;Los!&ldquo; im Sekundenabstand aus &ndash; einmal mit <code>then</code>, einmal mit <code>async/await</code>.</p>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 2</span>
+    <span class="aufgabe-title">W&uuml;rfeln mit Fehler</span>
+  </div>
+  <p>Schreiben Sie <code>wuerfle()</code>: ein Promise, das nach 500&nbsp;ms mit einer Zufallszahl 1&ndash;6 erf&uuml;llt wird, bei einer 1 aber mit dem Fehler &bdquo;Pech!&ldquo; abgelehnt wird. Behandeln Sie beide F&auml;lle und geben Sie in <code>finally</code> &bdquo;fertig&ldquo; aus.</p>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 3</span>
+    <span class="aufgabe-title">Daten laden</span>
+  </div>
+  <p>Laden Sie mit <code>fetch</code> die Daten von <code>https://jsonplaceholder.typicode.com/todos/1</code> und zeigen Sie den Titel in einem <code>&lt;p&gt;</code> auf der Seite an. W&auml;hrend des Ladens steht dort &bdquo;l&auml;dt &hellip;&ldquo;.</p>
+</div>
+          <div class="aufgabe aufgabe-bonus">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Bonus</span>
+    <span class="aufgabe-title">Parallel laden</span>
+  </div>
+  <p>Laden Sie die Todos 1 bis 5 parallel mit <code>Promise.all</code> und geben Sie alle Titel als Liste aus. Was passiert, wenn eine der URLs falsch ist? Probieren Sie dasselbe mit <code>Promise.allSettled</code>.</p>
+</div>
+        </div>
+      </section>
+
+    </div>
+
+    <nav class="lesson-nav">
+      <a class="nav-btn" href="2.2-webapp.html">&larr; Lektion 2.2: Struktur einfacher WebApps</a>
+      <span class="nav-center-info">Lektion 3.1</span>
+      <a class="nav-btn primary" href="3.2-eventloop.html">Lektion 3.2: Event Loop &rarr;</a>
+    </nav>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    const ham = document.getElementById('hamburger');
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('overlay');
+    ham.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('visible'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('visible'); });
+    const cur = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-link').forEach(l => {
+      if (l.getAttribute('href') === cur) l.classList.add('active');
+    });
+    const themeBtn = document.getElementById('theme-toggle');
+    const applyTheme = (t) => {
+      document.documentElement.setAttribute('data-theme', t);
+      if (themeBtn) themeBtn.innerHTML = t === 'dark' ? '&#9728;' : '&#9790;';
+    };
+    applyTheme(localStorage.getItem('kurs-theme') || 'dark');
+    setTimeout(() => document.documentElement.classList.add('theme-transitions'), 50);
+    if (themeBtn) themeBtn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('kurs-theme', next);
+      applyTheme(next);
+    });
+    hljs.highlightAll();
+  </script>
+</body>
+
+</html>

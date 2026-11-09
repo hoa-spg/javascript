@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<!-- GENERIERT von kurse/_build (javascript) – nicht direkt bearbeiten!
+     Quelle: kurse/_build/javascript/lessons/, bauen: python3 _build/build.py javascript -->
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1.4 &ndash; Objekte &amp; Klassen | JavaScript Kurs</title>
+  <script>(function () { var t = localStorage.getItem('kurs-theme') || 'dark'; document.documentElement.setAttribute('data-theme', t); })();</script>
+  <link rel="stylesheet" href="assets/kurs.css">
+  <link rel="stylesheet" id="hljs-theme"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+</head>
+
+<body>
+
+  <button class="hamburger" id="hamburger" aria-label="Navigation &ouml;ffnen">&#9776;</button>
+  <div class="sidebar-overlay" id="overlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="index.html">
+        <span class="brand-icon">JS</span>
+        <div>
+          <div class="brand-name">JavaScript</div>
+          <div class="brand-sub">Web- und Mobile Computing</div>
+        </div>
+      </a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Dark/Light Mode"
+        title="Theme wechseln">&#9728;</button>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-group">
+        <div class="nav-group-label js-label">Teil 1 &mdash; Sprachgrundlagen</div>
+        <a class="nav-link" href="1.1-einfuehrung.html"><span class="ln">1.1</span>Einf&uuml;hrung in JavaScript</a>
+        <a class="nav-link" href="1.2-funktionen.html"><span class="ln">1.2</span>Funktionen</a>
+        <a class="nav-link" href="1.3-arrays.html"><span class="ln">1.3</span>Arrays</a>
+        <a class="nav-link" href="1.4-objekte.html"><span class="ln">1.4</span>Objekte &amp; Klassen</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label html-label">Teil 2 &mdash; DOM &amp; WebApps</div>
+        <a class="nav-link" href="2.1-dom.html"><span class="ln">2.1</span>DOM</a>
+        <a class="nav-link" href="2.2-webapp.html"><span class="ln">2.2</span>Struktur einfacher WebApps</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label css-label">Teil 3 &mdash; Asynchron, Browser &amp; Daten</div>
+        <a class="nav-link" href="3.1-promises.html"><span class="ln">3.1</span>Promises &amp; async/await</a>
+        <a class="nav-link" href="3.2-eventloop.html"><span class="ln">3.2</span>Event Loop</a>
+        <a class="nav-link" href="3.3-browser-apis.html"><span class="ln">3.3</span>Browser APIs</a>
+        <a class="nav-link" href="3.4-cookies.html"><span class="ln">3.4</span>Cookies</a>
+        <a class="nav-link" href="3.5-prisma.html"><span class="ln">3.5</span>Prisma ORM</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="lesson-header">
+      <p class="lesson-eyebrow">Lektion 1.4 &mdash; Teil 1: Sprachgrundlagen</p>
+      <h1>Objekte &amp; Klassen</h1>
+      <div class="lesson-tags">
+        <span class="tag tag-js">JavaScript</span>
+        <span class="tag tag-time">ca. 90 min</span>
+        <span class="tag tag-level">Grundlagen</span>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <section class="section section-lernziele">
+        <h2>Lernziele</h2>
+        <ul class="lernziele-list">
+          <li>Klassen mit Konstruktor und Methoden schreiben und Objekte mit <code>new</code> erzeugen</li>
+          <li>Private Felder mit <code>#</code> einsetzen</li>
+          <li>Vererbung mit <code>extends</code> und <code>super</code> umsetzen</li>
+          <li>Objekte direkt als Object Literal schreiben und Eigenschaften dynamisch hinzuf&uuml;gen/entfernen</li>
+          <li>Objekte mit <code>JSON.stringify</code> und <code>JSON.parse</code> in JSON umwandeln und zur&uuml;ck</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>1 &mdash; Objekte als Instanzen von Klassen (wie in Java)</h2>
+        <ul>
+          <li>Seit ES6 gibt es die <code>class</code>-Syntax (&auml;hnlich zu Java).</li>
+          <li>Konstruktor mit <code>constructor()</code> (es gibt nur <strong>einen</strong> Konstruktor).</li>
+          <li>Methoden stehen im Klassenrumpf.</li>
+        </ul>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Klasse Person</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  greet() {
+    return "Hi, ich bin " + this.name;
+  }
+}
+
+const p = new Person("Anna", 30);
+console.log(p.greet());</code></pre>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>2 &mdash; Private Attribute mit <code>#</code> (seit ES2022)</h2>
+        <ul>
+          <li>Mit <code>#</code> definierte Felder sind wirklich privat.</li>
+          <li>Zugriff ist nur innerhalb der Klasse m&ouml;glich.</li>
+          <li>Kein Zugriff von au&szlig;en (auch nicht per <code>this["..."]</code>).</li>
+          <li>Anders als <code>private</code> in Java: rein sprachlich erzwungen.</li>
+        </ul>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Privates Feld</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">class Person {
+  #age; // privates Feld (Deklaration erforderlich)
+
+  constructor(name, age) {
+    this.name = name;
+    this.#age = age;
+  }
+
+  getAge() {
+    return this.#age;
+  }
+}
+
+const p = new Person("Anna", 30);
+console.log(p.getAge()); // OK
+console.log(p.#age);     // Fehler!</code></pre>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>3 &mdash; Vergleich zu Java</h2>
+        <div class="two-col">
+          <div>
+            <h4>&Auml;hnlich</h4>
+            <ul>
+              <li>Klassen, Konstruktoren, Methoden</li>
+              <li>Objekte mit <code>new</code></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Unterschiede</h4>
+            <ul>
+              <li>Keine Typdeklarationen</li>
+              <li>Kein echtes klassenbasiertes Modell, sondern <strong>prototypbasiert</strong></li>
+              <li>Methoden sind Funktionen</li>
+            </ul>
+          </div>
+        </div>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Java vs. JavaScript</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">// Java
+Person p = new Person("Anna", 30);
+
+// JavaScript
+const p = new Person("Anna", 30);</code></pre>
+</div>
+        <div class="callout callout-info">
+  <div class="callout-icon">&#8505;</div>
+  <div class="callout-body">
+    <div class="callout-title">Prototypbasiert?</div>
+    <p>Intern ist eine JavaScript-Klasse nur eine bequeme Schreibweise: Jedes Objekt hat einen
+          Verweis auf ein anderes Objekt (seinen <strong>Prototyp</strong>), von dem es Methoden
+          &bdquo;erbt&ldquo;. <code>class</code> erzeugt diese Verkn&uuml;pfung automatisch.</p>
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>4 &mdash; Vererbung</h2>
+        <ul>
+          <li><code>extends</code> erzeugt eine Unterklasse.</li>
+          <li><code>super(...)</code> ruft den Konstruktor der Oberklasse auf.</li>
+          <li><code>super.methode()</code> ruft eine Methode der Oberklasse auf.</li>
+          <li><code>super(...)</code> muss im Konstruktor <strong>vor</strong> <code>this</code> stehen!</li>
+        </ul>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Oberklasse</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">class Person {
+  constructor(name) {
+    this.name = name;
+  }
+
+  greet() {
+    return "Hallo " + this.name;
+  }
+}</code></pre>
+</div>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Unterklasse</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">class Student extends Person {
+  constructor(name, matrikelNr) {
+    super(name); // Aufruf Oberklasse
+    this.matrikelNr = matrikelNr;
+  }
+
+  greet() {
+    return super.greet() +
+      " (Matrikel: " + this.matrikelNr + ")";
+  }
+}
+
+const s = new Student("Anna", 12345);</code></pre>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>5 &mdash; Direkte Objektschreibweise (Object Literal)</h2>
+        <ul>
+          <li>Objekte sind auch ohne Klasse definierbar.</li>
+          <li>Sie bestehen aus Schl&uuml;ssel-Wert-Paaren.</li>
+          <li>Sehr h&auml;ufige Schreibweise in JS.</li>
+        </ul>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Object Literal</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const person = {
+  name: "Anna",
+  age: 30,
+  greet: function() {
+    return "Hi, ich bin " + this.name;
+  }
+};
+
+console.log(person.name);
+console.log(person.greet());</code></pre>
+</div>
+
+        <h3>Dynamische Eigenschaften</h3>
+        <p>Eigenschaften k&ouml;nnen jederzeit hinzugef&uuml;gt oder entfernt werden &ndash; anders als in Java!</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Eigenschaften ändern</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const person = { name: "Anna" };
+person.age = 30;           // hinzufügen
+delete person.name;        // entfernen
+person["city"] = "Berlin"; // alternative Syntax</code></pre>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>6 &mdash; JSON (JavaScript Object Notation)</h2>
+        <ul>
+          <li>Reines Datenformat (keine Funktionen!)</li>
+          <li>Wird f&uuml;r den Datenaustausch verwendet (z.&nbsp;B. REST-APIs)</li>
+          <li>Sehr &auml;hnlich zu Object Literals</li>
+        </ul>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">JSON</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">// JSON (String)
+const jsonText = '{"name": "Anna", "age": 30}';
+
+const obj = JSON.parse(jsonText);
+const backToJson = JSON.stringify(obj);</code></pre>
+</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>JSON</th><th>JS-Objekt</th></tr></thead>
+            <tbody>
+              <tr><td>nur Daten (Text)</td><td>Daten + Methoden</td></tr>
+              <tr><td>Schl&uuml;ssel immer in doppelten Anf&uuml;hrungszeichen</td><td>Schl&uuml;ssel ohne Anf&uuml;hrungszeichen m&ouml;glich</td></tr>
+              <tr><td><code>JSON.parse(text)</code> &rarr; Objekt</td><td><code>JSON.stringify(obj)</code> &rarr; Text</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section section-fehler">
+        <h2>H&auml;ufige Fehler</h2>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: this vor super()</div>
+  <p>Im Konstruktor einer Unterklasse wird <code>this.x = …</code> vor <code>super(…)</code> gesetzt &ndash; das wirft einen <code>ReferenceError</code>.</p>
+          <p class="fehler-fix"><code>super(…)</code> immer als erste Anweisung im Konstruktor aufrufen.</p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: new vergessen</div>
+  <p><code>const p = Person("Anna", 30)</code> wirft <code>TypeError: Class constructor Person cannot be invoked without 'new'</code>.</p>
+          <p class="fehler-fix">Objekte aus Klassen immer mit <code>new</code> erzeugen.</p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: Methoden gehen bei JSON verloren</div>
+  <p>Nach <code>JSON.parse(JSON.stringify(person))</code> fehlt <code>greet()</code>.</p>
+          <p class="fehler-fix">JSON speichert nur Daten. Methoden (und private Felder) werden nicht &uuml;bertragen.</p>
+</div>
+      </section>
+
+      <section class="section section-aufgaben">
+        <h2>Aufgaben</h2>
+        <div class="aufgaben-list">
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 1</span>
+    <span class="aufgabe-title">Klasse Konto</span>
+  </div>
+  <ol>
+              <li>Erstellen Sie eine Klasse <code>Konto</code> mit dem privaten Feld <code>#pin</code> und den &ouml;ffentlichen Feldern <code>username</code> und <code>balance</code>. Methoden:
+                <ul>
+                  <li><code>checkPin(eingabe)</code> &rarr; <code>true</code>/<code>false</code></li>
+                  <li><code>einzahlen(betrag)</code> &rarr; wirft einen Error bei ung&uuml;ltigem Parameter</li>
+                  <li><code>toString()</code> &rarr; String-Darstellung des Objekts</li>
+                  <li><code>toPublicJSON()</code> &rarr; JSON nur mit &ouml;ffentlichen Daten (also ohne <code>#pin</code>)</li>
+                </ul>
+              </li>
+              <li>Erzeugen Sie ein Objekt <code>konto = new Konto('sam2026', 1234)</code> und testen Sie <code>checkPin(1111)</code> sowie <code>checkPin(1234)</code>.</li>
+              <li>Testen Sie die <code>einzahlen</code>-Methode. Nur g&uuml;ltige Parameter sollen akzeptiert werden.</li>
+              <li>Erstellen Sie eine <code>toString()</code>-Methode, die den Benutzernamen ausgibt, z.&nbsp;B. <code>Benutzer: sam2026</code>. Verwenden Sie daf&uuml;r Template-Strings: <code>`Variable: ${abc}`</code></li>
+              <li>Entwickeln und testen Sie die Methode <code>konto.toPublicJSON()</code>. Hier muss mit den &ouml;ffentlichen Attributen ein neues Objekt erstellt werden!</li>
+            </ol>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 2</span>
+    <span class="aufgabe-title">Profil einer Lernplattform</span>
+  </div>
+  <p>Eine Lernplattform speichert zu jedem Teilnehmer ein Profil:</p>
+            <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Startcode</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const profil = {
+  username: "sam2026",
+  punkte: 42,
+  aktiv: true,
+  kontakt: {
+    email: "sam@example.com",
+    ort: "Graz"
+  },
+  interessen: ["JavaScript", "Web", "UI"]
+};</code></pre>
+</div>
+            <ol>
+              <li>Geben Sie <code>username</code>, <code>punkte</code> und die Stadt in einem Satz auf der Konsole aus.</li>
+              <li>Erg&auml;nzen Sie das Objekt um <code>level</code> mit dem Wert <code>"Beginner"</code>. Erh&ouml;hen Sie danach <code>punkte</code> um 8.</li>
+              <li>Entfernen Sie die Eigenschaft <code>aktiv</code> mit <code>delete</code>. Pr&uuml;fen Sie anschlie&szlig;end mit <code>console.log</code>, ob sie noch existiert.</li>
+              <li>Wandeln Sie <code>profil</code> mit <code>JSON.stringify</code> in JSON um und speichern Sie das Ergebnis in <code>profilJson</code>. Konvertieren Sie es danach mit <code>JSON.parse</code> zur&uuml;ck in <code>profilKopie</code>.</li>
+              <li>F&uuml;gen Sie <code>profilKopie</code> eine neue Eigenschaft <code>letzterLogin</code> hinzu (z.&nbsp;B. <code>"2026-03-11"</code>).</li>
+            </ol>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 3</span>
+    <span class="aufgabe-title">Vererbung: Sparkonto</span>
+  </div>
+  <p>Leiten Sie von <code>Konto</code> eine Klasse <code>Sparkonto</code> mit zus&auml;tzlichem Feld <code>zinssatz</code> ab. &Uuml;berschreiben Sie <code>toString()</code> so, dass es <code>super.toString()</code> verwendet und den Zinssatz anh&auml;ngt.</p>
+</div>
+          <div class="aufgabe aufgabe-bonus">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Bonus</span>
+    <span class="aufgabe-title">Ist profilKopie unabh&auml;ngig?</span>
+  </div>
+  <p>&Auml;ndern Sie nach Aufgabe 2 <code>profilKopie.kontakt.ort</code>. Bleibt <code>profil.kontakt.ort</code> unver&auml;ndert? Vergleichen Sie mit <code>const flach = { ...profil }</code> &ndash; was passiert dort beim &Auml;ndern von <code>flach.kontakt.ort</code>?</p>
+</div>
+        </div>
+      </section>
+
+    </div>
+
+    <nav class="lesson-nav">
+      <a class="nav-btn" href="1.3-arrays.html">&larr; Lektion 1.3: Arrays</a>
+      <span class="nav-center-info">Lektion 1.4</span>
+      <a class="nav-btn primary" href="2.1-dom.html">Lektion 2.1: DOM &rarr;</a>
+    </nav>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    const ham = document.getElementById('hamburger');
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('overlay');
+    ham.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('visible'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('visible'); });
+    const cur = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-link').forEach(l => {
+      if (l.getAttribute('href') === cur) l.classList.add('active');
+    });
+    const themeBtn = document.getElementById('theme-toggle');
+    const applyTheme = (t) => {
+      document.documentElement.setAttribute('data-theme', t);
+      if (themeBtn) themeBtn.innerHTML = t === 'dark' ? '&#9728;' : '&#9790;';
+    };
+    applyTheme(localStorage.getItem('kurs-theme') || 'dark');
+    setTimeout(() => document.documentElement.classList.add('theme-transitions'), 50);
+    if (themeBtn) themeBtn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('kurs-theme', next);
+      applyTheme(next);
+    });
+    hljs.highlightAll();
+  </script>
+</body>
+
+</html>

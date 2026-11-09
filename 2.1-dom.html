@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<!-- GENERIERT von kurse/_build (javascript) – nicht direkt bearbeiten!
+     Quelle: kurse/_build/javascript/lessons/, bauen: python3 _build/build.py javascript -->
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2.1 &ndash; DOM | JavaScript Kurs</title>
+  <script>(function () { var t = localStorage.getItem('kurs-theme') || 'dark'; document.documentElement.setAttribute('data-theme', t); })();</script>
+  <link rel="stylesheet" href="assets/kurs.css">
+  <link rel="stylesheet" id="hljs-theme"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+</head>
+
+<body>
+
+  <button class="hamburger" id="hamburger" aria-label="Navigation &ouml;ffnen">&#9776;</button>
+  <div class="sidebar-overlay" id="overlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="index.html">
+        <span class="brand-icon">JS</span>
+        <div>
+          <div class="brand-name">JavaScript</div>
+          <div class="brand-sub">Web- und Mobile Computing</div>
+        </div>
+      </a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Dark/Light Mode"
+        title="Theme wechseln">&#9728;</button>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-group">
+        <div class="nav-group-label js-label">Teil 1 &mdash; Sprachgrundlagen</div>
+        <a class="nav-link" href="1.1-einfuehrung.html"><span class="ln">1.1</span>Einf&uuml;hrung in JavaScript</a>
+        <a class="nav-link" href="1.2-funktionen.html"><span class="ln">1.2</span>Funktionen</a>
+        <a class="nav-link" href="1.3-arrays.html"><span class="ln">1.3</span>Arrays</a>
+        <a class="nav-link" href="1.4-objekte.html"><span class="ln">1.4</span>Objekte &amp; Klassen</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label html-label">Teil 2 &mdash; DOM &amp; WebApps</div>
+        <a class="nav-link" href="2.1-dom.html"><span class="ln">2.1</span>DOM</a>
+        <a class="nav-link" href="2.2-webapp.html"><span class="ln">2.2</span>Struktur einfacher WebApps</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label css-label">Teil 3 &mdash; Asynchron, Browser &amp; Daten</div>
+        <a class="nav-link" href="3.1-promises.html"><span class="ln">3.1</span>Promises &amp; async/await</a>
+        <a class="nav-link" href="3.2-eventloop.html"><span class="ln">3.2</span>Event Loop</a>
+        <a class="nav-link" href="3.3-browser-apis.html"><span class="ln">3.3</span>Browser APIs</a>
+        <a class="nav-link" href="3.4-cookies.html"><span class="ln">3.4</span>Cookies</a>
+        <a class="nav-link" href="3.5-prisma.html"><span class="ln">3.5</span>Prisma ORM</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="lesson-header">
+      <p class="lesson-eyebrow">Lektion 2.1 &mdash; Teil 2: DOM &amp; WebApps</p>
+      <h1>DOM</h1>
+      <div class="lesson-tags">
+        <span class="tag tag-js">JavaScript</span>
+        <span class="tag tag-time">ca. 90 min</span>
+        <span class="tag tag-level">Browser</span>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <section class="section section-lernziele">
+        <h2>Lernziele</h2>
+        <ul class="lernziele-list">
+          <li>Erkl&auml;ren, was das DOM ist und wie JavaScript es nutzt</li>
+          <li>Elemente mit <code>getElementById</code>, <code>querySelector</code> und <code>querySelectorAll</code> finden</li>
+          <li>Inhalte, Attribute und CSS-Klassen ver&auml;ndern</li>
+          <li>Elemente erzeugen, einf&uuml;gen und entfernen</li>
+          <li>Mit <code>addEventListener</code> auf Benutzeraktionen reagieren</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>1 &mdash; Was ist das DOM?</h2>
+        <ul>
+          <li>DOM = <strong>D</strong>ocument <strong>O</strong>bject <strong>M</strong>odel</li>
+          <li>Der Browser stellt HTML als <strong>Baumstruktur aus Knoten</strong> dar.</li>
+          <li>JavaScript kann diesen Baum lesen und ver&auml;ndern.</li>
+          <li>Ablauf in Web-Apps: <strong>Selektieren &rarr; Ver&auml;ndern &rarr; Auf Events reagieren</strong></li>
+        </ul>
+        <div class="callout callout-info">
+  <div class="callout-icon">&#8505;</div>
+  <div class="callout-body">
+    <div class="callout-title">Bekannt aus dem HTML-&amp;-CSS-Kurs</div>
+    <p>Den DOM-Baum hast du in den Entwicklertools (Tab <strong>Elements</strong>) schon gesehen.
+          Jedes HTML-Element ist darin ein Objekt, auf das JavaScript zugreifen kann &ndash; der
+          Einstiegspunkt ist das globale Objekt <code>document</code>.</p>
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>2 &mdash; DOM-Knoten selektieren</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Methode</th><th>Liefert</th></tr></thead>
+            <tbody>
+              <tr><td><code>getElementById(...)</code></td><td>das Element mit dieser eindeutigen ID (oder <code>null</code>)</td></tr>
+              <tr><td><code>querySelector(...)</code></td><td>das <strong>erste</strong> Element, das zum CSS-Selektor passt (oder <code>null</code>)</td></tr>
+              <tr><td><code>querySelectorAll(...)</code></td><td>eine Liste (<code>NodeList</code>) <strong>aller</strong> passenden Elemente</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Selektieren</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const title = document.getElementById('title');
+const firstTodo = document.querySelector('.todo-item');
+const allTodos = document.querySelectorAll('.todo-item');
+
+console.log(allTodos.length);</code></pre>
+</div>
+        <div class="callout callout-tip">
+  <div class="callout-icon">&#128161;</div>
+  <div class="callout-body">
+    <div class="callout-title">Dieselben Selektoren wie in CSS</div>
+    <code>querySelector</code> versteht alle CSS-Selektoren: <code>'#title'</code>,
+          <code>'.todo-item'</code>, <code>'nav a'</code>, <code>'input[type="email"]'</code> &hellip;
+          (bei <code>getElementById</code> dagegen <em>ohne</em> <code>#</code>).
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>3 &mdash; Inhalte und Attribute ver&auml;ndern</h2>
+        <ul>
+          <li>Inhalte: <code>textContent</code>, <code>innerHTML</code></li>
+          <li>Attribute: <code>setAttribute(...)</code></li>
+          <li>CSS-Klassen: <code>classList.add / remove / toggle</code></li>
+        </ul>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Verändern</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const info = document.querySelector('#info');
+info.textContent = 'Speichern erfolgreich';
+info.setAttribute('data-state', 'ok');
+info.classList.add('success');</code></pre>
+</div>
+        <div class="callout callout-warning">
+  <div class="callout-icon">&#9888;</div>
+  <div class="callout-body">
+    <div class="callout-title">textContent oder innerHTML?</div>
+    <code>textContent</code> setzt reinen Text. <code>innerHTML</code> interpretiert den String als
+          HTML &ndash; mit Benutzereingaben ist das gef&auml;hrlich (eingeschleuster Code, &bdquo;XSS&ldquo;). Im
+          Zweifel immer <code>textContent</code> verwenden.
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>4 &mdash; Elemente erzeugen, einf&uuml;gen, entfernen</h2>
+        <ul>
+          <li>Neue DOM-Knoten mit <code>createElement(...)</code></li>
+          <li>Mit <code>append</code>, <code>prepend</code> oder <code>appendChild</code> einf&uuml;gen</li>
+          <li>Mit <code>remove()</code> wieder l&ouml;schen</li>
+        </ul>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Erzeugen und einfügen</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const list = document.getElementById('todo-list');
+
+const li = document.createElement('li');
+li.textContent = 'DOM-Folien fertigstellen';
+list.append(li);
+
+// später
+li.remove();</code></pre>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>5 &mdash; Auf Events reagieren</h2>
+        <ul>
+          <li><code>addEventListener(...)</code> verbindet ein Event mit einer Handler-Funktion.</li>
+          <li>H&auml;ufige Events: <code>click</code>, <code>input</code>, <code>change</code>, <code>submit</code></li>
+          <li>Das Event-Objekt liefert Zusatzinfos (z.&nbsp;B. <code>target</code> &ndash; das ausl&ouml;sende Element).</li>
+        </ul>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Event-Handler</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const btn = document.getElementById('save-btn');
+btn.addEventListener('click', (event) =&gt; {
+  console.log('geklickt auf:', event.target.id);
+});</code></pre>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>6 &mdash; Kleines Gesamtbeispiel</h2>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">index.html (body)</span>
+    <span class="code-lang">HTML</span>
+  </div>
+  <pre><code class="language-xml">&lt;input id="name-input" placeholder="Dein Name"&gt;
+&lt;button id="apply-btn"&gt;Übernehmen&lt;/button&gt;
+&lt;p id="name-output"&gt;&lt;/p&gt;</code></pre>
+</div>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">app.js</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const input = document.getElementById('name-input');
+const output = document.getElementById('name-output');
+const button = document.getElementById('apply-btn');
+
+button.addEventListener('click', () =&gt; {
+  const value = input.value.trim();
+  if (value === '') {
+    output.textContent = 'Bitte Namen eingeben';
+    output.classList.remove('ok');
+    return;
+  }
+  output.textContent = `Hallo ${value}!`;
+  output.classList.add('ok');
+});</code></pre>
+</div>
+        <div class="demo">
+  <div class="demo-label">Live-Vorschau</div>
+  <div class="demo-body">
+          <input id="demo-name-input" placeholder="Dein Name">
+          <button id="demo-apply-btn">&Uuml;bernehmen</button>
+          <p id="demo-name-output" style="margin:.5rem 0 0"></p>
+          <script>
+            (() => {
+              const input = document.getElementById('demo-name-input');
+              const output = document.getElementById('demo-name-output');
+              document.getElementById('demo-apply-btn').addEventListener('click', () => {
+                const value = input.value.trim();
+                if (value === '') { output.textContent = 'Bitte Namen eingeben'; output.style.color = '#cf222e'; return; }
+                output.textContent = `Hallo ${value}!`;
+                output.style.color = '#1a7f37';
+              });
+            })();
+          </script>
+        </div>
+</div>
+      </section>
+
+      <section class="section section-fehler">
+        <h2>H&auml;ufige Fehler</h2>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: Cannot read properties of null</div>
+  <p><code>document.getElementById('titel')</code> liefert <code>null</code> &ndash; Tippfehler in der ID oder das Script l&auml;uft, bevor das Element existiert.</p>
+          <p class="fehler-fix">ID pr&uuml;fen und das Script mit <code>defer</code> einbinden.</p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: querySelectorAll wie ein einzelnes Element behandeln</div>
+  <p><code>document.querySelectorAll('li').textContent = '…'</code> bewirkt nichts.</p>
+          <p class="fehler-fix">Die Liste durchlaufen: <code>for (const li of document.querySelectorAll('li')) { … }</code>.</p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: Formular l&auml;dt die Seite neu</div>
+  <p>Beim <code>submit</code>-Event schickt der Browser das Formular ab, und alle &Auml;nderungen sind weg.</p>
+          <p class="fehler-fix">Im Handler <code>event.preventDefault()</code> aufrufen.</p>
+</div>
+      </section>
+
+      <section class="section section-aufgaben">
+        <h2>Aufgaben</h2>
+        <div class="aufgaben-list">
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 1</span>
+    <span class="aufgabe-title">Klick-Z&auml;hler</span>
+  </div>
+  <p>Ein Button &bdquo;+1&ldquo; erh&ouml;ht bei jedem Klick eine Zahl in einem <code>&lt;span&gt;</code>. Ab 10 Klicks bekommt die Zahl per <code>classList</code> eine rote Farbe.</p>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 2</span>
+    <span class="aufgabe-title">Einkaufsliste</span>
+  </div>
+  <p>Ein Eingabefeld und ein Button &bdquo;Hinzuf&uuml;gen&ldquo; erzeugen neue <code>&lt;li&gt;</code>-Elemente in einer Liste. Leere Eingaben werden ignoriert, danach wird das Feld geleert.</p>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 3</span>
+    <span class="aufgabe-title">Live-Zeichenz&auml;hler</span>
+  </div>
+  <p>Unter einer <code>&lt;textarea&gt;</code> steht &bdquo;0 / 200 Zeichen&ldquo;. Aktualisiere den Text bei jeder Eingabe (<code>input</code>-Event).</p>
+</div>
+          <div class="aufgabe aufgabe-bonus">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Bonus</span>
+    <span class="aufgabe-title">Dark-Mode-Schalter f&uuml;r die Demoseite</span>
+  </div>
+  <p>Erg&auml;nze die Demoseite aus dem HTML-&amp;-CSS-Kurs um einen Button, der per <code>document.documentElement.classList.toggle('dark')</code> eine Klasse setzt. Lege im CSS f&uuml;r <code>.dark</code> dunkle Farben fest.</p>
+</div>
+        </div>
+      </section>
+
+    </div>
+
+    <nav class="lesson-nav">
+      <a class="nav-btn" href="1.4-objekte.html">&larr; Lektion 1.4: Objekte &amp; Klassen</a>
+      <span class="nav-center-info">Lektion 2.1</span>
+      <a class="nav-btn primary" href="2.2-webapp.html">Lektion 2.2: Struktur einfacher WebApps &rarr;</a>
+    </nav>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    const ham = document.getElementById('hamburger');
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('overlay');
+    ham.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('visible'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('visible'); });
+    const cur = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-link').forEach(l => {
+      if (l.getAttribute('href') === cur) l.classList.add('active');
+    });
+    const themeBtn = document.getElementById('theme-toggle');
+    const applyTheme = (t) => {
+      document.documentElement.setAttribute('data-theme', t);
+      if (themeBtn) themeBtn.innerHTML = t === 'dark' ? '&#9728;' : '&#9790;';
+    };
+    applyTheme(localStorage.getItem('kurs-theme') || 'dark');
+    setTimeout(() => document.documentElement.classList.add('theme-transitions'), 50);
+    if (themeBtn) themeBtn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('kurs-theme', next);
+      applyTheme(next);
+    });
+    hljs.highlightAll();
+  </script>
+</body>
+
+</html>

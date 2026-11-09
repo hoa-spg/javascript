@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<!-- GENERIERT von kurse/_build (javascript) – nicht direkt bearbeiten!
+     Quelle: kurse/_build/javascript/lessons/, bauen: python3 _build/build.py javascript -->
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1.3 &ndash; Arrays | JavaScript Kurs</title>
+  <script>(function () { var t = localStorage.getItem('kurs-theme') || 'dark'; document.documentElement.setAttribute('data-theme', t); })();</script>
+  <link rel="stylesheet" href="assets/kurs.css">
+  <link rel="stylesheet" id="hljs-theme"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+</head>
+
+<body>
+
+  <button class="hamburger" id="hamburger" aria-label="Navigation &ouml;ffnen">&#9776;</button>
+  <div class="sidebar-overlay" id="overlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="index.html">
+        <span class="brand-icon">JS</span>
+        <div>
+          <div class="brand-name">JavaScript</div>
+          <div class="brand-sub">Web- und Mobile Computing</div>
+        </div>
+      </a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Dark/Light Mode"
+        title="Theme wechseln">&#9728;</button>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-group">
+        <div class="nav-group-label js-label">Teil 1 &mdash; Sprachgrundlagen</div>
+        <a class="nav-link" href="1.1-einfuehrung.html"><span class="ln">1.1</span>Einf&uuml;hrung in JavaScript</a>
+        <a class="nav-link" href="1.2-funktionen.html"><span class="ln">1.2</span>Funktionen</a>
+        <a class="nav-link" href="1.3-arrays.html"><span class="ln">1.3</span>Arrays</a>
+        <a class="nav-link" href="1.4-objekte.html"><span class="ln">1.4</span>Objekte &amp; Klassen</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label html-label">Teil 2 &mdash; DOM &amp; WebApps</div>
+        <a class="nav-link" href="2.1-dom.html"><span class="ln">2.1</span>DOM</a>
+        <a class="nav-link" href="2.2-webapp.html"><span class="ln">2.2</span>Struktur einfacher WebApps</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label css-label">Teil 3 &mdash; Asynchron, Browser &amp; Daten</div>
+        <a class="nav-link" href="3.1-promises.html"><span class="ln">3.1</span>Promises &amp; async/await</a>
+        <a class="nav-link" href="3.2-eventloop.html"><span class="ln">3.2</span>Event Loop</a>
+        <a class="nav-link" href="3.3-browser-apis.html"><span class="ln">3.3</span>Browser APIs</a>
+        <a class="nav-link" href="3.4-cookies.html"><span class="ln">3.4</span>Cookies</a>
+        <a class="nav-link" href="3.5-prisma.html"><span class="ln">3.5</span>Prisma ORM</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="lesson-header">
+      <p class="lesson-eyebrow">Lektion 1.3 &mdash; Teil 1: Sprachgrundlagen</p>
+      <h1>Arrays</h1>
+      <div class="lesson-tags">
+        <span class="tag tag-js">JavaScript</span>
+        <span class="tag tag-time">ca. 90 min</span>
+        <span class="tag tag-level">Grundlagen</span>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <section class="section section-lernziele">
+        <h2>Lernziele</h2>
+        <ul class="lernziele-list">
+          <li>Arrays erstellen und ihre Eigenschaften kennen</li>
+          <li>Mit <code>for … of</code> und <code>for … in</code> &uuml;ber Arrays iterieren</li>
+          <li>Elemente mit <code>push</code>, <code>pop</code>, <code>unshift</code>, <code>shift</code>, <code>splice</code> und <code>slice</code> einf&uuml;gen, entfernen und ausschneiden</li>
+          <li>Den Spread-Operator <code>...</code> verwenden</li>
+          <li>Die Callback-Funktionen <code>forEach</code>, <code>map</code>, <code>filter</code>, <code>find</code> und <code>reduce</code> einsetzen</li>
+          <li>Wissen, welche Methoden das Original ver&auml;ndern und welche ein neues Array liefern</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>1 &mdash; Arrays</h2>
+        <p>Arrays sind</p>
+        <ul>
+          <li>geordnete Listen von Werten,</li>
+          <li>dynamisch vergr&ouml;&szlig;erbar,</li>
+          <li>k&ouml;nnen unterschiedliche Datentypen enthalten,</li>
+          <li>Objekte!</li>
+        </ul>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Beispiel</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const array = ["a", 7, true]; // [ 'a', 7, true ]</code></pre>
+</div>
+        <p>Die L&auml;nge eines Arrays <code>a</code> erh&auml;lt man &uuml;ber die Eigenschaft <code>a.length</code>.</p>
+      </section>
+
+      <section class="section">
+        <h2>2 &mdash; Arrays erstellen</h2>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Array-Literal</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const numbers = [1, 2, 3];</code></pre>
+</div>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Konstruktor</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const numbers = new Array(1, 2, 3);</code></pre>
+</div>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Leeres Array</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const empty = [];</code></pre>
+</div>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Leeres Array mit n Plätzen</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const a = new Array(n);</code></pre>
+</div>
+        <div class="callout callout-tip">
+  <div class="callout-icon">&#128161;</div>
+  <div class="callout-body">
+    <div class="callout-title">Literal bevorzugen</div>
+    <p>In der Praxis verwendet man fast immer die Literal-Schreibweise <code>[ … ]</code>.
+          Vorsicht: <code>new Array(3)</code> erzeugt ein leeres Array mit drei Pl&auml;tzen,
+          <code>new Array(3, 4)</code> dagegen ein Array mit den Werten 3 und 4.</p>
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>3 &mdash; &Uuml;ber Arrays iterieren</h2>
+        <p>Iteratoren:</p>
+        <ul>
+          <li><code>a.values()</code>: Werte des Arrays</li>
+          <li><code>a.keys()</code>: Schl&uuml;ssel (Indizes) des Arrays</li>
+          <li><code>a.entries()</code>: (Index, Wert)-Paare</li>
+        </ul>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Iteration über die Werte: for … of</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const a = ['a', 'b', 'c', 'd'];
+for (const x of a) {
+  console.log(x);
+}
+// Ausgabe: a, b, c, d</code></pre>
+</div>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Iteration über die Schlüssel: for … in</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const a = ['a', 'b', 'c', 'd'];
+for (const x in a) {
+  console.log(x);
+}
+// Ausgabe: 0, 1, 2, 3</code></pre>
+</div>
+        <div class="callout callout-info">
+  <div class="callout-icon">&#8505;</div>
+  <div class="callout-body">
+    <div class="callout-title">Merkhilfe</div>
+    <strong>of</strong> &rarr; die Werte (&bdquo;Elemente <em>of</em> the array&ldquo;),
+          <strong>in</strong> &rarr; die Indizes (Schl&uuml;ssel). F&uuml;r Arrays braucht man fast immer
+          <code>for … of</code>.
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>4 &mdash; Grundlegende Funktionen</h2>
+        <p>Beispiele mit <code>const array = ["a", 7, true]</code>:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Methode</th><th>Wirkung</th></tr></thead>
+            <tbody>
+              <tr><td><code>array.push(x)</code></td><td>h&auml;ngt <code>x</code> am Ende an</td></tr>
+              <tr><td><code>array.pop()</code></td><td>entfernt das letzte Element und gibt es zur&uuml;ck</td></tr>
+              <tr><td><code>array.unshift(x)</code></td><td>f&uuml;gt <code>x</code> am Anfang ein</td></tr>
+              <tr><td><code>array.shift()</code></td><td>entfernt das erste Element und gibt es zur&uuml;ck</td></tr>
+              <tr><td><code>array.at(index)</code></td><td>wie <code>array[index]</code>, erlaubt aber auch negative Indizes (<code>at(-1)</code> = letztes Element)</td></tr>
+              <tr><td><code>array.concat(array2)</code></td><td>ver&auml;ndert nichts, gibt das zusammengekettete Array zur&uuml;ck</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">entries()</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">Array.from(array.entries());
+// liefert: [ [ 0, 'a' ], [ 1, 7 ], [ 2, true ] ]</code></pre>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>5 &mdash; Spread-Operator <code>...</code></h2>
+        <p><strong>Syntax:</strong> <code>[...array]</code> bzw. <code>[...array1, ...array2]</code></p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Spread</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const tiere = ["Hund", "Katze", "Maus"];
+const farben = ["Rot", "Blau"];
+
+const kopie = [...tiere];
+const kombiniert = [...tiere, ...farben];
+const mitAnfang = ["Papagei", ...tiere];
+
+console.log(kopie);      // ["Hund", "Katze", "Maus"]
+console.log(kombiniert); // ["Hund", "Katze", "Maus", "Rot", "Blau"]
+console.log(mitAnfang);  // ["Papagei", "Hund", "Katze", "Maus"]</code></pre>
+</div>
+        <ul>
+          <li>Entpackt die Elemente eines Arrays an der gew&uuml;nschten Stelle.</li>
+          <li>Sehr praktisch zum Zusammenh&auml;ngen und Einf&uuml;gen in neue Arrays.</li>
+          <li>Erzeugt ein neues Array (die Originale bleiben unver&auml;ndert).</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>6 &mdash; &Uuml;bersicht der Array-Funktionen</h2>
+        <p>Viele Funktionen erwarten eine <strong>Callback-Funktion</strong> (<code>cb</code>), die f&uuml;r jedes Element aufgerufen wird.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Methode</th><th>Wirkung</th></tr></thead>
+            <tbody>
+              <tr><td><code>filter(cb)</code></td><td>Neues Array mit allen Elementen, f&uuml;r die <code>cb</code> <code>true</code> ergibt</td></tr>
+              <tr><td><code>find(cb)</code></td><td>Liefert das erste Element, f&uuml;r das <code>cb</code> <code>true</code> ergibt, oder <code>undefined</code></td></tr>
+              <tr><td><code>findIndex(cb)</code></td><td>Wie <code>find</code>, aber den Index (oder <code>-1</code>)</td></tr>
+              <tr><td><code>findLast(cb)</code></td><td>Wie <code>find</code>, sucht aber von hinten</td></tr>
+              <tr><td><code>findLastIndex(cb)</code></td><td>Wie <code>findIndex</code>, sucht aber von hinten</td></tr>
+              <tr><td><code>flat()</code></td><td>Enth&auml;lt das Array Sub-Arrays, werden diese &bdquo;aufgemacht&ldquo; &ndash; das Ergebnis hat keine Sub-Arrays mehr</td></tr>
+              <tr><td><code>flatMap(cb)</code></td><td><code>map</code> und anschlie&szlig;end <code>flat</code> in einem Schritt</td></tr>
+              <tr><td><code>forEach(cb)</code></td><td><code>cb</code> wird f&uuml;r jedes Element aufgerufen</td></tr>
+              <tr><td><code>includes(elem)</code></td><td><code>true</code>/<code>false</code>: Ist das Element enthalten?</td></tr>
+              <tr><td><code>indexOf(elem)</code> / <code>lastIndexOf(elem)</code></td><td>Index des (ersten/letzten) Vorkommens oder <code>-1</code></td></tr>
+              <tr><td><code>join(sepStr)</code></td><td>Verbindet alle Elemente zu einem String</td></tr>
+              <tr><td><code>keys()</code></td><td>Iterator &uuml;ber die Indizes (<code>for (let i of array.keys())</code>)</td></tr>
+              <tr><td><code>map(cb)</code></td><td>Neues Array mit jedem R&uuml;ckgabewert von <code>cb</code></td></tr>
+              <tr><td><code>pop()</code> / <code>push(elt)</code></td><td>Letztes Element entfernen / Element anh&auml;ngen</td></tr>
+              <tr><td><code>shift()</code> / <code>unshift(elt)</code></td><td>Element mit Index 0 entfernen / am Index 0 einf&uuml;gen</td></tr>
+              <tr><td><code>reduce(cb, start)</code></td><td>Reduziert das Array auf einen einzigen Wert</td></tr>
+              <tr><td><code>reverse()</code></td><td>Kehrt die Reihenfolge um &ndash; <strong>in place!</strong></td></tr>
+              <tr><td><code>slice(start, end)</code></td><td>Neues Teil-Array (Original bleibt)</td></tr>
+              <tr><td><code>some(cb)</code></td><td><code>true</code>, wenn <code>cb</code> f&uuml;r <strong>mindestens ein</strong> Element <code>true</code> ergibt (Gegenst&uuml;ck: <code>every</code>)</td></tr>
+              <tr><td><code>sort(cb)</code></td><td>Sortiert <strong>in place</strong>; <code>cb</code> liefert &lt;0, 0 oder &gt;0</td></tr>
+              <tr><td><code>splice(…)</code></td><td>Entfernt/ersetzt/f&uuml;gt Elemente ein &ndash; <strong>in place</strong></td></tr>
+              <tr><td><code>toLocaleString()</code> / <code>toString()</code></td><td>String-Darstellung des Arrays (siehe auch <code>join()</code>)</td></tr>
+              <tr><td><code>toReversed()</code> / <code>toSorted(cb)</code> / <code>toSpliced(…)</code></td><td>Wie <code>reverse</code>/<code>sort</code>/<code>splice</code>, geben aber ein <strong>neues</strong> Array zur&uuml;ck</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout callout-warning">
+  <div class="callout-icon">&#9888;</div>
+  <div class="callout-body">
+    <div class="callout-title">In place oder neu?</div>
+    <code>push</code>, <code>pop</code>, <code>shift</code>, <code>unshift</code>, <code>splice</code>,
+          <code>sort</code> und <code>reverse</code> <strong>ver&auml;ndern das Original</strong>.
+          <code>map</code>, <code>filter</code>, <code>slice</code>, <code>concat</code>, Spread und die
+          <code>to…</code>-Varianten liefern ein <strong>neues</strong> Array.
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>7 &mdash; splice und slice</h2>
+        <h3>splice</h3>
+        <p><strong>Syntax:</strong> <code>array.splice(start, deleteCount, item1, item2, ...)</code></p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">splice</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const arr = [1, 2, 3, 4, 5];
+// Entferne 2 Elemente ab Index 1 und füge 9 und 10 ein
+arr.splice(1, 2, 9, 10);
+console.log(arr); // [1, 9, 10, 4, 5]</code></pre>
+</div>
+        <ul>
+          <li><code>start</code>: Index, ab dem Elemente entfernt/ersetzt werden</li>
+          <li><code>deleteCount</code>: Anzahl der zu entfernenden Elemente</li>
+          <li>Weitere Argumente: neue Elemente, die eingef&uuml;gt werden</li>
+        </ul>
+        <h3>slice</h3>
+        <p><strong>Syntax:</strong> <code>array.slice(start, end)</code></p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">slice</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const arr = [1, 2, 3, 4, 5];
+// Extrahiere Elemente von Index 1 bis 3 (exklusiv)
+const subArr = arr.slice(1, 3);
+console.log(subArr); // [2, 3]
+console.log(arr);    // [1, 2, 3, 4, 5] Original bleibt unverändert</code></pre>
+</div>
+        <ul>
+          <li><code>start</code> &rarr; inklusiver Startindex</li>
+          <li><code>end</code> &rarr; exklusiver Endindex (bis, aber nicht einschlie&szlig;lich)</li>
+          <li>Gibt ein neues Array zur&uuml;ck &rarr; das Original-Array wird nicht ver&auml;ndert</li>
+          <li>Man kann auch nur den Start angeben: <code>arr.slice(2)</code> &rarr; alles ab Index 2</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>8 &mdash; forEach, map und reduce</h2>
+        <h3>forEach</h3>
+        <p><strong>Syntax:</strong> <code>array.forEach((element, index, array) =&gt; { ... })</code></p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">forEach</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const fruits = ["Apple", "Banana", "Cherry"];
+fruits.forEach((fruit, idx) =&gt; {
+  console.log(`${idx}: ${fruit}`);
+});
+/* Ausgabe:
+0: Apple
+1: Banana
+2: Cherry
+*/</code></pre>
+</div>
+        <ul>
+          <li>Iteriert &uuml;ber jedes Element des Arrays.</li>
+          <li>Der Callback erh&auml;lt <code>element</code>, optional <code>index</code> und <code>array</code>.</li>
+          <li>Gibt keinen Wert zur&uuml;ck &rarr; nur f&uuml;r Seiteneffekte (z.&nbsp;B. Ausgabe) geeignet.</li>
+          <li>Kann nicht vorzeitig abbrechen (kein <code>break</code>).</li>
+        </ul>
+        <div class="callout callout-info">
+  <div class="callout-icon">&#8505;</div>
+  <div class="callout-body">
+    <div class="callout-title">Template-Strings</div>
+    <code>`${idx}: ${fruit}`</code> ist ein <strong>Template-String</strong> (mit Backticks).
+          Ausdr&uuml;cke in <code>${ }</code> werden direkt in den Text eingesetzt.
+  </div>
+</div>
+
+        <h3>map</h3>
+        <p><strong>Syntax:</strong> <code>array.map((element, index, array) =&gt; { ... })</code></p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">map</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const numbers = [1, 2, 3, 4, 5];
+const squares = numbers.map(num =&gt; num * num);
+console.log(squares); // [1, 4, 9, 16, 25]
+console.log(numbers); // [1, 2, 3, 4, 5] Original bleibt unverändert</code></pre>
+</div>
+        <ul>
+          <li>Erstellt ein neues Array mit den Ergebnissen der Callback-Funktion.</li>
+          <li>Der Callback erh&auml;lt <code>element</code>, optional <code>index</code> und <code>array</code>.</li>
+          <li>Das Original-Array bleibt unver&auml;ndert.</li>
+          <li>Ideal, um Transformationen auf Arrays anzuwenden.</li>
+        </ul>
+
+        <h3>reduce</h3>
+        <p><strong>Syntax:</strong> <code>array.reduce((accumulator, currentValue) =&gt; ..., initialValue)</code></p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">reduce</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const numbers = [1, 2, 3, 4, 5];
+const sum = numbers.reduce((acc, val) =&gt; acc + val, 0);
+console.log(sum); // 15</code></pre>
+</div>
+        <ul>
+          <li><code>accumulator</code> &rarr; sammelt das Ergebnis</li>
+          <li><code>currentValue</code> &rarr; aktuelles Array-Element</li>
+          <li><code>initialValue</code> &rarr; Startwert f&uuml;r den Akkumulator</li>
+          <li>Reduziert das Array auf einen einzigen Wert.</li>
+        </ul>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Schritt</th><th><code>acc</code></th><th><code>val</code></th><th>R&uuml;ckgabe</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>0 (Startwert)</td><td>1</td><td>1</td></tr>
+              <tr><td>2</td><td>1</td><td>2</td><td>3</td></tr>
+              <tr><td>3</td><td>3</td><td>3</td><td>6</td></tr>
+              <tr><td>4</td><td>6</td><td>4</td><td>10</td></tr>
+              <tr><td>5</td><td>10</td><td>5</td><td><strong>15</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section section-fehler">
+        <h2>H&auml;ufige Fehler</h2>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: for … in statt for … of</div>
+  <p><code>for (const x in ["a", "b"])</code> liefert <code>"0"</code>, <code>"1"</code> &ndash; die Indizes als Strings.</p>
+          <p class="fehler-fix">F&uuml;r die Werte <code>for … of</code> verwenden.</p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: map ohne R&uuml;ckgabewert</div>
+  <p><code>numbers.map(n =&gt; { n * 2 })</code> ergibt <code>[undefined, undefined, …]</code>.</p>
+          <p class="fehler-fix">Mit geschweiften Klammern braucht es <code>return</code>: <code>n =&gt; { return n * 2; }</code> &ndash; oder Kurzform <code>n =&gt; n * 2</code>.</p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: splice und slice verwechselt</div>
+  <p><code>arr.splice(1, 3)</code> sollte eine Kopie liefern, hat aber das Original ver&auml;ndert.</p>
+          <p class="fehler-fix"><code>slice</code> = Ausschnitt kopieren (Original bleibt), <code>splice</code> = im Original entfernen/einf&uuml;gen.</p>
+</div>
+      </section>
+
+      <section class="section section-aufgaben">
+        <h2>Aufgaben</h2>
+        <p>In allen Aufgaben sind zwei Arrays mit Strings gegeben. Bearbeiten Sie jede Aufgabe unabh&auml;ngig voneinander und starten Sie jeweils mit diesen Arrays:</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Startcode</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const tiere = ["Hund", "Katze", "Maus", "Pferd"];
+const farben = ["Rot", "Blau", "Gruen", "Gelb"];</code></pre>
+</div>
+        <div class="aufgaben-list">
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 1</span>
+    <span class="aufgabe-title">Elemente lesen, entfernen, anh&auml;ngen</span>
+  </div>
+  <ol>
+              <li><strong>Erstes und letztes Element ausgeben:</strong> Geben Sie das erste Tier und die letzte Farbe auf der Konsole aus.</li>
+              <li><strong>Ein Element am Ende entfernen:</strong> Entfernen Sie das letzte Tier aus <code>tiere</code> und geben Sie das entfernte Element aus.</li>
+              <li><strong>Ein Element dranh&auml;ngen:</strong> H&auml;ngen Sie die Farbe <code>"Lila"</code> ans Ende von <code>farben</code>.</li>
+            </ol>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 2</span>
+    <span class="aufgabe-title">Einf&uuml;gen, entfernen, zusammenh&auml;ngen</span>
+  </div>
+  <ol start="4">
+              <li><strong>Ein Element am Anfang einf&uuml;gen:</strong> F&uuml;gen Sie <code>"Papagei"</code> am Anfang von <code>tiere</code> ein.</li>
+              <li><strong>Mehrere Elemente entfernen:</strong> Entfernen Sie aus <code>tiere</code> ab Index 1 genau zwei Elemente.</li>
+              <li><strong>Zwei Listen zusammenh&auml;ngen:</strong> Erzeugen Sie ein neues Array <code>alleWoerter</code>, das zuerst alle Tiere und danach alle Farben enth&auml;lt.</li>
+              <li><strong>Eine Liste in eine andere einf&uuml;gen:</strong> F&uuml;gen Sie <code>farben</code> in <code>tiere</code> ab Index 2 ein (ohne etwas zu l&ouml;schen).</li>
+            </ol>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 3</span>
+    <span class="aufgabe-title">slice und splice</span>
+  </div>
+  <ol start="8">
+              <li><strong>Teilarray mit <code>slice</code> erzeugen:</strong> Erzeugen Sie aus <code>tiere</code> ein neues Array <code>mittlereTiere</code>, das nur <code>Katze</code> und <code>Maus</code> enth&auml;lt. Das Original-Array darf nicht ver&auml;ndert werden.</li>
+              <li><strong>Mit <code>splice</code> ersetzen statt nur entfernen:</strong> Ersetzen Sie in <code>farben</code> ab Index 1 zwei Elemente durch <code>Lila</code> und <code>Orange</code>. Geben Sie danach das ver&auml;nderte Array aus.</li>
+            </ol>
+</div>
+          <div class="aufgabe aufgabe-bonus">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Bonus</span>
+    <span class="aufgabe-title">map, filter, reduce</span>
+  </div>
+  <p>Erzeugen Sie mit <code>map</code> ein Array der Wortl&auml;ngen von <code>tiere</code>, mit <code>filter</code> alle Farben mit mehr als 3 Buchstaben und mit <code>reduce</code> die Gesamtzahl der Buchstaben aller Tiere.</p>
+</div>
+        </div>
+      </section>
+
+    </div>
+
+    <nav class="lesson-nav">
+      <a class="nav-btn" href="1.2-funktionen.html">&larr; Lektion 1.2: Funktionen</a>
+      <span class="nav-center-info">Lektion 1.3</span>
+      <a class="nav-btn primary" href="1.4-objekte.html">Lektion 1.4: Objekte &amp; Klassen &rarr;</a>
+    </nav>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    const ham = document.getElementById('hamburger');
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('overlay');
+    ham.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('visible'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('visible'); });
+    const cur = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-link').forEach(l => {
+      if (l.getAttribute('href') === cur) l.classList.add('active');
+    });
+    const themeBtn = document.getElementById('theme-toggle');
+    const applyTheme = (t) => {
+      document.documentElement.setAttribute('data-theme', t);
+      if (themeBtn) themeBtn.innerHTML = t === 'dark' ? '&#9728;' : '&#9790;';
+    };
+    applyTheme(localStorage.getItem('kurs-theme') || 'dark');
+    setTimeout(() => document.documentElement.classList.add('theme-transitions'), 50);
+    if (themeBtn) themeBtn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('kurs-theme', next);
+      applyTheme(next);
+    });
+    hljs.highlightAll();
+  </script>
+</body>
+
+</html>

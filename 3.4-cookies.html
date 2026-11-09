@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<!-- GENERIERT von kurse/_build (javascript) – nicht direkt bearbeiten!
+     Quelle: kurse/_build/javascript/lessons/, bauen: python3 _build/build.py javascript -->
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3.4 &ndash; Cookies | JavaScript Kurs</title>
+  <script>(function () { var t = localStorage.getItem('kurs-theme') || 'dark'; document.documentElement.setAttribute('data-theme', t); })();</script>
+  <link rel="stylesheet" href="assets/kurs.css">
+  <link rel="stylesheet" id="hljs-theme"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+</head>
+
+<body>
+
+  <button class="hamburger" id="hamburger" aria-label="Navigation &ouml;ffnen">&#9776;</button>
+  <div class="sidebar-overlay" id="overlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="index.html">
+        <span class="brand-icon">JS</span>
+        <div>
+          <div class="brand-name">JavaScript</div>
+          <div class="brand-sub">Web- und Mobile Computing</div>
+        </div>
+      </a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Dark/Light Mode"
+        title="Theme wechseln">&#9728;</button>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-group">
+        <div class="nav-group-label js-label">Teil 1 &mdash; Sprachgrundlagen</div>
+        <a class="nav-link" href="1.1-einfuehrung.html"><span class="ln">1.1</span>Einf&uuml;hrung in JavaScript</a>
+        <a class="nav-link" href="1.2-funktionen.html"><span class="ln">1.2</span>Funktionen</a>
+        <a class="nav-link" href="1.3-arrays.html"><span class="ln">1.3</span>Arrays</a>
+        <a class="nav-link" href="1.4-objekte.html"><span class="ln">1.4</span>Objekte &amp; Klassen</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label html-label">Teil 2 &mdash; DOM &amp; WebApps</div>
+        <a class="nav-link" href="2.1-dom.html"><span class="ln">2.1</span>DOM</a>
+        <a class="nav-link" href="2.2-webapp.html"><span class="ln">2.2</span>Struktur einfacher WebApps</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label css-label">Teil 3 &mdash; Asynchron, Browser &amp; Daten</div>
+        <a class="nav-link" href="3.1-promises.html"><span class="ln">3.1</span>Promises &amp; async/await</a>
+        <a class="nav-link" href="3.2-eventloop.html"><span class="ln">3.2</span>Event Loop</a>
+        <a class="nav-link" href="3.3-browser-apis.html"><span class="ln">3.3</span>Browser APIs</a>
+        <a class="nav-link" href="3.4-cookies.html"><span class="ln">3.4</span>Cookies</a>
+        <a class="nav-link" href="3.5-prisma.html"><span class="ln">3.5</span>Prisma ORM</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="lesson-header">
+      <p class="lesson-eyebrow">Lektion 3.4 &mdash; Teil 3: Asynchron, Browser &amp; Daten</p>
+      <h1>Cookies</h1>
+      <div class="lesson-tags">
+        <span class="tag tag-js">JavaScript</span>
+        <span class="tag tag-time">ca. 45 min</span>
+        <span class="tag tag-level">Browser</span>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <section class="section section-lernziele">
+        <h2>Lernziele</h2>
+        <ul class="lernziele-list">
+          <li>Erkl&auml;ren, was Cookies sind und was typischerweise darin gespeichert wird</li>
+          <li>First-Party- und Third-Party-Cookies unterscheiden und Tracking verstehen</li>
+          <li>Cookies mit JavaScript setzen, lesen und l&ouml;schen</li>
+          <li>Die wichtigsten Cookie-Attribute (<code>Max-Age</code>, <code>Path</code>, <code>Secure</code>, <code>HttpOnly</code>, <code>SameSite</code>) kennen</li>
+          <li>Sicherheits- und Datenschutzaspekte (DSGVO) beachten</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>1 &mdash; Was sind Cookies?</h2>
+        <ul>
+          <li>Kleine Textinformationen, die im Browser gespeichert werden</li>
+          <li>Werden bei passenden Requests <strong>automatisch an den Server gesendet</strong></li>
+          <li>Typische Eins&auml;tze:
+            <ul>
+              <li>Session-ID (Login)</li>
+              <li>Spracheinstellungen</li>
+              <li>Consent-Status (Cookie-Banner)</li>
+            </ul>
+          </li>
+          <li>Keine gro&szlig;en Datenmengen speichern (ca. 4&nbsp;KB pro Cookie)</li>
+        </ul>
+        <h3>Was wird &uuml;blicherweise in Cookies gespeichert?</h3>
+        <div class="table-wrap">
+          <table>
+            <tbody>
+              <tr><td><strong>Session-Informationen</strong></td><td>z.&nbsp;B. Session-ID nach dem Login</td></tr>
+              <tr><td><strong>Pr&auml;ferenzen</strong></td><td>Sprache, Theme, Cookie-Consent-Status</td></tr>
+              <tr><td><strong>Warenkorb-/Flow-Infos</strong></td><td>z.&nbsp;B. letzter Schritt im Checkout</td></tr>
+              <tr><td><strong>Tracking-ID</strong></td><td>pseudonyme Kennung zur Wiedererkennung</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout callout-warning">
+  <div class="callout-icon">&#9888;</div>
+  <div class="callout-body">
+    <div class="callout-title">Wichtig</div>
+    <p>Keine Passw&ouml;rter oder sensiblen Klartextdaten speichern. Oft steht nur eine <strong>ID</strong>
+          im Cookie; die eigentlichen Daten liegen am Server.</p>
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>2 &mdash; First-Party vs. Third-Party Cookies</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Art</th><th>Gesetzt von</th><th>Beispiel</th></tr></thead>
+            <tbody>
+              <tr><td><strong>First-Party-Cookie</strong></td><td>der aktuell besuchten Domain</td><td><code>shop.example</code> setzt ein Login-/Warenkorb-Cookie</td></tr>
+              <tr><td><strong>Third-Party-Cookie</strong></td><td>einer eingebundenen fremden Domain</td><td>Werbe-/Analyse-Skript von <code>tracker.example</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Third-Party-Cookies werden in modernen Browsern stark eingeschr&auml;nkt.</p>
+
+        <h3>Tracking mit Cookies (vereinfacht)</h3>
+        <ol>
+          <li>Der Browser l&auml;dt Seite A mit eingebundenem Tracker-Skript.</li>
+          <li>Der Tracker setzt ein Cookie mit eindeutiger ID.</li>
+          <li>Der Nutzer besucht Seite B mit demselben Tracker.</li>
+          <li>Die Cookie-ID wird wieder mitgesendet &rarr; Wiedererkennung.</li>
+        </ol>
+        <ul>
+          <li>Ergebnis: Profilbildung &uuml;ber mehrere Seiten m&ouml;glich.</li>
+          <li>Datenschutzproblem: seiten&uuml;bergreifendes Verhalten wird verkn&uuml;pfbar.</li>
+          <li>Daher: Consent, Transparenz und Datenminimierung sind wichtig.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>3 &mdash; Cookies mit JavaScript</h2>
+        <h3>Setzen und lesen</h3>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">document.cookie</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">// Cookie setzen (gültig 7 Tage)
+document.cookie =
+  "theme=dark; Max-Age=604800; Path=/";
+
+// Alle Cookies als ein String
+console.log(document.cookie);</code></pre>
+</div>
+        <ul>
+          <li><code>document.cookie</code> liefert einen String mit allen sichtbaren Cookies.</li>
+          <li>Format: <code>name=value; name2=value2; ...</code></li>
+          <li>JavaScript kann nur Cookies <strong>ohne</strong> <code>HttpOnly</code> lesen.</li>
+          <li>Eine Zuweisung an <code>document.cookie</code> setzt bzw. &auml;ndert <em>ein</em> Cookie &ndash; die anderen bleiben erhalten.</li>
+        </ul>
+        <h3>Ein Cookie auslesen</h3>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">getCookie</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">function getCookie(name) {
+  const parts = document.cookie.split('; ');
+  for (const p of parts) {
+    const [key, value] = p.split('=');
+    if (key === name) return decodeURIComponent(value);
+  }
+  return null;
+}
+
+const theme = getCookie('theme');</code></pre>
+</div>
+        <h3>Cookie l&ouml;schen</h3>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Löschen durch Max-Age=0</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">document.cookie = "theme=; Max-Age=0; Path=/";</code></pre>
+</div>
+        <ul>
+          <li>Name und <code>Path</code> (ggf. <code>Domain</code>) m&uuml;ssen zum Original passen.</li>
+          <li>Sonst bleibt das Cookie erhalten.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>4 &mdash; Wichtige Cookie-Attribute</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Attribut</th><th>Bedeutung</th></tr></thead>
+            <tbody>
+              <tr><td><code>Expires</code> oder <code>Max-Age</code></td><td>Ablaufzeit (ohne Angabe: Session-Cookie bis zum Schlie&szlig;en des Browsers)</td></tr>
+              <tr><td><code>Path</code>, <code>Domain</code></td><td>Wo das Cookie gilt</td></tr>
+              <tr><td><code>Secure</code></td><td>Nur &uuml;ber HTTPS senden</td></tr>
+              <tr><td><code>HttpOnly</code></td><td>Nicht durch JavaScript lesbar (nur Server)</td></tr>
+              <tr><td><code>SameSite</code></td><td>Schutz gegen CSRF (<code>Lax</code>, <code>Strict</code>, <code>None</code>)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Der Server setzt Cookies &uuml;ber einen Response-Header:</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">HTTP-Response</span>
+    <span class="code-lang">HTTP</span>
+  </div>
+  <pre><code class="language-plaintext">Set-Cookie: sid=abc123; Path=/; Secure; HttpOnly; SameSite=Lax</code></pre>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>5 &mdash; Sicherheit und Datenschutz</h2>
+        <ul>
+          <li>Keine sensiblen Daten im Klartext in Cookies speichern.</li>
+          <li>Session-Cookies: <code>Secure</code> + <code>HttpOnly</code> + <code>SameSite</code> verwenden.</li>
+          <li>Cookies sind pro Domain/Path begrenzt und werden bei Requests mitgeschickt.</li>
+          <li>In der EU: nicht notwendige Cookies erst nach Einwilligung (DSGVO).</li>
+        </ul>
+        <div class="callout callout-tip">
+  <div class="callout-icon">&#128161;</div>
+  <div class="callout-body">
+    <div class="callout-title">Merke</div>
+    <ul>
+            <li>Cookies eignen sich f&uuml;r kleine, request-relevante Daten.</li>
+            <li>F&uuml;r reine Frontend-Daten ist <code>localStorage</code> oft einfacher (Lektion 3.3).</li>
+            <li>Sicherheitsattribute sind bei Login-Cookies Pflicht.</li>
+          </ul>
+  </div>
+</div>
+      </section>
+
+      <section class="section section-fehler">
+        <h2>H&auml;ufige Fehler</h2>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: Cookie l&auml;sst sich nicht l&ouml;schen</div>
+  <p><code>document.cookie = "theme=; Max-Age=0"</code> wirkt nicht, weil das Cookie mit <code>Path=/</code> gesetzt wurde.</p>
+          <p class="fehler-fix">Beim L&ouml;schen exakt denselben <code>Path</code> (und ggf. <code>Domain</code>) angeben.</p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: document.cookie als Objekt behandeln</div>
+  <p><code>document.cookie.theme</code> ist <code>undefined</code>.</p>
+          <p class="fehler-fix"><code>document.cookie</code> ist ein String &ndash; mit einer Funktion wie <code>getCookie</code> zerlegen.</p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: Sonderzeichen im Wert</div>
+  <p>Werte mit <code>;</code>, <code>=</code> oder Leerzeichen zerbrechen das Cookie-Format.</p>
+          <p class="fehler-fix">Beim Setzen <code>encodeURIComponent(wert)</code>, beim Lesen <code>decodeURIComponent</code>.</p>
+</div>
+      </section>
+
+      <section class="section section-aufgaben">
+        <h2>Aufgaben</h2>
+        <div class="aufgaben-list">
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 1</span>
+    <span class="aufgabe-title">Cookies untersuchen</span>
+  </div>
+  <p>&Ouml;ffnen Sie eine Nachrichtenseite und untersuchen Sie in den Entwicklertools (Tab <strong>Application</strong> bzw. <strong>Storage</strong> &rarr; Cookies), welche Cookies gesetzt werden. Welche sind First-Party, welche Third-Party? Welche haben <code>HttpOnly</code>?</p>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 2</span>
+    <span class="aufgabe-title">Sprache merken</span>
+  </div>
+  <p>Zwei Buttons &bdquo;Deutsch&ldquo; und &bdquo;English&ldquo; setzen ein Cookie <code>lang</code> (g&uuml;ltig 30 Tage). Beim Laden der Seite wird die Begr&uuml;&szlig;ung in der gespeicherten Sprache angezeigt.</p>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 3</span>
+    <span class="aufgabe-title">Cookie-Banner</span>
+  </div>
+  <p>Bauen Sie einen einfachen Cookie-Banner mit &bdquo;Akzeptieren&ldquo; und &bdquo;Ablehnen&ldquo;. Die Entscheidung wird in einem Cookie <code>consent</code> gespeichert; ist es vorhanden, erscheint der Banner nicht mehr.</p>
+</div>
+          <div class="aufgabe aufgabe-bonus">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Bonus</span>
+    <span class="aufgabe-title">setCookie und deleteCookie</span>
+  </div>
+  <p>Schreiben Sie zu <code>getCookie</code> passende Funktionen <code>setCookie(name, value, days)</code> und <code>deleteCookie(name)</code> &ndash; inklusive <code>encodeURIComponent</code>.</p>
+</div>
+        </div>
+      </section>
+
+    </div>
+
+    <nav class="lesson-nav">
+      <a class="nav-btn" href="3.3-browser-apis.html">&larr; Lektion 3.3: Browser APIs</a>
+      <span class="nav-center-info">Lektion 3.4</span>
+      <a class="nav-btn primary" href="3.5-prisma.html">Lektion 3.5: Prisma ORM &rarr;</a>
+    </nav>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    const ham = document.getElementById('hamburger');
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('overlay');
+    ham.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('visible'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('visible'); });
+    const cur = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-link').forEach(l => {
+      if (l.getAttribute('href') === cur) l.classList.add('active');
+    });
+    const themeBtn = document.getElementById('theme-toggle');
+    const applyTheme = (t) => {
+      document.documentElement.setAttribute('data-theme', t);
+      if (themeBtn) themeBtn.innerHTML = t === 'dark' ? '&#9728;' : '&#9790;';
+    };
+    applyTheme(localStorage.getItem('kurs-theme') || 'dark');
+    setTimeout(() => document.documentElement.classList.add('theme-transitions'), 50);
+    if (themeBtn) themeBtn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('kurs-theme', next);
+      applyTheme(next);
+    });
+    hljs.highlightAll();
+  </script>
+</body>
+
+</html>

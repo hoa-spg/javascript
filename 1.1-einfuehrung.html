@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<!-- GENERIERT von kurse/_build (javascript) – nicht direkt bearbeiten!
+     Quelle: kurse/_build/javascript/lessons/, bauen: python3 _build/build.py javascript -->
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1.1 &ndash; Einf&uuml;hrung in JavaScript | JavaScript Kurs</title>
+  <script>(function () { var t = localStorage.getItem('kurs-theme') || 'dark'; document.documentElement.setAttribute('data-theme', t); })();</script>
+  <link rel="stylesheet" href="assets/kurs.css">
+  <link rel="stylesheet" id="hljs-theme"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+</head>
+
+<body>
+
+  <button class="hamburger" id="hamburger" aria-label="Navigation &ouml;ffnen">&#9776;</button>
+  <div class="sidebar-overlay" id="overlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="index.html">
+        <span class="brand-icon">JS</span>
+        <div>
+          <div class="brand-name">JavaScript</div>
+          <div class="brand-sub">Web- und Mobile Computing</div>
+        </div>
+      </a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Dark/Light Mode"
+        title="Theme wechseln">&#9728;</button>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-group">
+        <div class="nav-group-label js-label">Teil 1 &mdash; Sprachgrundlagen</div>
+        <a class="nav-link" href="1.1-einfuehrung.html"><span class="ln">1.1</span>Einf&uuml;hrung in JavaScript</a>
+        <a class="nav-link" href="1.2-funktionen.html"><span class="ln">1.2</span>Funktionen</a>
+        <a class="nav-link" href="1.3-arrays.html"><span class="ln">1.3</span>Arrays</a>
+        <a class="nav-link" href="1.4-objekte.html"><span class="ln">1.4</span>Objekte &amp; Klassen</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label html-label">Teil 2 &mdash; DOM &amp; WebApps</div>
+        <a class="nav-link" href="2.1-dom.html"><span class="ln">2.1</span>DOM</a>
+        <a class="nav-link" href="2.2-webapp.html"><span class="ln">2.2</span>Struktur einfacher WebApps</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label css-label">Teil 3 &mdash; Asynchron, Browser &amp; Daten</div>
+        <a class="nav-link" href="3.1-promises.html"><span class="ln">3.1</span>Promises &amp; async/await</a>
+        <a class="nav-link" href="3.2-eventloop.html"><span class="ln">3.2</span>Event Loop</a>
+        <a class="nav-link" href="3.3-browser-apis.html"><span class="ln">3.3</span>Browser APIs</a>
+        <a class="nav-link" href="3.4-cookies.html"><span class="ln">3.4</span>Cookies</a>
+        <a class="nav-link" href="3.5-prisma.html"><span class="ln">3.5</span>Prisma ORM</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="lesson-header">
+      <p class="lesson-eyebrow">Lektion 1.1 &mdash; Teil 1: Sprachgrundlagen</p>
+      <h1>Einf&uuml;hrung in JavaScript</h1>
+      <div class="lesson-tags">
+        <span class="tag tag-js">JavaScript</span>
+        <span class="tag tag-time">ca. 2 &times; 90 min</span>
+        <span class="tag tag-level">Grundlagen</span>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <section class="section section-lernziele">
+        <h2>Lernziele</h2>
+        <ul class="lernziele-list">
+          <li>Wissen, wof&uuml;r JavaScript eingesetzt wird, wie es entstanden ist und was ECMAScript ist</li>
+          <li>JavaScript in HTML einbinden (<code>&lt;script&gt;</code>, <code>defer</code>)</li>
+          <li>Node.js und npm installieren und ein Projekt mit <code>npm init</code> anlegen</li>
+          <li>Die wichtigsten Unterschiede zu Java kennen</li>
+          <li>Variablen (<code>let</code>, <code>const</code>), Datentypen, Vergleichsoperatoren und Kontrollstrukturen verwenden</li>
+          <li>Einen ersten Blick auf Funktionen, Objekte, Klassen, Arrays und Ausnahmebehandlung werfen</li>
+          <li>Typumwandlung (<strong>Type Coercion</strong>) verstehen und ihre Fallen kennen</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>1 &mdash; Einleitung</h2>
+        <ul>
+          <li>JavaScript (kurz JS) wird haupts&auml;chlich f&uuml;r <strong>client-seitige</strong> Programmierung verwendet (Web-Frontend).</li>
+          <li>JavaScript wird im Browser <strong>interpretiert</strong>, d.&nbsp;h. der Code wird nicht vorab &uuml;bersetzt (kompiliert), sondern zur Laufzeit ausgef&uuml;hrt.</li>
+          <li>Die Syntax von JavaScript ist auf den ersten Blick &auml;hnlich zu Java.</li>
+          <li>Jedoch: Es gibt gro&szlig;e konzeptuelle und auch syntaktische Unterschiede.</li>
+          <li>Laufzeitumgebung au&szlig;erhalb des Browsers: <strong>Node.js</strong></li>
+          <li>Verbreitete Frameworks: <strong>Vue</strong>, <strong>Angular</strong>, <strong>React</strong>, <strong>Svelte</strong></li>
+        </ul>
+        <div class="callout callout-info">
+  <div class="callout-icon">&#8505;</div>
+  <div class="callout-body">
+    <div class="callout-title">Wo stehen wir?</div>
+    <p>Im HTML-&amp;-CSS-Kurs haben wir mit HTML die <strong>Struktur</strong> und mit CSS das
+          <strong>Aussehen</strong> gebaut. JavaScript bringt das <strong>Verhalten</strong> dazu: auf
+          Klicks reagieren, Inhalte ver&auml;ndern, Daten vom Server laden.</p>
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>2 &mdash; Entwicklung und Versionen</h2>
+        <ul>
+          <li>Ausgangspunkt war die Notwendigkeit einer Programmiersprache f&uuml;r den Browser (Netscape Navigator).</li>
+          <li>Entwickelt wurde JavaScript von <strong>Brendan Eich in zehn Tagen</strong> (1995).</li>
+          <li>Der Name lehnt sich an das damals aufstrebende und mit dem modernen Internet verbundene <strong>Java</strong> an &ndash; technisch haben die beiden Sprachen wenig gemeinsam.</li>
+        </ul>
+        <figure class="figure">
+  <div class="figure-img dark-bg"><img src="assets/img/js-versionen.png" alt="JavaScript-Versionen: ES1 (1997) bis ES6 (2015) und ES.Next &ndash; seit 2015 erscheint j&auml;hrlich eine neue Version" loading="lazy" style="max-width:640px"></div>
+  <figcaption>JavaScript-Versionen: ES1 (1997) bis ES6 (2015) und ES.Next &ndash; seit 2015 erscheint j&auml;hrlich eine neue Version</figcaption>
+</figure>
+        <figure class="figure">
+  <div class="figure-img dark-bg"><img src="assets/img/js-popularitaet-stackoverflow.png" alt="Verbreitung von Programmiersprachen (Quelle: Stack Overflow, 2025): JavaScript 66&nbsp;%, HTML/CSS 61,9&nbsp;%, SQL 58,6&nbsp;%, Python 57,9&nbsp;% &hellip;" loading="lazy"></div>
+  <figcaption>Verbreitung von Programmiersprachen (Quelle: Stack Overflow, 2025): JavaScript 66&nbsp;%, HTML/CSS 61,9&nbsp;%, SQL 58,6&nbsp;%, Python 57,9&nbsp;% &hellip;</figcaption>
+</figure>
+
+        <h3>Benennung: ECMAScript vs. JavaScript</h3>
+        <ul>
+          <li><strong>ECMAScript</strong>: offizieller Standard (ECMA-262) f&uuml;r Skriptsprachen</li>
+          <li><strong>JavaScript</strong>: Implementierung von ECMAScript, entwickelt von Netscape</li>
+          <li>Alle modernen JavaScript-Versionen basieren auf ECMAScript.</li>
+          <li>Im Alltag werden die Begriffe oft synonym verwendet.</li>
+          <li>Siehe <a href="https://javascript.tm" target="_blank" rel="noopener">javascript.tm</a></li>
+        </ul>
+
+        <h3>Quellen</h3>
+        <ul>
+          <li>Tutorial: <a href="https://www.w3schools.com/js/default.asp" target="_blank" rel="noopener">w3schools.com/js</a></li>
+          <li>Referenz: <a href="https://www.w3schools.com/jsref/default.asp" target="_blank" rel="noopener">w3schools.com/jsref</a></li>
+          <li>Referenz bei MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference" target="_blank" rel="noopener">developer.mozilla.org/en-US/docs/Web/JavaScript/Reference</a></li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>3 &mdash; Einbettung in HTML</h2>
+        <p>Mittels <code>&lt;script&gt;</code>-Tags kann JS direkt in HTML eingebettet werden:</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">index.html</span>
+    <span class="code-lang">HTML</span>
+  </div>
+  <pre><code class="language-xml">...
+&lt;/p&gt;
+&lt;script&gt;
+  // Hierher kommt der JavaScript-Code
+  function foo() {
+    alert('Die Funktion foo wurde aufgerufen!');
+  }
+&lt;/script&gt;
+&lt;h2&gt;
+...</code></pre>
+</div>
+        <p>Besser bindet man separate JavaScript-Dateien ein:</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">index.html (head)</span>
+    <span class="code-lang">HTML</span>
+  </div>
+  <pre><code class="language-xml">&lt;script src="Projekt.js" defer&gt;&lt;/script&gt;</code></pre>
+</div>
+        <p>
+          Das Attribut <code>defer</code> erm&ouml;glicht das Einbinden im <code>&lt;head&gt;</code>: Der Browser l&auml;dt
+          das Script parallel, f&uuml;hrt es aber erst aus, wenn das gesamte HTML gelesen wurde. So kann
+          das Script auf alle Elemente der Seite zugreifen.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>4 &mdash; Node.js und npm</h2>
+        <h3>Node.js</h3>
+        <ul>
+          <li>JavaScript-Laufzeitumgebung auf Basis der <strong>V8-Engine</strong> (Google)</li>
+          <li>Entwickelt von Ryan Dahl (2009)</li>
+          <li>Alternative: <strong>Deno</strong> (Ryan Dahl und Bert Belder)</li>
+          <li>Erm&ouml;glicht serverseitige (oder lokale) Entwicklung mit JavaScript</li>
+          <li>H&auml;ufig f&uuml;r Webserver, APIs, Tools und Skripte verwendet</li>
+          <li>Riesiges &Ouml;kosystem durch npm (Node Package Manager)</li>
+        </ul>
+        <h3>npm &ndash; Node Package Manager</h3>
+        <ul>
+          <li>Paketmanager f&uuml;r Node.js und JavaScript-Projekte</li>
+          <li>Erm&ouml;glicht Installation, Verwaltung und Ver&ouml;ffentlichung von Paketen (Libraries, Tools)</li>
+          <li>Zentrale Registry: <a href="https://www.npmjs.com/" target="_blank" rel="noopener">npmjs.com</a></li>
+          <li>Standardwerkzeug bei Node.js-Projekten (<code>package.json</code>)</li>
+          <li>Unterst&uuml;tzt Skripte und Abh&auml;ngigkeitsmanagement</li>
+        </ul>
+        <h3>Installation</h3>
+        <figure class="figure">
+  <div class="figure-img"><img src="assets/img/nodejs-download.png" alt="Download-Seite von nodejs.org (Quelle: nodejs.org)" loading="lazy" style="max-width:600px"></div>
+  <figcaption>Download-Seite von nodejs.org (Quelle: nodejs.org)</figcaption>
+</figure>
+        <p>Alternativ unter Windows: <code>winget install OpenJS.NodeJS</code></p>
+
+        <h3>Version pr&uuml;fen und Projekt initialisieren</h3>
+        <p>Mit den folgenden Befehlen werden die installierten Versionen von Node.js und npm angezeigt:</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Terminal</span>
+    <span class="code-lang">Bash</span>
+  </div>
+  <pre><code class="language-bash">node -v
+npm -v</code></pre>
+</div>
+        <p>Gegebenenfalls unter Windows (PowerShell) notwendig, damit npm-Skripte ausgef&uuml;hrt werden d&uuml;rfen:</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">PowerShell</span>
+    <span class="code-lang">Bash</span>
+  </div>
+  <pre><code class="language-bash">Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned</code></pre>
+</div>
+        <p>Initialisieren eines neuen npm-Projekts:</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Terminal</span>
+    <span class="code-lang">Bash</span>
+  </div>
+  <pre><code class="language-bash">npm init -y</code></pre>
+</div>
+        <p>Dadurch wird eine <code>package.json</code> mit Standardwerten erstellt. Eine Datei <code>app.js</code> f&uuml;hrt man dann mit <code>node app.js</code> aus.</p>
+      </section>
+
+      <section class="section">
+        <h2>5 &mdash; Unterschiede zu Java</h2>
+        <ul>
+          <li>Datentypen werden <strong>nicht</strong> angegeben.</li>
+          <li>Klassen existieren seit ECMAScript 2015 (ES6), funktionieren jedoch etwas anders: z.&nbsp;B. gibt es nur <strong>einen</strong> Konstruktor.</li>
+          <li>Objekte unterscheiden sich erheblich von Java-Objekten.</li>
+          <li>Ebenso gibt es Unterschiede bei Funktionen (vgl. Methoden).</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>6 &mdash; Variablen</h2>
+        <ul>
+          <li>Es werden <strong>keine Datentypen</strong> angegeben!</li>
+          <li>Datentypen sind <strong>dynamisch</strong>: Sie k&ouml;nnen sich zur Laufzeit &auml;ndern!</li>
+          <li><code>const</code> f&uuml;r unver&auml;nderliche Variablen, <code>let</code> f&uuml;r ver&auml;nderliche Variablen, <code>var</code> ist <strong>veraltet</strong> (funktionaler Scope).</li>
+        </ul>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Scope von let und var</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">function myFunction(x) {
+  if (x &gt; 10) {
+    let a = 10; // Gültigkeit im Block
+    var b = 20;
+  }
+  // Variable b hier sichtbar
+  // Variable a nicht
+}</code></pre>
+</div>
+        <div class="callout callout-tip">
+  <div class="callout-icon">&#128161;</div>
+  <div class="callout-body">
+    <div class="callout-title">Faustregel</div>
+    <p>Standardm&auml;&szlig;ig <code>const</code> verwenden. Nur wenn der Variablen sp&auml;ter ein neuer Wert
+          zugewiesen wird, <code>let</code>. <code>var</code> gar nicht mehr.</p>
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>7 &mdash; Vergleichsoperatoren</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Operator</th><th>Bedeutung</th></tr></thead>
+            <tbody>
+              <tr><td><code>==</code></td><td>equal to &ndash; gleicher Wert (mit Typumwandlung)</td></tr>
+              <tr><td><code>===</code></td><td>equal value and equal type &ndash; gleicher Wert <em>und</em> gleicher Typ</td></tr>
+              <tr><td><code>!=</code></td><td>not equal</td></tr>
+              <tr><td><code>!==</code></td><td>not equal value or not equal type</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout callout-warning">
+  <div class="callout-icon">&#9888;</div>
+  <div class="callout-body">
+    <div class="callout-title">Immer === verwenden</div>
+    <code>"5" == 5</code> ist <code>true</code>, <code>"5" === 5</code> ist <code>false</code>.
+          Warum das so ist, zeigt Abschnitt 14 (Type Coercion).
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>8 &mdash; Datentypen</h2>
+        <ul>
+          <li><strong>String:</strong> <code>let str1 = "Hallo"; let str2 = "World!";</code></li>
+          <li><strong>Zahlen:</strong> <code>let a = 4; let b = 3.1415;</code><br>
+            Intern werden alle Zahlen als 64-Bit-Flie&szlig;kommazahl verarbeitet. Konversion in eine Zahl mit <code>Number("3.14")</code>.</li>
+          <li><strong>Boolean:</strong> <code>let b = false; let c = true;</code></li>
+        </ul>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Datentyp</th><th>Beschreibung</th></tr></thead>
+            <tbody>
+              <tr><td><code>number</code></td><td>Zahlen (Ganzzahlen und Flie&szlig;kommazahlen doppelter Genauigkeit). Beispiel: <code>42</code>, <code>3.14</code>, <code>-Infinity</code>, <code>Infinity</code>, <code>NaN</code></td></tr>
+              <tr><td><code>bigint</code></td><td>F&uuml;r sehr gro&szlig;e Ganzzahlen jenseits von <code>Number.MAX_SAFE_INTEGER</code>. Beispiel: <code>123456789012345678901234567890n</code></td></tr>
+              <tr><td><code>string</code></td><td>Zeichenketten. Beispiel: <code>"Hallo Welt"</code></td></tr>
+              <tr><td><code>boolean</code></td><td>Wahrheitswerte: <code>true</code> oder <code>false</code></td></tr>
+              <tr><td><code>undefined</code></td><td>Variable wurde deklariert, aber noch nicht initialisiert</td></tr>
+              <tr><td><code>null</code></td><td>Bewusste Abwesenheit eines Wertes</td></tr>
+              <tr><td><code>symbol</code></td><td>Einzigartige und unver&auml;nderliche Werte, oft f&uuml;r Objekt-Eigenschaften verwendet</td></tr>
+              <tr><td><code>object</code></td><td>Sammlung von Schl&uuml;ssel-Wert-Paaren oder komplexe Datentypen (Arrays, Funktionen, Objekte)</td></tr>
+              <tr><td><code>function</code></td><td>Spezielle Art von Objekt, das ausf&uuml;hrbaren Code enth&auml;lt</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Den Typ eines Wertes liefert der Operator <code>typeof</code>, z.&nbsp;B. <code>typeof 42</code> &rarr; <code>"number"</code>.</p>
+      </section>
+
+      <section class="section">
+        <h2>9 &mdash; Funktionen und Kontrollstrukturen</h2>
+        <p>Funktionen entsprechen den Methoden in Java. Sie m&uuml;ssen aber nicht an Klassen/Objekte gekoppelt sein.</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Funktion</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">function berechneSumme(a, b) {
+  return a + b;
+}</code></pre>
+</div>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Kontrollstrukturen</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">if (condition1) {
+  // Code ...
+} else if (condition2) {
+  // Code ...
+} else {
+  // ...
+}
+
+let sum = 0;
+for (let i = 0; i &lt; 10; i++) {
+  sum += i;
+}</code></pre>
+</div>
+        <p><small class="text-muted">Funktionen behandeln wir ausf&uuml;hrlich in Lektion 1.2.</small></p>
+      </section>
+
+      <section class="section">
+        <h2>10 &mdash; Objekte und Klassen</h2>
+        <p>Alle Werte, die keine primitiven Datentypen sind, sind vom Typ <code>Object</code>.</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Objekt</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">let person = {
+  vorname: "Franz",
+  nachname: "Maier",
+  geburtsjahr: 1988,
+  augenfarbe: "blau",
+  ganzerName: function() {
+    return this.vorname + " " + this.nachname;
+  }
+};
+
+// Zugriff auf die Objekteigenschaften
+let x = person.vorname;
+// oder
+let y = person["vorname"];
+
+let z = person.ganzerName();
+
+console.log(typeof person); // 'object'</code></pre>
+</div>
+        <p>Klassen wurden erst nachtr&auml;glich zu JS hinzugef&uuml;gt (seit ECMAScript 2015 / ES6).</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Klasse</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">class Auto {
+  constructor(marke, baujahr) {
+    // Parameterprüfung! (hier weggelassen)
+    this.marke = marke;
+    this.baujahr = baujahr;
+  }
+
+  info() {
+    return this.marke + " " + this.baujahr;
+  }
+
+  toString() {
+    return this.info();
+  }
+}
+
+// Objekt erzeugen
+let auto = new Auto("BMW", 2001);
+let autoInfo = auto.info();</code></pre>
+</div>
+        <p><small class="text-muted">Objekte und Klassen vertiefen wir in Lektion 1.4.</small></p>
+      </section>
+
+      <section class="section">
+        <h2>11 &mdash; Arrays</h2>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Arrays</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const firmen = ["hp", "IBM", "Lenovo", "Dell"];
+for (let i = 0; i &lt; firmen.length; i++) {
+  let x = firmen[i];
+  // mache irgendetwas mit x ...
+}
+
+// letztes Element entfernen
+firmen.pop();
+// Hinzufügen
+firmen.push("Samsung");
+
+// leeres Array erzeugen:
+const laender = [];</code></pre>
+</div>
+        <div class="callout callout-info">
+  <div class="callout-icon">&#8505;</div>
+  <div class="callout-body">
+    <div class="callout-title">const und Arrays</div>
+    <code>const firmen</code> verhindert nur, dass der Variablen ein <em>anderes</em> Array
+          zugewiesen wird. Den Inhalt des Arrays darf man trotzdem mit <code>push</code>/<code>pop</code>
+          ver&auml;ndern. Mehr zu Arrays in Lektion 1.3.
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>12 &mdash; Ausgabe und Debugging</h2>
+        <p>Statt <code>System.out.println</code> in Java verwendet man in JS <code>console.log()</code> zur Ausgabe auf die Browser-Konsole.</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">index.html</span>
+    <span class="code-lang">HTML</span>
+  </div>
+  <pre><code class="language-xml">...
+&lt;script&gt;
+  const auto = new Auto("Mercedes", 1999);
+  const autoInfo = auto.info();
+  console.log("Info zum Auto: " + autoInfo);
+&lt;/script&gt;
+...</code></pre>
+</div>
+        <p>Die Browser-Konsole findet man im Webbrowser unter &bdquo;Entwicklertools&ldquo; (<kbd>F12</kbd> &rarr; Tab <strong>Console</strong>).</p>
+      </section>
+
+      <section class="section">
+        <h2>13 &mdash; Ausnahmebehandlung</h2>
+        <p>Mit <code>throw</code> k&ouml;nnen in Ausnahme- und Fehlersituationen Fehler &bdquo;geworfen&ldquo; werden.</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">throw / try … catch</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">function kinetischeEnergie(masse, geschwindigkeit) {
+  if (masse &lt;= 0) throw "ungueltige Masse";
+  if (geschwindigkeit &lt; 0) throw "ungueltige Geschwindigkeit";
+  return masse * geschwindigkeit * geschwindigkeit / 2;
+}
+
+try {
+  kinetischeEnergie(-3, -5);
+} catch (e) {
+  console.error(e);
+}</code></pre>
+</div>
+        <p>Geworfene Fehler werden mit <code>try … catch</code> abgefangen und behandelt.</p>
+        <div class="callout callout-tip">
+  <div class="callout-icon">&#128161;</div>
+  <div class="callout-body">
+    <div class="callout-title">Besser: Error-Objekte werfen</div>
+    <p>Statt eines Strings wirft man &uuml;blicherweise ein Error-Objekt:
+          <code>throw new Error("ungueltige Masse")</code>. Es enth&auml;lt zus&auml;tzlich einen Stacktrace,
+          und die Meldung steht in <code>e.message</code>.</p>
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>14 &mdash; Type Coercion</h2>
+        <p><strong>Type Coercion</strong> bedeutet <strong>Typumwandlung</strong> in JavaScript.</p>
+        <ul>
+          <li><strong>Implizit:</strong> JavaScript wandelt Typen automatisch um (z.&nbsp;B. bei <code>==</code> oder <code>+</code>).</li>
+          <li><strong>Explizit:</strong> Wir wandeln selbst um, z.&nbsp;B. mit <code>Number(...)</code> oder <code>String(...)</code>.</li>
+          <li>Viele &bdquo;komische&ldquo; Ergebnisse entstehen durch implizite Umwandlung.</li>
+        </ul>
+        <h3>Typische Beispiele</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Ausdruck</th><th>Ergebnis</th><th>Warum passiert das?</th></tr></thead>
+            <tbody>
+              <tr><td><code>"5" + 3</code></td><td><code>"53"</code></td><td><code>+</code> kann Strings verketten; <code>3</code> wird zu <code>"3"</code>.</td></tr>
+              <tr><td><code>"5" - 3</code></td><td><code>2</code></td><td><code>-</code> erzwingt Zahlenkonvertierung auf beiden Seiten.</td></tr>
+              <tr><td><code>5 + true</code></td><td><code>6</code></td><td><code>true</code> wird zu <code>1</code>.</td></tr>
+              <tr><td><code>5 + false</code></td><td><code>5</code></td><td><code>false</code> wird zu <code>0</code>.</td></tr>
+              <tr><td><code>true == 1</code></td><td><code>true</code></td><td>Bei <code>==</code> findet implizite Konvertierung statt.</td></tr>
+              <tr><td><code>false == 0</code></td><td><code>true</code></td><td><code>false</code> wird zu <code>0</code> konvertiert.</td></tr>
+              <tr><td><code>"" == 0</code></td><td><code>true</code></td><td>Leerer String wird zu <code>0</code>.</td></tr>
+              <tr><td><code>"" == false</code></td><td><code>true</code></td><td>Beide Seiten landen bei <code>0</code>.</td></tr>
+              <tr><td><code>null == undefined</code></td><td><code>true</code></td><td>Spezialregel im losen Vergleich.</td></tr>
+              <tr><td><code>null == 0</code></td><td><code>false</code></td><td><code>null</code> wird hier nicht zu <code>0</code>.</td></tr>
+              <tr><td><code>[] == ""</code></td><td><code>true</code></td><td>Leeres Array wird zu leerem String.</td></tr>
+              <tr><td><code>[] == 0</code></td><td><code>true</code></td><td><code>[]</code> &rarr; <code>""</code> &rarr; <code>0</code>.</td></tr>
+              <tr><td><code>["5"] == 5</code></td><td><code>true</code></td><td>Array &rarr; String <code>"5"</code> &rarr; Zahl <code>5</code>.</td></tr>
+              <tr><td><code>[0] == false</code></td><td><code>true</code></td><td><code>[0]</code> &rarr; <code>"0"</code> &rarr; <code>0</code>.</td></tr>
+              <tr><td><code>"0" == false</code></td><td><code>true</code></td><td><code>"0"</code> wird zu <code>0</code>.</td></tr>
+              <tr><td><code>"\t\n" == 0</code></td><td><code>true</code></td><td>Whitespace-String wird zu <code>0</code>.</td></tr>
+              <tr><td><code>[] + {}</code></td><td><code>"[object Object]"</code></td><td>Beide Seiten werden als Strings kombiniert.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>Weitere komische F&auml;lle</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Ausdruck</th><th>Ergebnis</th><th>Kommentar</th></tr></thead>
+            <tbody>
+              <tr><td><code>[] == ![]</code></td><td><code>true</code></td><td><code>![]</code> ist <code>false</code>, danach <code>[] == false</code>.</td></tr>
+              <tr><td><code>NaN == NaN</code></td><td><code>false</code></td><td>Einziger Wert, der nicht gleich sich selbst ist.</td></tr>
+              <tr><td><code>typeof null</code></td><td><code>"object"</code></td><td>Historischer Bug aus den fr&uuml;hen JS-Versionen.</td></tr>
+              <tr><td><code>0 &lt; 1 &lt; 2</code></td><td><code>true</code></td><td><code>(0 &lt; 1)</code> ist <code>true</code>; <code>true</code> wird zu <code>1</code>; dann <code>1 &lt; 2</code>.</td></tr>
+              <tr><td><code>2 &lt; 1 &lt; 0</code></td><td><code>false</code></td><td><code>(2 &lt; 1)</code> ist <code>false</code>; <code>false</code> wird zu <code>0</code>; dann <code>0 &lt; 0</code>.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section section-fehler">
+        <h2>H&auml;ufige Fehler</h2>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: Script greift auf Elemente zu, die es noch nicht gibt</div>
+  <p>Ein Script im <code>&lt;head&gt;</code> ohne <code>defer</code> findet mit <code>document.querySelector</code> nichts (<code>null</code>).</p>
+          <p class="fehler-fix">Externe Scripts mit <code>defer</code> einbinden oder das <code>&lt;script&gt;</code> ans Ende des <code>&lt;body&gt;</code> setzen.</p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: == statt ===</div>
+  <p><code>if (eingabe == 0)</code> ist auch f&uuml;r einen leeren String <code>""</code> wahr.</p>
+          <p class="fehler-fix">Immer <code>===</code> und <code>!==</code> verwenden und Eingaben bei Bedarf explizit mit <code>Number(...)</code> umwandeln.</p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: Zahlen aus Eingaben werden verkettet</div>
+  <p><code>"5" + 3</code> ergibt <code>"53"</code> &ndash; Werte aus Formularfeldern sind immer Strings.</p>
+          <p class="fehler-fix">Vor dem Rechnen umwandeln: <code>Number(input.value) + 3</code>.</p>
+</div>
+      </section>
+
+      <section class="section section-aufgaben">
+        <h2>Aufgaben</h2>
+        <div class="aufgaben-list">
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 1</span>
+    <span class="aufgabe-title">Selection Sort</span>
+  </div>
+  <p>Bef&uuml;llen Sie ein Array mit Zahlen und sortieren Sie diese mit einer eigenen Implementierung von Selection Sort (oder einem beliebigen anderen Sortieralgorithmus). Der Sortieralgorithmus soll in einer eigenen Funktion umgesetzt sein. Die Vertauschung der Elemente soll ebenfalls in einer eigenen Funktion umgesetzt werden. Geben Sie das sortierte Array auf der Browser-Konsole aus.</p>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 2</span>
+    <span class="aufgabe-title">Klasse Auto</span>
+  </div>
+  <p>Erstellen Sie eine Klasse <code>Auto</code> mit den Eigenschaften <code>marke</code>, <code>gewicht</code> und <code>ps</code>. Die Marke darf nicht leer sein, das Gewicht muss im Bereich 500 bis 3000&nbsp;kg liegen, PS muss gr&ouml;&szlig;er als 30 sein. Die Funktion <code>verbrauch()</code> der Klasse soll den Verbrauch n&auml;herungsweise berechnen: PS mal Gewicht, dividiert durch 10000. Die Ausgabe eines Autos auf die Konsole soll so aussehen:</p>
+            <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Ausgabe</span>
+    <span class="code-lang">Text</span>
+  </div>
+  <pre><code class="language-plaintext">Ferrari (1000 kg, 340 PS, Verbrauch: 34 l/100km)</code></pre>
+</div>
+            <p>Bef&uuml;llen Sie nun ein Array mit mehreren Autos. Sortieren Sie die Autos aufsteigend nach Verbrauch mit einem selbst implementierten Algorithmus (nach den Vorgaben von Aufgabe 1). Geben Sie das sortierte Array auf der Browser-Konsole aus.</p>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 3</span>
+    <span class="aufgabe-title">Type Coercion vorhersagen</span>
+  </div>
+  <p>Notieren Sie zuerst Ihre Vermutung und pr&uuml;fen Sie sie dann in der Konsole: <code>"10" / "2"</code>, <code>"10" + 2 - 1</code>, <code>true + true</code>, <code>[1,2] + [3]</code>, <code>null + 1</code>, <code>undefined + 1</code>.</p>
+</div>
+          <div class="aufgabe aufgabe-bonus">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Bonus</span>
+    <span class="aufgabe-title">Node.js-Skript</span>
+  </div>
+  <p>Legen Sie mit <code>npm init -y</code> ein Projekt an und f&uuml;hren Sie Ihre Sortierfunktion aus Aufgabe 1 mit <code>node sort.js</code> im Terminal statt im Browser aus.</p>
+</div>
+        </div>
+      </section>
+
+    </div>
+
+    <nav class="lesson-nav">
+      <a class="nav-btn" href="index.html">&larr; Kurs&uuml;bersicht</a>
+      <span class="nav-center-info">Lektion 1.1</span>
+      <a class="nav-btn primary" href="1.2-funktionen.html">Lektion 1.2: Funktionen &rarr;</a>
+    </nav>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    const ham = document.getElementById('hamburger');
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('overlay');
+    ham.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('visible'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('visible'); });
+    const cur = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-link').forEach(l => {
+      if (l.getAttribute('href') === cur) l.classList.add('active');
+    });
+    const themeBtn = document.getElementById('theme-toggle');
+    const applyTheme = (t) => {
+      document.documentElement.setAttribute('data-theme', t);
+      if (themeBtn) themeBtn.innerHTML = t === 'dark' ? '&#9728;' : '&#9790;';
+    };
+    applyTheme(localStorage.getItem('kurs-theme') || 'dark');
+    setTimeout(() => document.documentElement.classList.add('theme-transitions'), 50);
+    if (themeBtn) themeBtn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('kurs-theme', next);
+      applyTheme(next);
+    });
+    hljs.highlightAll();
+  </script>
+</body>
+
+</html>

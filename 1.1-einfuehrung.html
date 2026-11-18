@@ -50,6 +50,12 @@
         <a class="nav-link" href="3.4-cookies.html"><span class="ln">3.4</span>Cookies</a>
         <a class="nav-link" href="3.5-prisma.html"><span class="ln">3.5</span>Prisma ORM</a>
       </div>
+      <div class="nav-group">
+        <div class="nav-group-label ts-label">Teil 4 &mdash; TypeScript</div>
+        <a class="nav-link" href="4.1-typescript-grundlagen.html"><span class="ln">4.1</span>TypeScript-Grundlagen</a>
+        <a class="nav-link" href="4.2-typescript-objekte.html"><span class="ln">4.2</span>Objekttypen &amp; Klassen</a>
+        <a class="nav-link" href="4.3-typescript-generics.html"><span class="ln">4.3</span>Generics, DOM &amp; fetch</a>
+      </div>
     </nav>
   </aside>
 
@@ -144,13 +150,15 @@
 &lt;/p&gt;
 &lt;script&gt;
   // Hierher kommt der JavaScript-Code
-  function foo() {
-    alert('Die Funktion foo wurde aufgerufen!');
-  }
+  console.log('Hallo aus JavaScript!');
 &lt;/script&gt;
 &lt;h2&gt;
 ...</code></pre>
 </div>
+        <p>
+          <code>console.log(...)</code> gibt einen Text in der Browser-Konsole aus
+          (<kbd>F12</kbd> &rarr; Tab <strong>Console</strong>) &ndash; mehr dazu in Abschnitt 12.
+        </p>
         <p>Besser bindet man separate JavaScript-Dateien ein:</p>
         <div class="code-block">
   <div class="code-header">
@@ -243,14 +251,12 @@ npm -v</code></pre>
     <span class="code-filename">Scope von let und var</span>
     <span class="code-lang">JavaScript</span>
   </div>
-  <pre><code class="language-javascript">function myFunction(x) {
-  if (x &gt; 10) {
-    let a = 10; // Gültigkeit im Block
-    var b = 20;
-  }
-  // Variable b hier sichtbar
-  // Variable a nicht
-}</code></pre>
+  <pre><code class="language-javascript">{
+  let a = 10; // gilt nur in diesem Block { … }
+  var b = 20; // gilt auch außerhalb des Blocks
+}
+console.log(b); // 20
+console.log(a); // Fehler: a is not defined</code></pre>
 </div>
         <div class="callout callout-tip">
   <div class="callout-icon">&#128161;</div>
@@ -288,10 +294,10 @@ npm -v</code></pre>
       <section class="section">
         <h2>8 &mdash; Datentypen</h2>
         <ul>
-          <li><strong>String:</strong> <code>let str1 = "Hallo"; let str2 = "World!";</code></li>
-          <li><strong>Zahlen:</strong> <code>let a = 4; let b = 3.1415;</code><br>
+          <li><strong>String:</strong> <code>const str1 = "Hallo"; const str2 = "World!";</code></li>
+          <li><strong>Zahlen:</strong> <code>const a = 4; const b = 3.1415;</code><br>
             Intern werden alle Zahlen als 64-Bit-Flie&szlig;kommazahl verarbeitet. Konversion in eine Zahl mit <code>Number("3.14")</code>.</li>
-          <li><strong>Boolean:</strong> <code>let b = false; let c = true;</code></li>
+          <li><strong>Boolean:</strong> <code>const fertig = false; const aktiv = true;</code></li>
         </ul>
         <div class="table-wrap">
           <table>
@@ -353,26 +359,25 @@ for (let i = 0; i &lt; 10; i++) {
     <span class="code-filename">Objekt</span>
     <span class="code-lang">JavaScript</span>
   </div>
-  <pre><code class="language-javascript">let person = {
+  <pre><code class="language-javascript">const person = {
   vorname: "Franz",
   nachname: "Maier",
   geburtsjahr: 1988,
-  augenfarbe: "blau",
-  ganzerName: function() {
-    return this.vorname + " " + this.nachname;
-  }
+  augenfarbe: "blau"
 };
 
 // Zugriff auf die Objekteigenschaften
-let x = person.vorname;
+const x = person.vorname;
 // oder
-let y = person["vorname"];
-
-let z = person.ganzerName();
+const y = person["vorname"];
 
 console.log(typeof person); // 'object'</code></pre>
 </div>
-        <p>Klassen wurden erst nachtr&auml;glich zu JS hinzugef&uuml;gt (seit ECMAScript 2015 / ES6).</p>
+        <p>
+          Klassen wurden erst nachtr&auml;glich zu JS hinzugef&uuml;gt (seit ECMAScript 2015 / ES6). Der
+          Konstruktor hei&szlig;t immer <code>constructor</code>; <code>this</code> bezeichnet wie in Java das
+          aktuelle Objekt.
+        </p>
         <div class="code-block">
   <div class="code-header">
     <span class="code-filename">Klasse</span>
@@ -388,15 +393,11 @@ console.log(typeof person); // 'object'</code></pre>
   info() {
     return this.marke + " " + this.baujahr;
   }
-
-  toString() {
-    return this.info();
-  }
 }
 
 // Objekt erzeugen
-let auto = new Auto("BMW", 2001);
-let autoInfo = auto.info();</code></pre>
+const auto = new Auto("BMW", 2001);
+const autoInfo = auto.info();</code></pre>
 </div>
         <p><small class="text-muted">Objekte und Klassen vertiefen wir in Lektion 1.4.</small></p>
       </section>
@@ -410,7 +411,7 @@ let autoInfo = auto.info();</code></pre>
   </div>
   <pre><code class="language-javascript">const firmen = ["hp", "IBM", "Lenovo", "Dell"];
 for (let i = 0; i &lt; firmen.length; i++) {
-  let x = firmen[i];
+  const x = firmen[i];
   // mache irgendetwas mit x ...
 }
 
@@ -435,7 +436,7 @@ const laender = [];</code></pre>
 
       <section class="section">
         <h2>12 &mdash; Ausgabe und Debugging</h2>
-        <p>Statt <code>System.out.println</code> in Java verwendet man in JS <code>console.log()</code> zur Ausgabe auf die Browser-Konsole.</p>
+        <p>Statt <code>System.out.println</code> in Java verwendet man in JS <code>console.log()</code> zur Ausgabe auf die Browser-Konsole. F&uuml;r Fehlermeldungen gibt es <code>console.error()</code> &ndash; die Ausgabe erscheint dort rot markiert.</p>
         <div class="code-block">
   <div class="code-header">
     <span class="code-filename">index.html</span>
@@ -500,20 +501,11 @@ try {
               <tr><td><code>"5" + 3</code></td><td><code>"53"</code></td><td><code>+</code> kann Strings verketten; <code>3</code> wird zu <code>"3"</code>.</td></tr>
               <tr><td><code>"5" - 3</code></td><td><code>2</code></td><td><code>-</code> erzwingt Zahlenkonvertierung auf beiden Seiten.</td></tr>
               <tr><td><code>5 + true</code></td><td><code>6</code></td><td><code>true</code> wird zu <code>1</code>.</td></tr>
-              <tr><td><code>5 + false</code></td><td><code>5</code></td><td><code>false</code> wird zu <code>0</code>.</td></tr>
               <tr><td><code>true == 1</code></td><td><code>true</code></td><td>Bei <code>==</code> findet implizite Konvertierung statt.</td></tr>
-              <tr><td><code>false == 0</code></td><td><code>true</code></td><td><code>false</code> wird zu <code>0</code> konvertiert.</td></tr>
               <tr><td><code>"" == 0</code></td><td><code>true</code></td><td>Leerer String wird zu <code>0</code>.</td></tr>
-              <tr><td><code>"" == false</code></td><td><code>true</code></td><td>Beide Seiten landen bei <code>0</code>.</td></tr>
               <tr><td><code>null == undefined</code></td><td><code>true</code></td><td>Spezialregel im losen Vergleich.</td></tr>
-              <tr><td><code>null == 0</code></td><td><code>false</code></td><td><code>null</code> wird hier nicht zu <code>0</code>.</td></tr>
-              <tr><td><code>[] == ""</code></td><td><code>true</code></td><td>Leeres Array wird zu leerem String.</td></tr>
               <tr><td><code>[] == 0</code></td><td><code>true</code></td><td><code>[]</code> &rarr; <code>""</code> &rarr; <code>0</code>.</td></tr>
-              <tr><td><code>["5"] == 5</code></td><td><code>true</code></td><td>Array &rarr; String <code>"5"</code> &rarr; Zahl <code>5</code>.</td></tr>
-              <tr><td><code>[0] == false</code></td><td><code>true</code></td><td><code>[0]</code> &rarr; <code>"0"</code> &rarr; <code>0</code>.</td></tr>
               <tr><td><code>"0" == false</code></td><td><code>true</code></td><td><code>"0"</code> wird zu <code>0</code>.</td></tr>
-              <tr><td><code>"\t\n" == 0</code></td><td><code>true</code></td><td>Whitespace-String wird zu <code>0</code>.</td></tr>
-              <tr><td><code>[] + {}</code></td><td><code>"[object Object]"</code></td><td>Beide Seiten werden als Strings kombiniert.</td></tr>
             </tbody>
           </table>
         </div>
@@ -522,11 +514,9 @@ try {
           <table>
             <thead><tr><th>Ausdruck</th><th>Ergebnis</th><th>Kommentar</th></tr></thead>
             <tbody>
-              <tr><td><code>[] == ![]</code></td><td><code>true</code></td><td><code>![]</code> ist <code>false</code>, danach <code>[] == false</code>.</td></tr>
               <tr><td><code>NaN == NaN</code></td><td><code>false</code></td><td>Einziger Wert, der nicht gleich sich selbst ist.</td></tr>
               <tr><td><code>typeof null</code></td><td><code>"object"</code></td><td>Historischer Bug aus den fr&uuml;hen JS-Versionen.</td></tr>
               <tr><td><code>0 &lt; 1 &lt; 2</code></td><td><code>true</code></td><td><code>(0 &lt; 1)</code> ist <code>true</code>; <code>true</code> wird zu <code>1</code>; dann <code>1 &lt; 2</code>.</td></tr>
-              <tr><td><code>2 &lt; 1 &lt; 0</code></td><td><code>false</code></td><td><code>(2 &lt; 1)</code> ist <code>false</code>; <code>false</code> wird zu <code>0</code>; dann <code>0 &lt; 0</code>.</td></tr>
             </tbody>
           </table>
         </div>

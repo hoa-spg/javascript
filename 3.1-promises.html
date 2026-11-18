@@ -50,6 +50,12 @@
         <a class="nav-link" href="3.4-cookies.html"><span class="ln">3.4</span>Cookies</a>
         <a class="nav-link" href="3.5-prisma.html"><span class="ln">3.5</span>Prisma ORM</a>
       </div>
+      <div class="nav-group">
+        <div class="nav-group-label ts-label">Teil 4 &mdash; TypeScript</div>
+        <a class="nav-link" href="4.1-typescript-grundlagen.html"><span class="ln">4.1</span>TypeScript-Grundlagen</a>
+        <a class="nav-link" href="4.2-typescript-objekte.html"><span class="ln">4.2</span>Objekttypen &amp; Klassen</a>
+        <a class="nav-link" href="4.3-typescript-generics.html"><span class="ln">4.3</span>Generics, DOM &amp; fetch</a>
+      </div>
     </nav>
   </aside>
 
@@ -149,6 +155,8 @@
         <ul>
           <li><code>resolve(wert)</code> markiert das Promise als erfolgreich.</li>
           <li><code>reject(fehler)</code> markiert es als fehlgeschlagen.</li>
+          <li>Kurzformen f&uuml;r ein schon fertiges Promise: <code>Promise.resolve(wert)</code> ist sofort
+            erfolgreich, <code>Promise.reject(fehler)</code> sofort fehlgeschlagen.</li>
         </ul>
       </section>
 
@@ -295,6 +303,11 @@ Promise.allSettled([p1, p2])
 
       <section class="section">
         <h2>7 &mdash; Praxisbeispiel mit <code>fetch()</code></h2>
+        <ul>
+          <li><code>fetch(url)</code> schickt einen HTTP-Request und liefert ein Promise mit der Antwort (<code>response</code>).</li>
+          <li><code>response.ok</code> ist bei Statuscodes 200&ndash;299 <code>true</code>, <code>response.status</code> enth&auml;lt den Statuscode.</li>
+          <li><code>response.json()</code> liest den Body als JSON &ndash; und liefert wieder ein Promise.</li>
+        </ul>
         <div class="code-block">
   <div class="code-header">
     <span class="code-filename">fetch mit then</span>

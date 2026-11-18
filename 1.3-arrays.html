@@ -50,6 +50,12 @@
         <a class="nav-link" href="3.4-cookies.html"><span class="ln">3.4</span>Cookies</a>
         <a class="nav-link" href="3.5-prisma.html"><span class="ln">3.5</span>Prisma ORM</a>
       </div>
+      <div class="nav-group">
+        <div class="nav-group-label ts-label">Teil 4 &mdash; TypeScript</div>
+        <a class="nav-link" href="4.1-typescript-grundlagen.html"><span class="ln">4.1</span>TypeScript-Grundlagen</a>
+        <a class="nav-link" href="4.2-typescript-objekte.html"><span class="ln">4.2</span>Objekttypen &amp; Klassen</a>
+        <a class="nav-link" href="4.3-typescript-generics.html"><span class="ln">4.3</span>Generics, DOM &amp; fetch</a>
+      </div>
     </nav>
   </aside>
 
@@ -139,12 +145,6 @@
 
       <section class="section">
         <h2>3 &mdash; &Uuml;ber Arrays iterieren</h2>
-        <p>Iteratoren:</p>
-        <ul>
-          <li><code>a.values()</code>: Werte des Arrays</li>
-          <li><code>a.keys()</code>: Schl&uuml;ssel (Indizes) des Arrays</li>
-          <li><code>a.entries()</code>: (Index, Wert)-Paare</li>
-        </ul>
         <div class="code-block">
   <div class="code-header">
     <span class="code-filename">Iteration über die Werte: for … of</span>
@@ -194,14 +194,6 @@ for (const x in a) {
             </tbody>
           </table>
         </div>
-        <div class="code-block">
-  <div class="code-header">
-    <span class="code-filename">entries()</span>
-    <span class="code-lang">JavaScript</span>
-  </div>
-  <pre><code class="language-javascript">Array.from(array.entries());
-// liefert: [ [ 0, 'a' ], [ 1, 7 ], [ 2, true ] ]</code></pre>
-</div>
       </section>
 
       <section class="section">
@@ -240,15 +232,10 @@ console.log(mitAnfang);  // ["Papagei", "Hund", "Katze", "Maus"]</code></pre>
               <tr><td><code>filter(cb)</code></td><td>Neues Array mit allen Elementen, f&uuml;r die <code>cb</code> <code>true</code> ergibt</td></tr>
               <tr><td><code>find(cb)</code></td><td>Liefert das erste Element, f&uuml;r das <code>cb</code> <code>true</code> ergibt, oder <code>undefined</code></td></tr>
               <tr><td><code>findIndex(cb)</code></td><td>Wie <code>find</code>, aber den Index (oder <code>-1</code>)</td></tr>
-              <tr><td><code>findLast(cb)</code></td><td>Wie <code>find</code>, sucht aber von hinten</td></tr>
-              <tr><td><code>findLastIndex(cb)</code></td><td>Wie <code>findIndex</code>, sucht aber von hinten</td></tr>
-              <tr><td><code>flat()</code></td><td>Enth&auml;lt das Array Sub-Arrays, werden diese &bdquo;aufgemacht&ldquo; &ndash; das Ergebnis hat keine Sub-Arrays mehr</td></tr>
-              <tr><td><code>flatMap(cb)</code></td><td><code>map</code> und anschlie&szlig;end <code>flat</code> in einem Schritt</td></tr>
               <tr><td><code>forEach(cb)</code></td><td><code>cb</code> wird f&uuml;r jedes Element aufgerufen</td></tr>
               <tr><td><code>includes(elem)</code></td><td><code>true</code>/<code>false</code>: Ist das Element enthalten?</td></tr>
               <tr><td><code>indexOf(elem)</code> / <code>lastIndexOf(elem)</code></td><td>Index des (ersten/letzten) Vorkommens oder <code>-1</code></td></tr>
               <tr><td><code>join(sepStr)</code></td><td>Verbindet alle Elemente zu einem String</td></tr>
-              <tr><td><code>keys()</code></td><td>Iterator &uuml;ber die Indizes (<code>for (let i of array.keys())</code>)</td></tr>
               <tr><td><code>map(cb)</code></td><td>Neues Array mit jedem R&uuml;ckgabewert von <code>cb</code></td></tr>
               <tr><td><code>pop()</code> / <code>push(elt)</code></td><td>Letztes Element entfernen / Element anh&auml;ngen</td></tr>
               <tr><td><code>shift()</code> / <code>unshift(elt)</code></td><td>Element mit Index 0 entfernen / am Index 0 einf&uuml;gen</td></tr>
@@ -258,8 +245,6 @@ console.log(mitAnfang);  // ["Papagei", "Hund", "Katze", "Maus"]</code></pre>
               <tr><td><code>some(cb)</code></td><td><code>true</code>, wenn <code>cb</code> f&uuml;r <strong>mindestens ein</strong> Element <code>true</code> ergibt (Gegenst&uuml;ck: <code>every</code>)</td></tr>
               <tr><td><code>sort(cb)</code></td><td>Sortiert <strong>in place</strong>; <code>cb</code> liefert &lt;0, 0 oder &gt;0</td></tr>
               <tr><td><code>splice(…)</code></td><td>Entfernt/ersetzt/f&uuml;gt Elemente ein &ndash; <strong>in place</strong></td></tr>
-              <tr><td><code>toLocaleString()</code> / <code>toString()</code></td><td>String-Darstellung des Arrays (siehe auch <code>join()</code>)</td></tr>
-              <tr><td><code>toReversed()</code> / <code>toSorted(cb)</code> / <code>toSpliced(…)</code></td><td>Wie <code>reverse</code>/<code>sort</code>/<code>splice</code>, geben aber ein <strong>neues</strong> Array zur&uuml;ck</td></tr>
             </tbody>
           </table>
         </div>
@@ -269,8 +254,8 @@ console.log(mitAnfang);  // ["Papagei", "Hund", "Katze", "Maus"]</code></pre>
     <div class="callout-title">In place oder neu?</div>
     <code>push</code>, <code>pop</code>, <code>shift</code>, <code>unshift</code>, <code>splice</code>,
           <code>sort</code> und <code>reverse</code> <strong>ver&auml;ndern das Original</strong>.
-          <code>map</code>, <code>filter</code>, <code>slice</code>, <code>concat</code>, Spread und die
-          <code>to…</code>-Varianten liefern ein <strong>neues</strong> Array.
+          <code>map</code>, <code>filter</code>, <code>slice</code>, <code>concat</code> und Spread liefern ein
+          <strong>neues</strong> Array.
   </div>
 </div>
       </section>
@@ -319,6 +304,14 @@ console.log(arr);    // [1, 2, 3, 4, 5] Original bleibt unverändert</code></pre
         <h2>8 &mdash; forEach, map und reduce</h2>
         <h3>forEach</h3>
         <p><strong>Syntax:</strong> <code>array.forEach((element, index, array) =&gt; { ... })</code></p>
+        <div class="callout callout-info">
+  <div class="callout-icon">&#8505;</div>
+  <div class="callout-body">
+    <div class="callout-title">Template-Strings</div>
+    <p>Im folgenden Beispiel ist <code>`${idx}: ${fruit}`</code> ein <strong>Template-String</strong>
+          (mit Backticks). Ausdr&uuml;cke in <code>${ }</code> werden direkt in den Text eingesetzt.</p>
+  </div>
+</div>
         <div class="code-block">
   <div class="code-header">
     <span class="code-filename">forEach</span>
@@ -340,14 +333,6 @@ fruits.forEach((fruit, idx) =&gt; {
           <li>Gibt keinen Wert zur&uuml;ck &rarr; nur f&uuml;r Seiteneffekte (z.&nbsp;B. Ausgabe) geeignet.</li>
           <li>Kann nicht vorzeitig abbrechen (kein <code>break</code>).</li>
         </ul>
-        <div class="callout callout-info">
-  <div class="callout-icon">&#8505;</div>
-  <div class="callout-body">
-    <div class="callout-title">Template-Strings</div>
-    <code>`${idx}: ${fruit}`</code> ist ein <strong>Template-String</strong> (mit Backticks).
-          Ausdr&uuml;cke in <code>${ }</code> werden direkt in den Text eingesetzt.
-  </div>
-</div>
 
         <h3>map</h3>
         <p><strong>Syntax:</strong> <code>array.map((element, index, array) =&gt; { ... })</code></p>

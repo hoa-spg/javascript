@@ -50,6 +50,12 @@
         <a class="nav-link" href="3.4-cookies.html"><span class="ln">3.4</span>Cookies</a>
         <a class="nav-link" href="3.5-prisma.html"><span class="ln">3.5</span>Prisma ORM</a>
       </div>
+      <div class="nav-group">
+        <div class="nav-group-label ts-label">Teil 4 &mdash; TypeScript</div>
+        <a class="nav-link" href="4.1-typescript-grundlagen.html"><span class="ln">4.1</span>TypeScript-Grundlagen</a>
+        <a class="nav-link" href="4.2-typescript-objekte.html"><span class="ln">4.2</span>Objekttypen &amp; Klassen</a>
+        <a class="nav-link" href="4.3-typescript-generics.html"><span class="ln">4.3</span>Generics, DOM &amp; fetch</a>
+      </div>
     </nav>
   </aside>
 
@@ -87,7 +93,7 @@
         </ul>
         <ul>
           <li>Innerhalb der Funktion besteht Zugriff auf den globalen Scope (Variablen, die mit <code>const</code> oder <code>let</code> deklariert wurden).</li>
-          <li>Eine Funktion kann selbst Parameter f&uuml;r eine andere Funktion sein (Callbacks, wie z.&nbsp;B. <code>setTimeout(function, milliSeconds)</code>).</li>
+          <li>Eine Funktion kann selbst Parameter f&uuml;r eine andere Funktion sein (sogenannte <strong>Callbacks</strong>, siehe Abschnitte 4, 5 und 7).</li>
           <li>Funktionen k&ouml;nnen einen Namen haben, aber auch <strong>anonym</strong> sein (Lambda-Functions bzw. Arrow-Functions).</li>
         </ul>
         <div class="code-block">
@@ -99,7 +105,7 @@
   return "Hallo " + name;
 }
 
-let text = begruessung("Anna");
+const text = begruessung("Anna");
 console.log(text);</code></pre>
 </div>
         <ul>
@@ -272,58 +278,28 @@ console.log(zahlen);</code></pre>
         <h2>6 &mdash; Parameter und Argumente</h2>
         <p>
           F&uuml;r die Sprache selbst ist es egal, ob der Aufrufer die &bdquo;richtige&ldquo; Anzahl an
-          Argumenten mitgibt. Beispiel ohne Parameter, aber dennoch werden Argumente &uuml;bergeben &ndash;
-          sie sind &uuml;ber das spezielle Objekt <code>arguments</code> erreichbar:
+          Argumenten mitgibt: Fehlende Parameter sind <code>undefined</code>, &uuml;berz&auml;hlige
+          Argumente werden ignoriert.
         </p>
         <div class="code-block">
   <div class="code-header">
-    <span class="code-filename">zu viele Argumente</span>
-    <span class="code-lang">JavaScript</span>
-  </div>
-  <pre><code class="language-javascript">function f() {
-  for (let i = 0; i &lt; arguments.length; i++) {
-    console.log(i, arguments[i]);
-  }
-}
-
-f(23, "georg", new Date());</code></pre>
-</div>
-        <div class="code-block">
-  <div class="code-header">
-    <span class="code-filename">Ausgabe</span>
-    <span class="code-lang">Text</span>
-  </div>
-  <pre><code class="language-plaintext">0 23
-1 georg
-2 2023-10-18T20:28:55.244Z</code></pre>
-</div>
-        <p>Hier werden &bdquo;zu wenige&ldquo; Argumente &uuml;bergeben, siehe <code>undefined</code> in der Ausgabe:</p>
-        <div class="code-block">
-  <div class="code-header">
-    <span class="code-filename">zu wenige Argumente</span>
+    <span class="code-filename">zu wenige und zu viele Argumente</span>
     <span class="code-lang">JavaScript</span>
   </div>
   <pre><code class="language-javascript">function f(a, b, c) {
-  console.log(a);
-  console.log(b);
-  console.log(c);
-  for (let i = 0; i &lt; arguments.length; i++) {
-    console.log(i, arguments[i]);
-  }
+  console.log(a, b, c);
 }
 
-f(23, 3.14159);</code></pre>
+f(23, 3.14159);       // c fehlt
+f(1, 2, 3, 4);        // 4 ist zu viel</code></pre>
 </div>
         <div class="code-block">
   <div class="code-header">
     <span class="code-filename">Ausgabe</span>
     <span class="code-lang">Text</span>
   </div>
-  <pre><code class="language-plaintext">23
-3.14159
-undefined
-0 23
-1 3.14159</code></pre>
+  <pre><code class="language-plaintext">23 3.14159 undefined
+1 2 3</code></pre>
 </div>
 
         <h3>Kein R&uuml;ckgabewert</h3>
@@ -423,8 +399,8 @@ console.log(counter2()); // 1</code></pre>
         <h2>H&auml;ufige Fehler</h2>
         <div class="fehler-item">
   <div class="fehler-title">Fehler: Funktion aufgerufen statt &uuml;bergeben</div>
-  <p><code>button.addEventListener('click', speichern())</code> f&uuml;hrt <code>speichern</code> sofort aus und &uuml;bergibt das Ergebnis.</p>
-          <p class="fehler-fix">Die Funktion selbst &uuml;bergeben: <code>addEventListener('click', speichern)</code> oder <code>() =&gt; speichern()</code>.</p>
+  <p><code>setTimeout(speichern(), 1000)</code> f&uuml;hrt <code>speichern</code> sofort aus und &uuml;bergibt das Ergebnis.</p>
+          <p class="fehler-fix">Die Funktion selbst &uuml;bergeben: <code>setTimeout(speichern, 1000)</code> oder <code>setTimeout(() =&gt; speichern(), 1000)</code>.</p>
 </div>
         <div class="fehler-item">
   <div class="fehler-title">Fehler: return vergessen</div>

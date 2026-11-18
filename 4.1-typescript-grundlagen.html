@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<!-- GENERIERT von kurse/_build (javascript) – nicht direkt bearbeiten!
+     Quelle: kurse/_build/javascript/lessons/, bauen: python3 _build/build.py javascript -->
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4.1 &ndash; TypeScript-Grundlagen | JavaScript Kurs</title>
+  <script>(function () { var t = localStorage.getItem('kurs-theme') || 'dark'; document.documentElement.setAttribute('data-theme', t); })();</script>
+  <link rel="stylesheet" href="assets/kurs.css">
+  <link rel="stylesheet" id="hljs-theme"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+</head>
+
+<body>
+
+  <button class="hamburger" id="hamburger" aria-label="Navigation &ouml;ffnen">&#9776;</button>
+  <div class="sidebar-overlay" id="overlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="index.html">
+        <span class="brand-icon">JS</span>
+        <div>
+          <div class="brand-name">JavaScript</div>
+          <div class="brand-sub">Web- und Mobile Computing</div>
+        </div>
+      </a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Dark/Light Mode"
+        title="Theme wechseln">&#9728;</button>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-group">
+        <div class="nav-group-label js-label">Teil 1 &mdash; Sprachgrundlagen</div>
+        <a class="nav-link" href="1.1-einfuehrung.html"><span class="ln">1.1</span>Einf&uuml;hrung in JavaScript</a>
+        <a class="nav-link" href="1.2-funktionen.html"><span class="ln">1.2</span>Funktionen</a>
+        <a class="nav-link" href="1.3-arrays.html"><span class="ln">1.3</span>Arrays</a>
+        <a class="nav-link" href="1.4-objekte.html"><span class="ln">1.4</span>Objekte &amp; Klassen</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label html-label">Teil 2 &mdash; DOM &amp; WebApps</div>
+        <a class="nav-link" href="2.1-dom.html"><span class="ln">2.1</span>DOM</a>
+        <a class="nav-link" href="2.2-webapp.html"><span class="ln">2.2</span>Struktur einfacher WebApps</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label css-label">Teil 3 &mdash; Asynchron, Browser &amp; Daten</div>
+        <a class="nav-link" href="3.1-promises.html"><span class="ln">3.1</span>Promises &amp; async/await</a>
+        <a class="nav-link" href="3.2-eventloop.html"><span class="ln">3.2</span>Event Loop</a>
+        <a class="nav-link" href="3.3-browser-apis.html"><span class="ln">3.3</span>Browser APIs</a>
+        <a class="nav-link" href="3.4-cookies.html"><span class="ln">3.4</span>Cookies</a>
+        <a class="nav-link" href="3.5-prisma.html"><span class="ln">3.5</span>Prisma ORM</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label ts-label">Teil 4 &mdash; TypeScript</div>
+        <a class="nav-link" href="4.1-typescript-grundlagen.html"><span class="ln">4.1</span>TypeScript-Grundlagen</a>
+        <a class="nav-link" href="4.2-typescript-objekte.html"><span class="ln">4.2</span>Objekttypen &amp; Klassen</a>
+        <a class="nav-link" href="4.3-typescript-generics.html"><span class="ln">4.3</span>Generics, DOM &amp; fetch</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="lesson-header">
+      <p class="lesson-eyebrow">Lektion 4.1 &mdash; Teil 4: TypeScript</p>
+      <h1>TypeScript-Grundlagen</h1>
+      <div class="lesson-tags">
+        <span class="tag tag-css">TypeScript</span>
+        <span class="tag tag-time">ca. 90 min</span>
+        <span class="tag tag-level">Grundlagen</span>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <section class="section section-lernziele">
+        <h2>Lernziele</h2>
+        <ul class="lernziele-list">
+          <li>Wissen, was TypeScript ist und welche Fehler es schon beim Schreiben findet</li>
+          <li>Ein TypeScript-Projekt anlegen und mit <code>tsc</code> in JavaScript &uuml;bersetzen</li>
+          <li>Variablen, Arrays und Funktionen mit Typen versehen</li>
+          <li>Typinferenz nutzen: Typen nur dort angeben, wo sie n&ouml;tig sind</li>
+          <li>Union-Typen und Literal-Typen einsetzen und mit <code>typeof</code> eingrenzen</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>1 &mdash; Was ist TypeScript?</h2>
+        <ul>
+          <li>TypeScript (kurz TS) ist <strong>JavaScript mit Typen</strong>, entwickelt von Microsoft (2012).</li>
+          <li>Jedes JavaScript-Programm ist auch g&uuml;ltiges TypeScript &ndash; TS f&uuml;gt nur Typangaben hinzu.</li>
+          <li>Browser und Node.js verstehen kein TypeScript: Der <strong>Compiler</strong> <code>tsc</code>
+            pr&uuml;ft die Typen und &uuml;bersetzt den Code in normales JavaScript. Die Typen fallen dabei weg.</li>
+          <li>Vorteil: Viele Fehler zeigt der Editor schon <strong>beim Schreiben</strong> an, nicht erst
+            zur Laufzeit.</li>
+        </ul>
+        <p>Ein typischer JavaScript-Fehler, der erst beim Ausf&uuml;hren auff&auml;llt:</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">app.js</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">function flaeche(breite, hoehe) {
+  return breite * hoehe;
+}
+
+console.log(flaeche("5", 3));  // 15 – zufällig richtig
+console.log(flaeche("fünf", 3)); // NaN – kein Fehler, nur ein falsches Ergebnis</code></pre>
+</div>
+        <p>Dieselbe Funktion in TypeScript: Nach dem Parameternamen steht mit Doppelpunkt der Typ.</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">app.ts</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">function flaeche(breite: number, hoehe: number): number {
+  return breite * hoehe;
+}
+
+console.log(flaeche("fünf", 3));
+// Fehler: Argument of type 'string' is not assignable to parameter of type 'number'.</code></pre>
+</div>
+        <div class="callout callout-info">
+  <div class="callout-icon">&#8505;</div>
+  <div class="callout-body">
+    <div class="callout-title">Vergleich zu Java</div>
+    <p>Wie in Java gibt es statische Typen &ndash; nur steht der Typ <strong>nach</strong> dem Namen
+          (<code>breite: number</code> statt <code>int breite</code>). Und anders als in Java existieren
+          die Typen nur beim Entwickeln: Im fertigen JavaScript sind sie verschwunden.</p>
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>2 &mdash; Projekt anlegen und &uuml;bersetzen</h2>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Terminal</span>
+    <span class="code-lang">Bash</span>
+  </div>
+  <pre><code class="language-bash">npm init -y
+npm install --save-dev typescript</code></pre>
+</div>
+        <p>
+          <code>--save-dev</code> installiert TypeScript als <strong>Entwicklungswerkzeug</strong>: Es wird
+          nur zum &Uuml;bersetzen gebraucht, nicht beim Ausf&uuml;hren. Die Einstellungen des Compilers stehen
+          in der Datei <code>tsconfig.json</code>. F&uuml;r den Kurs reicht diese:
+        </p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">tsconfig.json</span>
+    <span class="code-lang">JSON</span>
+  </div>
+  <pre><code class="language-json">{
+  "compilerOptions": {
+    "target": "es2022",
+    "strict": true
+  }
+}</code></pre>
+</div>
+        <ul>
+          <li><code>target</code>: welche JavaScript-Version erzeugt wird.</li>
+          <li><code>strict</code>: alle strengen Pr&uuml;fungen einschalten &ndash; immer verwenden.</li>
+        </ul>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Terminal</span>
+    <span class="code-lang">Bash</span>
+  </div>
+  <pre><code class="language-bash">npx tsc          # übersetzt alle .ts-Dateien im Ordner, z. B. app.ts → app.js
+node app.js      # das erzeugte JavaScript ausführen
+npx tsc --watch  # übersetzt bei jedem Speichern automatisch neu</code></pre>
+</div>
+        <div class="callout callout-tip">
+  <div class="callout-icon">&#128161;</div>
+  <div class="callout-body">
+    <div class="callout-title">VS Code</div>
+    <p>VS Code kann TypeScript von Haus aus: Fehler werden rot unterstrichen, und wenn man mit der Maus
+          &uuml;ber eine Variable f&auml;hrt, zeigt der Editor ihren Typ an.</p>
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>3 &mdash; Typen f&uuml;r Variablen</h2>
+        <p>Die Grundtypen hei&szlig;en wie die Ergebnisse von <code>typeof</code> aus Lektion 1.1:</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Typannotationen</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">let alter: number = 17;
+const vorname: string = "Anna";
+let fertig: boolean = false;
+
+alter = "achtzehn";
+// Fehler: Type 'string' is not assignable to type 'number'.</code></pre>
+</div>
+        <p>
+          Die Angabe <code>: number</code> hei&szlig;t <strong>Typannotation</strong>. Eine Variable beh&auml;lt
+          ihren Typ &ndash; anders als in JavaScript kann aus einer Zahl sp&auml;ter kein String werden.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>4 &mdash; Typinferenz</h2>
+        <p>Meistens muss man den Typ gar nicht hinschreiben: TypeScript erkennt ihn aus dem Startwert.</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Typinferenz</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">let alter = 17;          // TypeScript erkennt: number
+const vorname = "Anna";  // string
+
+alter = "achtzehn";
+// Fehler: Type 'string' is not assignable to type 'number'.</code></pre>
+</div>
+        <div class="callout callout-tip">
+  <div class="callout-icon">&#128161;</div>
+  <div class="callout-body">
+    <div class="callout-title">Faustregel</div>
+    <p>Typen bei <strong>Funktionsparametern</strong> immer angeben &ndash; dort kann TypeScript sie nicht
+          erraten. Bei Variablen mit Startwert den Typ weglassen und TypeScript arbeiten lassen.</p>
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>5 &mdash; Arrays</h2>
+        <p>Ein Array-Typ besteht aus dem Typ der Elemente und <code>[]</code>:</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Arrays</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">const noten: number[] = [1, 2, 2, 3];
+const tiere = ["Hund", "Katze"]; // erkannt: string[]
+
+noten.push(4);       // ok
+noten.push("gut");
+// Fehler: Argument of type 'string' is not assignable to parameter of type 'number'.</code></pre>
+</div>
+        <p>Auch Array-Methoden aus Lektion 1.3 kennen die Typen: <code>noten.map((n) =&gt; n * 2)</code> liefert wieder ein <code>number[]</code>, und <code>n</code> ist automatisch eine <code>number</code>.</p>
+      </section>
+
+      <section class="section">
+        <h2>6 &mdash; Union-Typen und Literal-Typen</h2>
+        <p>Mit <code>|</code> (&bdquo;oder&ldquo;) erlaubt man mehrere Typen &ndash; ein <strong>Union-Typ</strong>:</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Union-Typen</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">let id: number | string = 42;
+id = "A-42"; // auch erlaubt
+
+let gewinner: string | null = null; // noch kein Gewinner
+gewinner = "Anna";</code></pre>
+</div>
+        <p>Statt eines ganzen Typs kann man auch einzelne erlaubte <strong>Werte</strong> angeben (Literal-Typen):</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Literal-Typen</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">let ampel: "rot" | "gelb" | "gruen" = "rot";
+ampel = "gruen"; // ok
+ampel = "blau";
+// Fehler: Type '"blau"' is not assignable to type '"rot" | "gelb" | "gruen"'.</code></pre>
+</div>
+        <p>
+          Lange Typen gibt man mit <code>type</code> einen Namen (<strong>Typ-Alias</strong>) und verwendet
+          diesen Namen dann wie einen eingebauten Typ:
+        </p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Typ-Alias</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">type Ampelfarbe = "rot" | "gelb" | "gruen";
+
+let ampel: Ampelfarbe = "rot";</code></pre>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>7 &mdash; Funktionen</h2>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Funktionen</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">function begruesse(vorname: string, anrede?: string): string {
+  if (anrede === undefined) {
+    return "Hallo " + vorname;
+  }
+  return anrede + " " + vorname;
+}
+
+begruesse("Anna");          // "Hallo Anna"
+begruesse("Anna", "Liebe"); // "Liebe Anna"
+begruesse();
+// Fehler: Expected 1-2 arguments, but got 0.
+
+function log(text: string): void {
+  console.log(text);
+}
+
+const verdopple = (x: number): number =&gt; x * 2;</code></pre>
+</div>
+        <ul>
+          <li>Der Typ nach der Klammer <code>): string</code> ist der <strong>R&uuml;ckgabetyp</strong>. Er kann meist auch weggelassen werden (Inferenz).</li>
+          <li><code>void</code>: Die Funktion gibt nichts zur&uuml;ck.</li>
+          <li><code>anrede?</code>: <strong>optionaler Parameter</strong>. Wird er weggelassen, ist er <code>undefined</code> &ndash; sein Typ ist also <code>string | undefined</code>.</li>
+          <li>Anders als in JavaScript (Lektion 1.2) pr&uuml;ft TypeScript die Anzahl der Argumente.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>8 &mdash; Typen eingrenzen (Narrowing)</h2>
+        <p>
+          Bei einem Union-Typ erlaubt TypeScript nur, was f&uuml;r <strong>alle</strong> Typen passt. Im
+          Beispiel unten gibt es <code>toFixed(2)</code> (Zahl auf 2 Nachkommastellen runden) nur f&uuml;r
+          Zahlen und <code>toUpperCase()</code> (in Gro&szlig;buchstaben) nur f&uuml;r Strings. Mit einer
+          Pr&uuml;fung grenzt man den Typ ein:
+        </p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Narrowing mit typeof</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">function formatiere(wert: number | string): string {
+  if (typeof wert === "number") {
+    return wert.toFixed(2); // hier ist wert sicher eine number
+  }
+  return wert.toUpperCase(); // hier bleibt nur noch string übrig
+}</code></pre>
+</div>
+        <p>
+          Ohne die <code>if</code>-Pr&uuml;fung meldet TypeScript bei beiden Methoden einen Fehler. Genauso funktioniert
+          die Pr&uuml;fung <code>if (gewinner !== null)</code> bei <code>string | null</code>.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>9 &mdash; <code>any</code>: die Notbremse</h2>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">any</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">let x: any = 5;
+x = "Text";
+x.gibtEsNicht(); // kein Fehler beim Übersetzen – aber Absturz zur Laufzeit</code></pre>
+</div>
+        <p>
+          <code>any</code> schaltet die Typpr&uuml;fung f&uuml;r diese Variable ab. Damit verliert man den ganzen
+          Nutzen von TypeScript &ndash; also nur als Notl&ouml;sung verwenden.
+        </p>
+      </section>
+
+      <section class="section section-fehler">
+        <h2>H&auml;ufige Fehler</h2>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: Cannot redeclare block-scoped variable 'name'</div>
+  <p>Eine Datei ohne Imports wird als globales Script behandelt. Dort gibt es schon Browser-Variablen wie <code>name</code> oder <code>status</code> &ndash; eine eigene <code>const name</code> kollidiert damit.</p>
+          <p class="fehler-fix">Einen anderen Namen w&auml;hlen (z.&nbsp;B. <code>vorname</code>) oder ganz ans Ende der Datei <code>export {};</code> schreiben &ndash; dann ist die Datei ein eigenes Modul.</p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: Die .js-Datei statt der .ts-Datei bearbeitet</div>
+  <p>&Auml;nderungen in <code>app.js</code> sind nach dem n&auml;chsten <code>tsc</code> wieder weg.</p>
+          <p class="fehler-fix">Nur die <code>.ts</code>-Datei bearbeiten; die <code>.js</code>-Datei wird erzeugt.</p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: Fehler mit any &bdquo;wegmachen&ldquo;</div>
+  <p>Ein rot unterstrichener Ausdruck wird mit <code>: any</code> versehen &ndash; der Fehler verschwindet aus dem Editor, aber nicht aus dem Programm.</p>
+          <p class="fehler-fix">Die Fehlermeldung lesen und den Typ richtigstellen oder mit einer Pr&uuml;fung eingrenzen.</p>
+</div>
+      </section>
+
+      <section class="section section-aufgaben">
+        <h2>Aufgaben</h2>
+        <div class="aufgaben-list">
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 1</span>
+    <span class="aufgabe-title">Projekt einrichten</span>
+  </div>
+  <p>Legen Sie ein Projekt mit <code>tsconfig.json</code> wie in Abschnitt 2 an. Schreiben Sie in <code>app.ts</code> die Funktion <code>flaeche</code>, rufen Sie sie einmal richtig und einmal mit einem String auf. Lesen Sie die Fehlermeldung von <code>npx tsc</code>, entfernen Sie den falschen Aufruf und f&uuml;hren Sie das Ergebnis mit <code>node app.js</code> aus.</p>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 2</span>
+    <span class="aufgabe-title">Typen erg&auml;nzen</span>
+  </div>
+  <p>Schreiben Sie typisierte Funktionen: <code>durchschnitt(zahlen)</code> f&uuml;r ein <code>number[]</code>, <code>istVolljaehrig(alter)</code> mit R&uuml;ckgabe <code>boolean</code> und <code>wiederhole(text, anzahl?)</code>, die den Text <code>anzahl</code>-mal (Standard: 2-mal) aneinanderh&auml;ngt.</p>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 3</span>
+    <span class="aufgabe-title">Ampel</span>
+  </div>
+  <p>Definieren Sie <code>type Ampelfarbe = "rot" | "gelb" | "gruen"</code> und eine Funktion <code>naechsteFarbe(farbe: Ampelfarbe): Ampelfarbe</code> (rot &rarr; gruen &rarr; gelb &rarr; rot). Was meldet TypeScript, wenn Sie in der Funktion einen Fall vergessen und keinen R&uuml;ckgabewert liefern?</p>
+</div>
+          <div class="aufgabe aufgabe-bonus">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Bonus</span>
+    <span class="aufgabe-title">JavaScript umstellen</span>
+  </div>
+  <p>Nehmen Sie Ihre Selection-Sort-L&ouml;sung aus Lektion 1.1, benennen Sie sie in <code>.ts</code> um und erg&auml;nzen Sie alle Typen, bis <code>npx tsc</code> keine Fehler mehr meldet.</p>
+</div>
+        </div>
+      </section>
+
+    </div>
+
+    <nav class="lesson-nav">
+      <a class="nav-btn" href="3.5-prisma.html">&larr; Lektion 3.5: Prisma ORM</a>
+      <span class="nav-center-info">Lektion 4.1</span>
+      <a class="nav-btn primary" href="4.2-typescript-objekte.html">Lektion 4.2: Objekttypen &amp; Klassen &rarr;</a>
+    </nav>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    const ham = document.getElementById('hamburger');
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('overlay');
+    ham.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('visible'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('visible'); });
+    const cur = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-link').forEach(l => {
+      if (l.getAttribute('href') === cur) l.classList.add('active');
+    });
+    const themeBtn = document.getElementById('theme-toggle');
+    const applyTheme = (t) => {
+      document.documentElement.setAttribute('data-theme', t);
+      if (themeBtn) themeBtn.innerHTML = t === 'dark' ? '&#9728;' : '&#9790;';
+    };
+    applyTheme(localStorage.getItem('kurs-theme') || 'dark');
+    setTimeout(() => document.documentElement.classList.add('theme-transitions'), 50);
+    if (themeBtn) themeBtn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('kurs-theme', next);
+      applyTheme(next);
+    });
+    hljs.highlightAll();
+  </script>
+</body>
+
+</html>

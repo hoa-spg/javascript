@@ -50,6 +50,12 @@
         <a class="nav-link" href="3.4-cookies.html"><span class="ln">3.4</span>Cookies</a>
         <a class="nav-link" href="3.5-prisma.html"><span class="ln">3.5</span>Prisma ORM</a>
       </div>
+      <div class="nav-group">
+        <div class="nav-group-label ts-label">Teil 4 &mdash; TypeScript</div>
+        <a class="nav-link" href="4.1-typescript-grundlagen.html"><span class="ln">4.1</span>TypeScript-Grundlagen</a>
+        <a class="nav-link" href="4.2-typescript-objekte.html"><span class="ln">4.2</span>Objekttypen &amp; Klassen</a>
+        <a class="nav-link" href="4.3-typescript-generics.html"><span class="ln">4.3</span>Generics, DOM &amp; fetch</a>
+      </div>
     </nav>
   </aside>
 
@@ -133,7 +139,8 @@ console.log(allTodos.length);</code></pre>
         <h2>3 &mdash; Inhalte und Attribute ver&auml;ndern</h2>
         <ul>
           <li>Inhalte: <code>textContent</code>, <code>innerHTML</code></li>
-          <li>Attribute: <code>setAttribute(...)</code></li>
+          <li>Attribute: <code>setAttribute(...)</code> oder direkt als Eigenschaft, z.&nbsp;B. <code>input.type = 'checkbox'</code>, <code>checkbox.checked = true</code></li>
+          <li>Eingabefelder: <code>value</code> liefert bzw. setzt den eingegebenen Text (immer ein String)</li>
           <li>CSS-Klassen: <code>classList.add / remove / toggle</code></li>
         </ul>
         <div class="code-block">
@@ -143,8 +150,12 @@ console.log(allTodos.length);</code></pre>
   </div>
   <pre><code class="language-javascript">const info = document.querySelector('#info');
 info.textContent = 'Speichern erfolgreich';
-info.setAttribute('data-state', 'ok');
-info.classList.add('success');</code></pre>
+info.setAttribute('title', 'Gespeichert um 10:15');
+info.classList.add('success');
+
+const nameInput = document.querySelector('#name');
+console.log(nameInput.value); // was im Feld steht
+nameInput.value = '';         // Feld leeren</code></pre>
 </div>
         <div class="callout callout-warning">
   <div class="callout-icon">&#9888;</div>
@@ -201,6 +212,10 @@ btn.addEventListener('click', (event) =&gt; {
 
       <section class="section">
         <h2>6 &mdash; Kleines Gesamtbeispiel</h2>
+        <p>
+          Neu ist hier nur <code>trim()</code>: Die String-Methode entfernt Leerzeichen am Anfang und
+          Ende, damit auch eine Eingabe aus lauter Leerzeichen als leer gilt.
+        </p>
         <div class="code-block">
   <div class="code-header">
     <span class="code-filename">index.html (body)</span>

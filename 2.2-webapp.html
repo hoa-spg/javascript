@@ -50,6 +50,12 @@
         <a class="nav-link" href="3.4-cookies.html"><span class="ln">3.4</span>Cookies</a>
         <a class="nav-link" href="3.5-prisma.html"><span class="ln">3.5</span>Prisma ORM</a>
       </div>
+      <div class="nav-group">
+        <div class="nav-group-label ts-label">Teil 4 &mdash; TypeScript</div>
+        <a class="nav-link" href="4.1-typescript-grundlagen.html"><span class="ln">4.1</span>TypeScript-Grundlagen</a>
+        <a class="nav-link" href="4.2-typescript-objekte.html"><span class="ln">4.2</span>Objekttypen &amp; Klassen</a>
+        <a class="nav-link" href="4.3-typescript-generics.html"><span class="ln">4.3</span>Generics, DOM &amp; fetch</a>
+      </div>
     </nav>
   </aside>
 
@@ -181,7 +187,7 @@ function toggleTodoState(todoObject) {
 }
 
 function deleteTodoObjectFromState(todoObject) {
-  let idx = state.todos.indexOf(todoObject);
+  const idx = state.todos.indexOf(todoObject);
   if (idx !== -1) {
     state.todos.splice(idx, 1);
   }
@@ -215,11 +221,11 @@ const newTodoText = document.getElementById('todo-input');</code></pre>
   const cb = document.createElement('input');
   cb.type = 'checkbox';
   cb.checked = todo.completed;
-  cb.addEventListener('change', (event) =&gt; onTodoStateChanged(todo));
+  cb.addEventListener('change', () =&gt; onTodoStateChanged(todo));
 
   const delBtn = document.createElement('button');
   delBtn.textContent = 'delete';
-  delBtn.addEventListener('click', (event) =&gt; onTodoObjectDelete(todo));
+  delBtn.addEventListener('click', () =&gt; onTodoObjectDelete(todo));
 
   listItem.prepend(cb);
   listItem.append(delBtn);
@@ -238,7 +244,7 @@ const newTodoText = document.getElementById('todo-input');</code></pre>
   todoList.innerHTML = '';
   todoListDone.innerHTML = '';
 
-  for (let todoItem of state.todos) {
+  for (const todoItem of state.todos) {
     const li = createTodoElement(todoItem);
     if (todoItem.completed) {
       todoListDone.appendChild(li);
@@ -247,14 +253,6 @@ const newTodoText = document.getElementById('todo-input');</code></pre>
     }
   }
 }</code></pre>
-</div>
-        <div class="callout callout-info">
-  <div class="callout-icon">&#8505;</div>
-  <div class="callout-body">
-    <div class="callout-title">Erg&auml;nzt gegen&uuml;ber den Folien</div>
-    <p>Auf den Folien ist nur das Rendern der &bdquo;Done&ldquo;-Liste abgebildet. Hier steht die
-          vollst&auml;ndige Funktion, die beide Listen leert und jedes Todo der passenden Liste zuordnet.</p>
-  </div>
 </div>
 
         <h3>6) Event Handlers</h3>
@@ -287,7 +285,7 @@ function onTodoObjectDelete(todoObject) {
     <span class="code-filename">app.js</span>
     <span class="code-lang">JavaScript</span>
   </div>
-  <pre><code class="language-javascript">addBtn.addEventListener('click', (event) =&gt; onAddBtnPressed());</code></pre>
+  <pre><code class="language-javascript">addBtn.addEventListener('click', onAddBtnPressed);</code></pre>
 </div>
 
         <h3>8) Initial Rendering</h3>

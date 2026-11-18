@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<!-- GENERIERT von kurse/_build (javascript) – nicht direkt bearbeiten!
+     Quelle: kurse/_build/javascript/lessons/, bauen: python3 _build/build.py javascript -->
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4.2 &ndash; Objekttypen &amp; Klassen | JavaScript Kurs</title>
+  <script>(function () { var t = localStorage.getItem('kurs-theme') || 'dark'; document.documentElement.setAttribute('data-theme', t); })();</script>
+  <link rel="stylesheet" href="assets/kurs.css">
+  <link rel="stylesheet" id="hljs-theme"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+</head>
+
+<body>
+
+  <button class="hamburger" id="hamburger" aria-label="Navigation &ouml;ffnen">&#9776;</button>
+  <div class="sidebar-overlay" id="overlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="index.html">
+        <span class="brand-icon">JS</span>
+        <div>
+          <div class="brand-name">JavaScript</div>
+          <div class="brand-sub">Web- und Mobile Computing</div>
+        </div>
+      </a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Dark/Light Mode"
+        title="Theme wechseln">&#9728;</button>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-group">
+        <div class="nav-group-label js-label">Teil 1 &mdash; Sprachgrundlagen</div>
+        <a class="nav-link" href="1.1-einfuehrung.html"><span class="ln">1.1</span>Einf&uuml;hrung in JavaScript</a>
+        <a class="nav-link" href="1.2-funktionen.html"><span class="ln">1.2</span>Funktionen</a>
+        <a class="nav-link" href="1.3-arrays.html"><span class="ln">1.3</span>Arrays</a>
+        <a class="nav-link" href="1.4-objekte.html"><span class="ln">1.4</span>Objekte &amp; Klassen</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label html-label">Teil 2 &mdash; DOM &amp; WebApps</div>
+        <a class="nav-link" href="2.1-dom.html"><span class="ln">2.1</span>DOM</a>
+        <a class="nav-link" href="2.2-webapp.html"><span class="ln">2.2</span>Struktur einfacher WebApps</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label css-label">Teil 3 &mdash; Asynchron, Browser &amp; Daten</div>
+        <a class="nav-link" href="3.1-promises.html"><span class="ln">3.1</span>Promises &amp; async/await</a>
+        <a class="nav-link" href="3.2-eventloop.html"><span class="ln">3.2</span>Event Loop</a>
+        <a class="nav-link" href="3.3-browser-apis.html"><span class="ln">3.3</span>Browser APIs</a>
+        <a class="nav-link" href="3.4-cookies.html"><span class="ln">3.4</span>Cookies</a>
+        <a class="nav-link" href="3.5-prisma.html"><span class="ln">3.5</span>Prisma ORM</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label ts-label">Teil 4 &mdash; TypeScript</div>
+        <a class="nav-link" href="4.1-typescript-grundlagen.html"><span class="ln">4.1</span>TypeScript-Grundlagen</a>
+        <a class="nav-link" href="4.2-typescript-objekte.html"><span class="ln">4.2</span>Objekttypen &amp; Klassen</a>
+        <a class="nav-link" href="4.3-typescript-generics.html"><span class="ln">4.3</span>Generics, DOM &amp; fetch</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="lesson-header">
+      <p class="lesson-eyebrow">Lektion 4.2 &mdash; Teil 4: TypeScript</p>
+      <h1>Objekttypen &amp; Klassen</h1>
+      <div class="lesson-tags">
+        <span class="tag tag-css">TypeScript</span>
+        <span class="tag tag-time">ca. 90 min</span>
+        <span class="tag tag-level">Grundlagen</span>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <section class="section section-lernziele">
+        <h2>Lernziele</h2>
+        <ul class="lernziele-list">
+          <li>Die Form von Objekten mit <code>type</code> und <code>interface</code> beschreiben</li>
+          <li>Optionale und schreibgesch&uuml;tzte Eigenschaften verwenden</li>
+          <li>Interfaces mit <code>extends</code> erweitern</li>
+          <li>Arrays von Objekten und Funktionen mit Objektparametern typisieren</li>
+          <li>Klassen mit typisierten Feldern, <code>private</code> und <code>implements</code> schreiben</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>1 &mdash; Objekttypen</h2>
+        <p>
+          Der Typ eines Objekts beschreibt, welche Eigenschaften es hat und welchen Typ jede davon hat.
+          Mit <code>type</code> (Typ-Alias, Lektion 4.1) gibt man ihm einen Namen:
+        </p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Objekttyp</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">type Person = {
+  vorname: string;
+  alter: number;
+};
+
+const anna: Person = { vorname: "Anna", alter: 17 };
+
+const tom: Person = { vorname: "Tom" };
+// Fehler: Property 'alter' is missing in type '{ vorname: string; }'
+
+anna.altr = 18;
+// Fehler: Property 'altr' does not exist on type 'Person'. Did you mean 'alter'?</code></pre>
+</div>
+        <div class="callout callout-info">
+  <div class="callout-icon">&#8505;</div>
+  <div class="callout-body">
+    <div class="callout-title">Weniger Tippfehler</div>
+    <p>In JavaScript h&auml;tte <code>anna.altr = 18</code> einfach eine neue Eigenschaft angelegt
+          (Lektion 1.4). TypeScript erlaubt nur die Eigenschaften, die im Typ stehen.</p>
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>2 &mdash; Optionale und schreibgesch&uuml;tzte Eigenschaften</h2>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">? und readonly</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">type Person = {
+  readonly id: number;
+  vorname: string;
+  alter: number;
+  email?: string; // optional
+};
+
+const anna: Person = { id: 1, vorname: "Anna", alter: 17 }; // ok ohne email
+
+anna.id = 2;
+// Fehler: Cannot assign to 'id' because it is a read-only property.</code></pre>
+</div>
+        <ul>
+          <li><code>email?</code>: Die Eigenschaft darf fehlen &ndash; ihr Typ ist <code>string | undefined</code> (wie beim optionalen Parameter in Lektion 4.1).</li>
+          <li><code>readonly</code>: Der Wert kann nach dem Erzeugen nicht mehr ge&auml;ndert werden.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>3 &mdash; <code>interface</code></h2>
+        <p>Objekttypen kann man auch als <strong>Interface</strong> schreiben &ndash; ohne <code>=</code> und ohne Strichpunkt am Ende:</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">interface</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">interface Person {
+  vorname: string;
+  alter: number;
+}
+
+interface Schueler extends Person {
+  klasse: string;
+}
+
+const lisa: Schueler = { vorname: "Lisa", alter: 16, klasse: "2AHIF" };</code></pre>
+</div>
+        <ul>
+          <li><code>extends</code> &uuml;bernimmt alle Eigenschaften von <code>Person</code> und f&uuml;gt neue hinzu &ndash; wie bei Klassen.</li>
+          <li>Anders als in Java beschreibt ein TypeScript-Interface vor allem die <strong>Form von Daten</strong>, nicht nur Methoden.</li>
+        </ul>
+        <div class="callout callout-tip">
+  <div class="callout-icon">&#128161;</div>
+  <div class="callout-body">
+    <div class="callout-title">type oder interface?</div>
+    <p>F&uuml;r Objekte sind beide fast gleichwertig. Faustregel f&uuml;r den Kurs: <code>interface</code>
+          f&uuml;r Objekte, <code>type</code> f&uuml;r alles andere (z.&nbsp;B. Union-Typen wie
+          <code>"rot" | "gelb" | "gruen"</code>).</p>
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>4 &mdash; Arrays von Objekten und Funktionen</h2>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Person[]</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">interface Person {
+  vorname: string;
+  alter: number;
+}
+
+const klasse: Person[] = [
+  { vorname: "Anna", alter: 17 },
+  { vorname: "Tom", alter: 16 },
+];
+
+function istVolljaehrig(p: Person): boolean {
+  return p.alter &gt;= 18;
+}
+
+const namen = klasse.map((p) =&gt; p.vorname); // erkannt: string[]
+const volljaehrige = klasse.filter(istVolljaehrig);</code></pre>
+</div>
+        <p>
+          In <code>map</code> und <code>filter</code> braucht <code>p</code> keine Annotation: TypeScript
+          wei&szlig; aus <code>Person[]</code>, dass jedes Element eine <code>Person</code> ist.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>5 &mdash; Klassen</h2>
+        <p>In TypeScript-Klassen m&uuml;ssen alle Felder mit Typ <strong>deklariert</strong> werden:</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Klasse</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">class Konto {
+  inhaber: string;
+  private kontostand: number;
+
+  constructor(inhaber: string, startbetrag: number) {
+    this.inhaber = inhaber;
+    this.kontostand = startbetrag;
+  }
+
+  einzahlen(betrag: number): void {
+    if (betrag &lt;= 0) {
+      throw new Error("Betrag muss positiv sein");
+    }
+    this.kontostand += betrag;
+  }
+
+  getKontostand(): number {
+    return this.kontostand;
+  }
+}
+
+const k = new Konto("Anna", 100);
+k.einzahlen(50);
+k.kontostand = 1000000;
+// Fehler: Property 'kontostand' is private and only accessible within class 'Konto'.</code></pre>
+</div>
+        <ul>
+          <li><code>private</code> wie in Java: Zugriff nur innerhalb der Klasse. Ohne Angabe ist ein Feld <code>public</code>.</li>
+          <li>Unterschied zu <code>#kontostand</code> aus Lektion 1.4: <code>private</code> pr&uuml;ft nur der Compiler, im erzeugten JavaScript ist das Feld normal zug&auml;nglich. <code>#</code> ist auch zur Laufzeit privat.</li>
+        </ul>
+        <h3>Interfaces implementieren</h3>
+        <p>Mit <code>implements</code> verspricht eine Klasse, alles zu haben, was ein Interface verlangt &ndash; wie in Java:</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">implements</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">interface Form {
+  flaeche(): number;
+}
+
+class Rechteck implements Form {
+  breite: number;
+  hoehe: number;
+
+  constructor(breite: number, hoehe: number) {
+    this.breite = breite;
+    this.hoehe = hoehe;
+  }
+
+  flaeche(): number {
+    return this.breite * this.hoehe;
+  }
+}
+
+const formen: Form[] = [new Rechteck(2, 3), new Rechteck(1, 1)];</code></pre>
+</div>
+        <p><code>flaeche(): number;</code> im Interface beschreibt eine Methode ohne Parameter, die eine Zahl zur&uuml;ckgibt.</p>
+      </section>
+
+      <section class="section section-fehler">
+        <h2>H&auml;ufige Fehler</h2>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: Property has no initializer</div>
+  <p>Ein Feld ist deklariert, wird aber im Konstruktor nicht gesetzt: <code>Property 'inhaber' has no initializer and is not definitely assigned in the constructor</code>.</p>
+          <p class="fehler-fix">Das Feld im Konstruktor zuweisen, ihm einen Startwert geben (<code>kontostand = 0;</code>) oder es optional machen (<code>email?: string</code>).</p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: Optionale Eigenschaft ohne Pr&uuml;fung verwendet</div>
+  <p><code>anna.email.toUpperCase()</code> meldet <code>'anna.email' is possibly 'undefined'</code>.</p>
+          <p class="fehler-fix">Vorher pr&uuml;fen: <code>if (anna.email !== undefined) { … }</code></p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: Objekt mit zus&auml;tzlicher Eigenschaft</div>
+  <p><code>const p: Person = { vorname: "Anna", alter: 17, hobby: "Tennis" }</code> meldet <code>Object literal may only specify known properties</code>.</p>
+          <p class="fehler-fix">Die Eigenschaft in den Typ aufnehmen oder weglassen.</p>
+</div>
+      </section>
+
+      <section class="section section-aufgaben">
+        <h2>Aufgaben</h2>
+        <div class="aufgaben-list">
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 1</span>
+    <span class="aufgabe-title">Interface Buch</span>
+  </div>
+  <p>Definieren Sie ein Interface <code>Buch</code> mit <code>titel</code>, <code>autor</code>, <code>seiten</code> und optionalem <code>erscheinungsjahr</code>. Legen Sie ein Array mit drei B&uuml;chern an und schreiben Sie typisierte Funktionen <code>dicksteBuch(buecher)</code> und <code>titelListe(buecher)</code> (liefert ein <code>string[]</code>).</p>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 2</span>
+    <span class="aufgabe-title">Profil mit Typen</span>
+  </div>
+  <p>Typisieren Sie das <code>profil</code>-Objekt aus Lektion 1.4, Aufgabe 2, mit Interfaces (<code>Kontakt</code> f&uuml;r das verschachtelte Objekt). <code>username</code> soll <code>readonly</code> sein. Was meldet TypeScript bei <code>delete profil.aktiv</code>, und wie machen Sie das erlaubt?</p>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 3</span>
+    <span class="aufgabe-title">Konto in TypeScript</span>
+  </div>
+  <p>Setzen Sie die Klasse <code>Konto</code> aus Lektion 1.4, Aufgabe 1, in TypeScript um: <code>pin</code> und <code>balance</code> <code>private</code>, typisierte Methoden. Leiten Sie <code>Sparkonto</code> mit <code>extends</code> ab.</p>
+</div>
+          <div class="aufgabe aufgabe-bonus">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Bonus</span>
+    <span class="aufgabe-title">Formen</span>
+  </div>
+  <p>Erg&auml;nzen Sie zum Interface <code>Form</code> die Klassen <code>Kreis</code> (Fl&auml;che <code>Math.PI * r * r</code>) und <code>Quadrat</code>. Berechnen Sie mit <code>reduce</code> die Gesamtfl&auml;che eines <code>Form[]</code>.</p>
+</div>
+        </div>
+      </section>
+
+    </div>
+
+    <nav class="lesson-nav">
+      <a class="nav-btn" href="4.1-typescript-grundlagen.html">&larr; Lektion 4.1: TypeScript-Grundlagen</a>
+      <span class="nav-center-info">Lektion 4.2</span>
+      <a class="nav-btn primary" href="4.3-typescript-generics.html">Lektion 4.3: Generics, DOM &amp; fetch &rarr;</a>
+    </nav>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    const ham = document.getElementById('hamburger');
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('overlay');
+    ham.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('visible'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('visible'); });
+    const cur = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-link').forEach(l => {
+      if (l.getAttribute('href') === cur) l.classList.add('active');
+    });
+    const themeBtn = document.getElementById('theme-toggle');
+    const applyTheme = (t) => {
+      document.documentElement.setAttribute('data-theme', t);
+      if (themeBtn) themeBtn.innerHTML = t === 'dark' ? '&#9728;' : '&#9790;';
+    };
+    applyTheme(localStorage.getItem('kurs-theme') || 'dark');
+    setTimeout(() => document.documentElement.classList.add('theme-transitions'), 50);
+    if (themeBtn) themeBtn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('kurs-theme', next);
+      applyTheme(next);
+    });
+    hljs.highlightAll();
+  </script>
+</body>
+
+</html>

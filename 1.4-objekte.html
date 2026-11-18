@@ -50,6 +50,12 @@
         <a class="nav-link" href="3.4-cookies.html"><span class="ln">3.4</span>Cookies</a>
         <a class="nav-link" href="3.5-prisma.html"><span class="ln">3.5</span>Prisma ORM</a>
       </div>
+      <div class="nav-group">
+        <div class="nav-group-label ts-label">Teil 4 &mdash; TypeScript</div>
+        <a class="nav-link" href="4.1-typescript-grundlagen.html"><span class="ln">4.1</span>TypeScript-Grundlagen</a>
+        <a class="nav-link" href="4.2-typescript-objekte.html"><span class="ln">4.2</span>Objekttypen &amp; Klassen</a>
+        <a class="nav-link" href="4.3-typescript-generics.html"><span class="ln">4.3</span>Generics, DOM &amp; fetch</a>
+      </div>
     </nav>
   </aside>
 
@@ -256,6 +262,22 @@ console.log(person.greet());</code></pre>
 person.age = 30;           // hinzufügen
 delete person.name;        // entfernen
 person["city"] = "Berlin"; // alternative Syntax</code></pre>
+</div>
+
+        <h3>Spread-Operator f&uuml;r Objekte</h3>
+        <p>
+          Wie bei Arrays (Lektion 1.3) gibt es den Spread-Operator <code>...</code> auch f&uuml;r Objekte:
+          Er kopiert alle Eigenschaften in ein neues Objekt.
+        </p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Objekt-Spread</span>
+    <span class="code-lang">JavaScript</span>
+  </div>
+  <pre><code class="language-javascript">const anna = { name: "Anna", age: 30 };
+const aelter = { ...anna, age: 31 }; // kopieren, age überschreiben
+console.log(aelter); // { name: "Anna", age: 31 }
+console.log(anna);   // { name: "Anna", age: 30 } bleibt unverändert</code></pre>
 </div>
       </section>
 

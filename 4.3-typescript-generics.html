@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<!-- GENERIERT von kurse/_build (javascript) – nicht direkt bearbeiten!
+     Quelle: kurse/_build/javascript/lessons/, bauen: python3 _build/build.py javascript -->
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4.3 &ndash; Generics, DOM &amp; fetch | JavaScript Kurs</title>
+  <script>(function () { var t = localStorage.getItem('kurs-theme') || 'dark'; document.documentElement.setAttribute('data-theme', t); })();</script>
+  <link rel="stylesheet" href="assets/kurs.css">
+  <link rel="stylesheet" id="hljs-theme"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+</head>
+
+<body>
+
+  <button class="hamburger" id="hamburger" aria-label="Navigation &ouml;ffnen">&#9776;</button>
+  <div class="sidebar-overlay" id="overlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="index.html">
+        <span class="brand-icon">JS</span>
+        <div>
+          <div class="brand-name">JavaScript</div>
+          <div class="brand-sub">Web- und Mobile Computing</div>
+        </div>
+      </a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Dark/Light Mode"
+        title="Theme wechseln">&#9728;</button>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-group">
+        <div class="nav-group-label js-label">Teil 1 &mdash; Sprachgrundlagen</div>
+        <a class="nav-link" href="1.1-einfuehrung.html"><span class="ln">1.1</span>Einf&uuml;hrung in JavaScript</a>
+        <a class="nav-link" href="1.2-funktionen.html"><span class="ln">1.2</span>Funktionen</a>
+        <a class="nav-link" href="1.3-arrays.html"><span class="ln">1.3</span>Arrays</a>
+        <a class="nav-link" href="1.4-objekte.html"><span class="ln">1.4</span>Objekte &amp; Klassen</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label html-label">Teil 2 &mdash; DOM &amp; WebApps</div>
+        <a class="nav-link" href="2.1-dom.html"><span class="ln">2.1</span>DOM</a>
+        <a class="nav-link" href="2.2-webapp.html"><span class="ln">2.2</span>Struktur einfacher WebApps</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label css-label">Teil 3 &mdash; Asynchron, Browser &amp; Daten</div>
+        <a class="nav-link" href="3.1-promises.html"><span class="ln">3.1</span>Promises &amp; async/await</a>
+        <a class="nav-link" href="3.2-eventloop.html"><span class="ln">3.2</span>Event Loop</a>
+        <a class="nav-link" href="3.3-browser-apis.html"><span class="ln">3.3</span>Browser APIs</a>
+        <a class="nav-link" href="3.4-cookies.html"><span class="ln">3.4</span>Cookies</a>
+        <a class="nav-link" href="3.5-prisma.html"><span class="ln">3.5</span>Prisma ORM</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label ts-label">Teil 4 &mdash; TypeScript</div>
+        <a class="nav-link" href="4.1-typescript-grundlagen.html"><span class="ln">4.1</span>TypeScript-Grundlagen</a>
+        <a class="nav-link" href="4.2-typescript-objekte.html"><span class="ln">4.2</span>Objekttypen &amp; Klassen</a>
+        <a class="nav-link" href="4.3-typescript-generics.html"><span class="ln">4.3</span>Generics, DOM &amp; fetch</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="lesson-header">
+      <p class="lesson-eyebrow">Lektion 4.3 &mdash; Teil 4: TypeScript</p>
+      <h1>Generics, DOM &amp; fetch</h1>
+      <div class="lesson-tags">
+        <span class="tag tag-css">TypeScript</span>
+        <span class="tag tag-time">ca. 90 min</span>
+        <span class="tag tag-level">Aufbau</span>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <section class="section section-lernziele">
+        <h2>Lernziele</h2>
+        <ul class="lernziele-list">
+          <li>Generische Typen wie <code>Array&lt;T&gt;</code> lesen und eigene generische Funktionen schreiben</li>
+          <li>Die Utility-Typen <code>Partial</code>, <code>Omit</code> und <code>Record</code> einsetzen</li>
+          <li>Asynchrone Funktionen mit <code>Promise&lt;T&gt;</code> typisieren und <code>fetch</code>-Daten einen Typ geben</li>
+          <li>DOM-Elemente typsicher verwenden (<code>null</code> pr&uuml;fen, <code>HTMLInputElement</code>)</li>
+          <li>TypeScript im Browser einsetzen: &uuml;bersetzen mit <code>tsc</code> oder mit Vite</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>1 &mdash; Generics</h2>
+        <p>
+          Manche Typen brauchen einen weiteren Typ als &bdquo;Parameter&ldquo;. Ein Array ist erst vollst&auml;ndig
+          beschrieben, wenn man wei&szlig;, <em>wovon</em> es ein Array ist. Diesen Typ-Parameter schreibt man in
+          spitze Klammern &ndash; wie bei <code>ArrayList&lt;String&gt;</code> in Java:
+        </p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Array&lt;T&gt;</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">const noten: Array&lt;number&gt; = [1, 2, 3]; // dasselbe wie number[]</code></pre>
+</div>
+        <p>
+          Auch eigene Funktionen k&ouml;nnen generisch sein. <code>&lt;T&gt;</code> nach dem Funktionsnamen
+          f&uuml;hrt einen Platzhalter f&uuml;r einen Typ ein, der erst beim Aufruf feststeht:
+        </p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Generische Funktion</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">function letztes&lt;T&gt;(liste: T[]): T | undefined {
+  return liste[liste.length - 1];
+}
+
+const n = letztes([1, 2, 3]);      // T = number, n: number | undefined
+const s = letztes(["a", "b"]);     // T = string, s: string | undefined
+const x = letztes&lt;string&gt;([1, 2]);
+// Fehler: Type 'number' is not assignable to type 'string'.</code></pre>
+</div>
+        <ul>
+          <li>Meist erkennt TypeScript <code>T</code> selbst aus dem Argument (Inferenz).</li>
+          <li>Man kann <code>T</code> auch ausdr&uuml;cklich angeben: <code>letztes&lt;string&gt;(…)</code>.</li>
+          <li>Das Ergebnis ist <code>T | undefined</code>, weil ein leeres Array kein letztes Element hat.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>2 &mdash; Utility-Typen</h2>
+        <p>TypeScript bringt generische Typen mit, die aus einem bestehenden Typ einen neuen bauen:</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Partial, Omit, Record</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">interface Todo {
+  id: number;
+  text: string;
+  completed: boolean;
+}
+
+// Partial&lt;T&gt;: alle Eigenschaften optional – z. B. für Änderungen
+const aenderung: Partial&lt;Todo&gt; = { completed: true };
+
+// Omit&lt;T, "…"&gt;: ohne die genannten Eigenschaften – z. B. vor dem Speichern, wenn die id fehlt
+const neu: Omit&lt;Todo, "id"&gt; = { text: "TS lernen", completed: false };
+
+// Record&lt;K, V&gt;: Objekt mit Schlüsseln vom Typ K und Werten vom Typ V
+const punkte: Record&lt;string, number&gt; = { anna: 12, tom: 9 };
+punkte.lisa = 15; // ok</code></pre>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>3 &mdash; <code>async</code>-Funktionen und <code>fetch</code></h2>
+        <p>Eine <code>async</code>-Funktion liefert immer ein Promise (Lektion 3.1). Ihr R&uuml;ckgabetyp ist deshalb <code>Promise&lt;T&gt;</code> &ndash; ein Promise, das einen Wert vom Typ <code>T</code> liefert:</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Promise&lt;T&gt;</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">async function ladeAnzahl(): Promise&lt;number&gt; {
+  return 42;
+}</code></pre>
+</div>
+        <p>
+          <code>response.json()</code> wei&szlig; nicht, was der Server schickt, und liefert <code>any</code>.
+          Mit <code>as</code> (<strong>Typzusicherung</strong>) sagt man TypeScript, welchen Typ die Daten haben:
+        </p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">fetch mit Typ</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">interface Todo {
+  id: number;
+  title: string;
+  completed: boolean;
+}
+
+async function ladeTodo(id: number): Promise&lt;Todo&gt; {
+  const response = await fetch("https://jsonplaceholder.typicode.com/todos/" + id);
+  if (!response.ok) {
+    throw new Error("HTTP-Fehler: " + response.status);
+  }
+  return (await response.json()) as Todo;
+}
+
+async function zeigeTodo(): Promise&lt;void&gt; {
+  const todo = await ladeTodo(1);
+  console.log(todo.title);  // Editor schlägt title, id, completed vor
+  console.log(todo.titel);
+  // Fehler: Property 'titel' does not exist on type 'Todo'. Did you mean 'title'?
+}</code></pre>
+</div>
+        <div class="callout callout-warning">
+  <div class="callout-icon">&#9888;</div>
+  <div class="callout-body">
+    <div class="callout-title">as pr&uuml;ft nichts</div>
+    <code>as Todo</code> ist ein Versprechen an den Compiler, keine Kontrolle. Schickt der Server
+          etwas anderes, merkt TypeScript das nicht &ndash; der Fehler kommt dann zur Laufzeit.
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>4 &mdash; Das DOM mit Typen</h2>
+        <p>Jedes HTML-Element hat einen eigenen Typ, z.&nbsp;B. <code>HTMLElement</code>, <code>HTMLInputElement</code> oder <code>HTMLButtonElement</code>. Die Methoden aus Lektion 2.1 liefern dabei auch <code>null</code>, wenn nichts gefunden wird:</p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">null pr&uuml;fen</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">const ausgabe = document.getElementById("ausgabe"); // HTMLElement | null
+
+ausgabe.textContent = "Hallo";
+// Fehler: 'ausgabe' is possibly 'null'.
+
+if (ausgabe !== null) {
+  ausgabe.textContent = "Hallo"; // ok – null ist ausgeschlossen
+}</code></pre>
+</div>
+        <p>
+          <code>querySelector</code> ist generisch: In spitzen Klammern gibt man an, welche Art Element man
+          erwartet. Erst dann kennt TypeScript Eigenschaften wie <code>value</code>, die nur Eingabefelder haben:
+        </p>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Eingabefeld</span>
+    <span class="code-lang">TypeScript</span>
+  </div>
+  <pre><code class="language-typescript">const input = document.querySelector&lt;HTMLInputElement&gt;("#name-input");
+const button = document.querySelector&lt;HTMLButtonElement&gt;("#apply-btn");
+
+if (input !== null &amp;&amp; button !== null) {
+  button.addEventListener("click", () =&gt; {
+    console.log(input.value.trim());
+  });
+}</code></pre>
+</div>
+        <div class="callout callout-info">
+  <div class="callout-icon">&#8505;</div>
+  <div class="callout-body">
+    <div class="callout-title">Das Ausrufezeichen !</div>
+    <p>Wer sicher ist, dass ein Element existiert, kann mit <code>!</code> nach dem Ausdruck
+          <code>null</code> ausschlie&szlig;en: <code>document.getElementById("app")!</code>. Wie
+          <code>as</code> pr&uuml;ft das nichts &ndash; fehlt das Element doch, st&uuml;rzt das Programm ab. Diese
+          Schreibweise begegnet dir im React-Kurs gleich in der ersten Datei.</p>
+  </div>
+</div>
+      </section>
+
+      <section class="section">
+        <h2>5 &mdash; TypeScript im Browser</h2>
+        <p>Der Browser f&uuml;hrt nur JavaScript aus. Zwei Wege:</p>
+        <ul>
+          <li><strong>Selbst &uuml;bersetzen:</strong> <code>npx tsc --watch</code> erzeugt aus <code>app.ts</code> laufend <code>app.js</code>; in der HTML-Datei bindet man wie gewohnt <code>&lt;script src="app.js" defer&gt;&lt;/script&gt;</code> ein.</li>
+          <li><strong>Mit einem Build-Tool wie Vite:</strong> Es &uuml;bersetzt automatisch und l&auml;dt die Seite beim Speichern neu.</li>
+        </ul>
+        <div class="code-block">
+  <div class="code-header">
+    <span class="code-filename">Terminal</span>
+    <span class="code-lang">Bash</span>
+  </div>
+  <pre><code class="language-bash">npm create vite@latest meine-app -- --template vanilla-ts
+cd meine-app
+npm install
+npm run dev</code></pre>
+</div>
+        <p>
+          Vite legt ein fertiges Projekt mit <code>index.html</code>, <code>src/main.ts</code> und
+          <code>tsconfig.json</code> an. Im React-Kurs startet jedes Projekt auf diese Weise &ndash; dort mit
+          der Vorlage <code>react-ts</code>.
+        </p>
+      </section>
+
+      <section class="section section-fehler">
+        <h2>H&auml;ufige Fehler</h2>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: Property 'value' does not exist on type 'HTMLElement'</div>
+  <p><code>document.getElementById("name").value</code> &ndash; TypeScript wei&szlig; nur, dass es irgendein Element ist.</p>
+          <p class="fehler-fix"><code>document.querySelector&lt;HTMLInputElement&gt;("#name")</code> verwenden und auf <code>null</code> pr&uuml;fen.</p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: R&uuml;ckgabetyp einer async-Funktion ohne Promise</div>
+  <p><code>async function lade(): Todo</code> meldet <code>The return type of an async function must be the global Promise&lt;T&gt; type</code>.</p>
+          <p class="fehler-fix"><code>async function lade(): Promise&lt;Todo&gt;</code></p>
+</div>
+        <div class="fehler-item">
+  <div class="fehler-title">Fehler: Mit as Fehler verstecken</div>
+  <p><code>const zahl = ("5" as any) as number</code> l&auml;sst sich &uuml;bersetzen, ist zur Laufzeit aber immer noch ein String.</p>
+          <p class="fehler-fix"><code>as</code> nur f&uuml;r Daten von au&szlig;en (z.&nbsp;B. <code>fetch</code>) verwenden; Werte im eigenen Code richtig umwandeln (<code>Number("5")</code>).</p>
+</div>
+      </section>
+
+      <section class="section section-aufgaben">
+        <h2>Aufgaben</h2>
+        <div class="aufgaben-list">
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 1</span>
+    <span class="aufgabe-title">Generische Funktionen</span>
+  </div>
+  <p>Schreiben Sie <code>erstes&lt;T&gt;(liste: T[]): T | undefined</code> und <code>mische&lt;T&gt;(liste: T[]): T[]</code>, die ein neues Array in zuf&auml;lliger Reihenfolge liefert. Testen Sie beide mit Zahlen und mit Strings und pr&uuml;fen Sie im Editor, welchen Typ das Ergebnis hat.</p>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 2</span>
+    <span class="aufgabe-title">Todos laden</span>
+  </div>
+  <p>Laden Sie mit einer typisierten Funktion <code>ladeTodos(): Promise&lt;Todo[]&gt;</code> alle Todos von <code>https://jsonplaceholder.typicode.com/todos</code> und geben Sie die Titel der erledigten Todos aus.</p>
+</div>
+          <div class="aufgabe">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Aufgabe 3</span>
+    <span class="aufgabe-title">Begr&uuml;&szlig;ung mit Vite</span>
+  </div>
+  <p>Legen Sie ein Vite-Projekt mit der Vorlage <code>vanilla-ts</code> an und bauen Sie das Gesamtbeispiel aus Lektion 2.1 (Name eingeben, Begr&uuml;&szlig;ung anzeigen) in <code>src/main.ts</code> nach &ndash; ohne <code>any</code> und ohne <code>!</code>.</p>
+</div>
+          <div class="aufgabe aufgabe-bonus">
+  <div class="aufgabe-header">
+    <span class="aufgabe-num">Bonus</span>
+    <span class="aufgabe-title">Todo-App in TypeScript</span>
+  </div>
+  <p>Stellen Sie die Todo-App aus Lektion 2.2 auf TypeScript um: ein Interface f&uuml;r ein Todo, ein Typ f&uuml;r den State, typisierte Mutatoren und DOM-Referenzen.</p>
+</div>
+        </div>
+      </section>
+
+    </div>
+
+    <nav class="lesson-nav">
+      <a class="nav-btn" href="4.2-typescript-objekte.html">&larr; Lektion 4.2: Objekttypen &amp; Klassen</a>
+      <span class="nav-center-info">Lektion 4.3</span>
+      <a class="nav-btn primary" href="index.html">Kurs&uuml;bersicht &rarr;</a>
+    </nav>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    const ham = document.getElementById('hamburger');
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('overlay');
+    ham.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('visible'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('visible'); });
+    const cur = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-link').forEach(l => {
+      if (l.getAttribute('href') === cur) l.classList.add('active');
+    });
+    const themeBtn = document.getElementById('theme-toggle');
+    const applyTheme = (t) => {
+      document.documentElement.setAttribute('data-theme', t);
+      if (themeBtn) themeBtn.innerHTML = t === 'dark' ? '&#9728;' : '&#9790;';
+    };
+    applyTheme(localStorage.getItem('kurs-theme') || 'dark');
+    setTimeout(() => document.documentElement.classList.add('theme-transitions'), 50);
+    if (themeBtn) themeBtn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('kurs-theme', next);
+      applyTheme(next);
+    });
+    hljs.highlightAll();
+  </script>
+</body>
+
+</html>

@@ -57,6 +57,9 @@
         <a class="nav-link" href="4.3-typescript-generics.html"><span class="ln">4.3</span>Generics, DOM &amp; fetch</a>
       </div>
     </nav>
+    <div class="sidebar-footer">
+      <a class="sidebar-home" href="https://hoa-spg.github.io/">&larr; Kursseite</a>
+    </div>
   </aside>
 
   <main class="main-content">
@@ -268,7 +271,9 @@ button.addEventListener('click', () =&gt; {
       </section>
 
       <section class="section section-fehler">
-        <h2>H&auml;ufige Fehler</h2>
+<details class="fold-box">
+<summary><h2>H&auml;ufige Fehler</h2><span class="quiz-box-hint">3 Fehler &middot; zum Aufklappen klicken</span></summary>
+<div class="fold-body">
         <div class="fehler-item">
   <div class="fehler-title">Fehler: Cannot read properties of null</div>
   <p><code>document.getElementById('titel')</code> liefert <code>null</code> &ndash; Tippfehler in der ID oder das Script l&auml;uft, bevor das Element existiert.</p>
@@ -284,10 +289,14 @@ button.addEventListener('click', () =&gt; {
   <p>Beim <code>submit</code>-Event schickt der Browser das Formular ab, und alle &Auml;nderungen sind weg.</p>
           <p class="fehler-fix">Im Handler <code>event.preventDefault()</code> aufrufen.</p>
 </div>
+</div>
+</details>
       </section>
 
       <section class="section section-aufgaben">
-        <h2>Aufgaben</h2>
+<details class="fold-box">
+<summary><h2>Aufgaben</h2><span class="quiz-box-hint">3 Aufgaben + Bonus &middot; zum Aufklappen klicken</span></summary>
+<div class="fold-body">
         <div class="aufgaben-list">
           <div class="aufgabe">
   <div class="aufgabe-header">
@@ -318,6 +327,8 @@ button.addEventListener('click', () =&gt; {
   <p>Erg&auml;nze die Demoseite aus dem HTML-&amp;-CSS-Kurs um einen Button, der per <code>document.documentElement.classList.toggle('dark')</code> eine Klasse setzt. Lege im CSS f&uuml;r <code>.dark</code> dunkle Farben fest.</p>
 </div>
         </div>
+</div>
+</details>
       </section>
 
       <section class="section section-quiz">

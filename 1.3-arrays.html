@@ -57,6 +57,9 @@
         <a class="nav-link" href="4.3-typescript-generics.html"><span class="ln">4.3</span>Generics, DOM &amp; fetch</a>
       </div>
     </nav>
+    <div class="sidebar-footer">
+      <a class="sidebar-home" href="https://hoa-spg.github.io/">&larr; Kursseite</a>
+    </div>
   </aside>
 
   <main class="main-content">
@@ -385,7 +388,9 @@ console.log(sum); // 15</code></pre>
       </section>
 
       <section class="section section-fehler">
-        <h2>H&auml;ufige Fehler</h2>
+<details class="fold-box">
+<summary><h2>H&auml;ufige Fehler</h2><span class="quiz-box-hint">3 Fehler &middot; zum Aufklappen klicken</span></summary>
+<div class="fold-body">
         <div class="fehler-item">
   <div class="fehler-title">Fehler: for … in statt for … of</div>
   <p><code>for (const x in ["a", "b"])</code> liefert <code>"0"</code>, <code>"1"</code> &ndash; die Indizes als Strings.</p>
@@ -401,10 +406,14 @@ console.log(sum); // 15</code></pre>
   <p><code>arr.splice(1, 3)</code> sollte eine Kopie liefern, hat aber das Original ver&auml;ndert.</p>
           <p class="fehler-fix"><code>slice</code> = Ausschnitt kopieren (Original bleibt), <code>splice</code> = im Original entfernen/einf&uuml;gen.</p>
 </div>
+</div>
+</details>
       </section>
 
       <section class="section section-aufgaben">
-        <h2>Aufgaben</h2>
+<details class="fold-box">
+<summary><h2>Aufgaben</h2><span class="quiz-box-hint">3 Aufgaben + Bonus &middot; zum Aufklappen klicken</span></summary>
+<div class="fold-body">
         <p>In allen Aufgaben sind zwei Arrays mit Strings gegeben. Bearbeiten Sie jede Aufgabe unabh&auml;ngig voneinander und starten Sie jeweils mit diesen Arrays:</p>
         <div class="code-block">
   <div class="code-header">
@@ -456,6 +465,8 @@ const farben = ["Rot", "Blau", "Gruen", "Gelb"];</code></pre>
   <p>Erzeugen Sie mit <code>map</code> ein Array der Wortl&auml;ngen von <code>tiere</code>, mit <code>filter</code> alle Farben mit mehr als 3 Buchstaben und mit <code>reduce</code> die Gesamtzahl der Buchstaben aller Tiere.</p>
 </div>
         </div>
+</div>
+</details>
       </section>
 
       <section class="section section-quiz">

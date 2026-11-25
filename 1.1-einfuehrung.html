@@ -57,6 +57,9 @@
         <a class="nav-link" href="4.3-typescript-generics.html"><span class="ln">4.3</span>Generics, DOM &amp; fetch</a>
       </div>
     </nav>
+    <div class="sidebar-footer">
+      <a class="sidebar-home" href="https://hoa-spg.github.io/">&larr; Kursseite</a>
+    </div>
   </aside>
 
   <main class="main-content">
@@ -523,7 +526,9 @@ try {
       </section>
 
       <section class="section section-fehler">
-        <h2>H&auml;ufige Fehler</h2>
+<details class="fold-box">
+<summary><h2>H&auml;ufige Fehler</h2><span class="quiz-box-hint">3 Fehler &middot; zum Aufklappen klicken</span></summary>
+<div class="fold-body">
         <div class="fehler-item">
   <div class="fehler-title">Fehler: Script greift auf Elemente zu, die es noch nicht gibt</div>
   <p>Ein Script im <code>&lt;head&gt;</code> ohne <code>defer</code> findet mit <code>document.querySelector</code> nichts (<code>null</code>).</p>
@@ -539,10 +544,14 @@ try {
   <p><code>"5" + 3</code> ergibt <code>"53"</code> &ndash; Werte aus Formularfeldern sind immer Strings.</p>
           <p class="fehler-fix">Vor dem Rechnen umwandeln: <code>Number(input.value) + 3</code>.</p>
 </div>
+</div>
+</details>
       </section>
 
       <section class="section section-aufgaben">
-        <h2>Aufgaben</h2>
+<details class="fold-box">
+<summary><h2>Aufgaben</h2><span class="quiz-box-hint">3 Aufgaben + Bonus &middot; zum Aufklappen klicken</span></summary>
+<div class="fold-body">
         <div class="aufgaben-list">
           <div class="aufgabe">
   <div class="aufgabe-header">
@@ -581,6 +590,8 @@ try {
   <p>Legen Sie mit <code>npm init -y</code> ein Projekt an und f&uuml;hren Sie Ihre Sortierfunktion aus Aufgabe 1 mit <code>node sort.js</code> im Terminal statt im Browser aus.</p>
 </div>
         </div>
+</div>
+</details>
       </section>
 
       <section class="section section-quiz">

@@ -57,6 +57,9 @@
         <a class="nav-link" href="4.3-typescript-generics.html"><span class="ln">4.3</span>Generics, DOM &amp; fetch</a>
       </div>
     </nav>
+    <div class="sidebar-footer">
+      <a class="sidebar-home" href="https://hoa-spg.github.io/">&larr; Kursseite</a>
+    </div>
   </aside>
 
   <main class="main-content">
@@ -359,7 +362,9 @@ x.gibtEsNicht(); // kein Fehler beim Übersetzen – aber Absturz zur Laufzeit</
       </section>
 
       <section class="section section-fehler">
-        <h2>H&auml;ufige Fehler</h2>
+<details class="fold-box">
+<summary><h2>H&auml;ufige Fehler</h2><span class="quiz-box-hint">3 Fehler &middot; zum Aufklappen klicken</span></summary>
+<div class="fold-body">
         <div class="fehler-item">
   <div class="fehler-title">Fehler: Cannot redeclare block-scoped variable 'name'</div>
   <p>Eine Datei ohne Imports wird als globales Script behandelt. Dort gibt es schon Browser-Variablen wie <code>name</code> oder <code>status</code> &ndash; eine eigene <code>const name</code> kollidiert damit.</p>
@@ -375,10 +380,14 @@ x.gibtEsNicht(); // kein Fehler beim Übersetzen – aber Absturz zur Laufzeit</
   <p>Ein rot unterstrichener Ausdruck wird mit <code>: any</code> versehen &ndash; der Fehler verschwindet aus dem Editor, aber nicht aus dem Programm.</p>
           <p class="fehler-fix">Die Fehlermeldung lesen und den Typ richtigstellen oder mit einer Pr&uuml;fung eingrenzen.</p>
 </div>
+</div>
+</details>
       </section>
 
       <section class="section section-aufgaben">
-        <h2>Aufgaben</h2>
+<details class="fold-box">
+<summary><h2>Aufgaben</h2><span class="quiz-box-hint">3 Aufgaben + Bonus &middot; zum Aufklappen klicken</span></summary>
+<div class="fold-body">
         <div class="aufgaben-list">
           <div class="aufgabe">
   <div class="aufgabe-header">
@@ -409,6 +418,8 @@ x.gibtEsNicht(); // kein Fehler beim Übersetzen – aber Absturz zur Laufzeit</
   <p>Nehmen Sie Ihre Selection-Sort-L&ouml;sung aus Lektion 1.1, benennen Sie sie in <code>.ts</code> um und erg&auml;nzen Sie alle Typen, bis <code>npx tsc</code> keine Fehler mehr meldet.</p>
 </div>
         </div>
+</div>
+</details>
       </section>
 
       <section class="section section-quiz">

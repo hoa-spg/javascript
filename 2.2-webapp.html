@@ -57,6 +57,9 @@
         <a class="nav-link" href="4.3-typescript-generics.html"><span class="ln">4.3</span>Generics, DOM &amp; fetch</a>
       </div>
     </nav>
+    <div class="sidebar-footer">
+      <a class="sidebar-home" href="https://hoa-spg.github.io/">&larr; Kursseite</a>
+    </div>
   </aside>
 
   <main class="main-content">
@@ -350,7 +353,9 @@ function onTodoObjectDelete(todoObject) {
       </section>
 
       <section class="section section-fehler">
-        <h2>H&auml;ufige Fehler</h2>
+<details class="fold-box">
+<summary><h2>H&auml;ufige Fehler</h2><span class="quiz-box-hint">3 Fehler &middot; zum Aufklappen klicken</span></summary>
+<div class="fold-body">
         <div class="fehler-item">
   <div class="fehler-title">Fehler: DOM direkt im Handler ver&auml;ndern</div>
   <p>Der Handler h&auml;ngt ein neues <code>&lt;li&gt;</code> an, vergisst aber den State. Beim n&auml;chsten <code>render()</code> ist das Todo wieder weg.</p>
@@ -366,10 +371,14 @@ function onTodoObjectDelete(todoObject) {
   <p>Die Seite zeigt beim Laden keine Todos, obwohl der State gef&uuml;llt ist.</p>
           <p class="fehler-fix">Ganz am Ende einmal <code>render()</code> aufrufen (Baustein 8).</p>
 </div>
+</div>
+</details>
       </section>
 
       <section class="section section-aufgaben">
-        <h2>Aufgaben</h2>
+<details class="fold-box">
+<summary><h2>Aufgaben</h2><span class="quiz-box-hint">3 Aufgaben + Bonus &middot; zum Aufklappen klicken</span></summary>
+<div class="fold-body">
         <div class="aufgaben-list">
           <div class="aufgabe">
   <div class="aufgabe-header">
@@ -400,6 +409,8 @@ function onTodoObjectDelete(todoObject) {
   <p>W&auml;hle eine der Web-App-&Uuml;bungen (z.&nbsp;B. Snack-Bestellungen oder Flughafen-Board) und setze sie nach denselben acht Bausteinen um.</p>
 </div>
         </div>
+</div>
+</details>
       </section>
 
       <section class="section section-quiz">

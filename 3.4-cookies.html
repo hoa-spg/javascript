@@ -57,6 +57,9 @@
         <a class="nav-link" href="4.3-typescript-generics.html"><span class="ln">4.3</span>Generics, DOM &amp; fetch</a>
       </div>
     </nav>
+    <div class="sidebar-footer">
+      <a class="sidebar-home" href="https://hoa-spg.github.io/">&larr; Kursseite</a>
+    </div>
   </aside>
 
   <main class="main-content">
@@ -247,7 +250,9 @@ const theme = getCookie('theme');</code></pre>
       </section>
 
       <section class="section section-fehler">
-        <h2>H&auml;ufige Fehler</h2>
+<details class="fold-box">
+<summary><h2>H&auml;ufige Fehler</h2><span class="quiz-box-hint">3 Fehler &middot; zum Aufklappen klicken</span></summary>
+<div class="fold-body">
         <div class="fehler-item">
   <div class="fehler-title">Fehler: Cookie l&auml;sst sich nicht l&ouml;schen</div>
   <p><code>document.cookie = "theme=; Max-Age=0"</code> wirkt nicht, weil das Cookie mit <code>Path=/</code> gesetzt wurde.</p>
@@ -263,10 +268,14 @@ const theme = getCookie('theme');</code></pre>
   <p>Werte mit <code>;</code>, <code>=</code> oder Leerzeichen zerbrechen das Cookie-Format.</p>
           <p class="fehler-fix">Beim Setzen <code>encodeURIComponent(wert)</code>, beim Lesen <code>decodeURIComponent</code>.</p>
 </div>
+</div>
+</details>
       </section>
 
       <section class="section section-aufgaben">
-        <h2>Aufgaben</h2>
+<details class="fold-box">
+<summary><h2>Aufgaben</h2><span class="quiz-box-hint">3 Aufgaben + Bonus &middot; zum Aufklappen klicken</span></summary>
+<div class="fold-body">
         <div class="aufgaben-list">
           <div class="aufgabe">
   <div class="aufgabe-header">
@@ -297,6 +306,8 @@ const theme = getCookie('theme');</code></pre>
   <p>Schreiben Sie zu <code>getCookie</code> passende Funktionen <code>setCookie(name, value, days)</code> und <code>deleteCookie(name)</code> &ndash; inklusive <code>encodeURIComponent</code>.</p>
 </div>
         </div>
+</div>
+</details>
       </section>
 
       <section class="section section-quiz">

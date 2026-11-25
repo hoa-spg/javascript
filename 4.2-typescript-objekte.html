@@ -57,6 +57,9 @@
         <a class="nav-link" href="4.3-typescript-generics.html"><span class="ln">4.3</span>Generics, DOM &amp; fetch</a>
       </div>
     </nav>
+    <div class="sidebar-footer">
+      <a class="sidebar-home" href="https://hoa-spg.github.io/">&larr; Kursseite</a>
+    </div>
   </aside>
 
   <main class="main-content">
@@ -274,7 +277,9 @@ const formen: Form[] = [new Rechteck(2, 3), new Rechteck(1, 1)];</code></pre>
       </section>
 
       <section class="section section-fehler">
-        <h2>H&auml;ufige Fehler</h2>
+<details class="fold-box">
+<summary><h2>H&auml;ufige Fehler</h2><span class="quiz-box-hint">3 Fehler &middot; zum Aufklappen klicken</span></summary>
+<div class="fold-body">
         <div class="fehler-item">
   <div class="fehler-title">Fehler: Property has no initializer</div>
   <p>Ein Feld ist deklariert, wird aber im Konstruktor nicht gesetzt: <code>Property 'inhaber' has no initializer and is not definitely assigned in the constructor</code>.</p>
@@ -290,10 +295,14 @@ const formen: Form[] = [new Rechteck(2, 3), new Rechteck(1, 1)];</code></pre>
   <p><code>const p: Person = { vorname: "Anna", alter: 17, hobby: "Tennis" }</code> meldet <code>Object literal may only specify known properties</code>.</p>
           <p class="fehler-fix">Die Eigenschaft in den Typ aufnehmen oder weglassen.</p>
 </div>
+</div>
+</details>
       </section>
 
       <section class="section section-aufgaben">
-        <h2>Aufgaben</h2>
+<details class="fold-box">
+<summary><h2>Aufgaben</h2><span class="quiz-box-hint">3 Aufgaben + Bonus &middot; zum Aufklappen klicken</span></summary>
+<div class="fold-body">
         <div class="aufgaben-list">
           <div class="aufgabe">
   <div class="aufgabe-header">
@@ -324,6 +333,8 @@ const formen: Form[] = [new Rechteck(2, 3), new Rechteck(1, 1)];</code></pre>
   <p>Erg&auml;nzen Sie zum Interface <code>Form</code> die Klassen <code>Kreis</code> (Fl&auml;che <code>Math.PI * r * r</code>) und <code>Quadrat</code>. Berechnen Sie mit <code>reduce</code> die Gesamtfl&auml;che eines <code>Form[]</code>.</p>
 </div>
         </div>
+</div>
+</details>
       </section>
 
       <section class="section section-quiz">

@@ -57,6 +57,9 @@
         <a class="nav-link" href="4.3-typescript-generics.html"><span class="ln">4.3</span>Generics, DOM &amp; fetch</a>
       </div>
     </nav>
+    <div class="sidebar-footer">
+      <a class="sidebar-home" href="https://hoa-spg.github.io/">&larr; Kursseite</a>
+    </div>
   </aside>
 
   <main class="main-content">
@@ -324,7 +327,9 @@ ALTER TABLE "MyTable"
       </section>
 
       <section class="section section-fehler">
-        <h2>H&auml;ufige Fehler</h2>
+<details class="fold-box">
+<summary><h2>H&auml;ufige Fehler</h2><span class="quiz-box-hint">3 Fehler &middot; zum Aufklappen klicken</span></summary>
+<div class="fold-body">
         <div class="fehler-item">
   <div class="fehler-title">Fehler: Client nach Schema-&Auml;nderung nicht neu generiert</div>
   <p>Ein neues Feld im Schema ist im Code unbekannt (<code>Unknown argument</code>).</p>
@@ -340,10 +345,14 @@ ALTER TABLE "MyTable"
   <p>Nach dem Umbenennen einer Spalte sind alle Werte weg.</p>
           <p class="fehler-fix">Migration mit <code>--create-only</code> erstellen und das <code>DROP</code>/<code>ADD</code> durch <code>RENAME COLUMN</code> ersetzen.</p>
 </div>
+</div>
+</details>
       </section>
 
       <section class="section section-aufgaben">
-        <h2>Aufgaben</h2>
+<details class="fold-box">
+<summary><h2>Aufgaben</h2><span class="quiz-box-hint">3 Aufgaben + Bonus &middot; zum Aufklappen klicken</span></summary>
+<div class="fold-body">
         <div class="aufgaben-list">
           <div class="aufgabe">
   <div class="aufgabe-header">
@@ -374,6 +383,8 @@ ALTER TABLE "MyTable"
   <p>Benennen Sie im Modell <code>Todo</code> das Feld <code>text</code> in <code>title</code> um &ndash; nach dem Vorgehen aus Abschnitt 6, sodass die bestehenden Daten erhalten bleiben.</p>
 </div>
         </div>
+</div>
+</details>
       </section>
 
       <section class="section section-quiz">

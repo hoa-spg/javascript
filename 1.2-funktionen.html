@@ -57,6 +57,9 @@
         <a class="nav-link" href="4.3-typescript-generics.html"><span class="ln">4.3</span>Generics, DOM &amp; fetch</a>
       </div>
     </nav>
+    <div class="sidebar-footer">
+      <a class="sidebar-home" href="https://hoa-spg.github.io/">&larr; Kursseite</a>
+    </div>
   </aside>
 
   <main class="main-content">
@@ -396,7 +399,9 @@ console.log(counter2()); // 1</code></pre>
       </section>
 
       <section class="section section-fehler">
-        <h2>H&auml;ufige Fehler</h2>
+<details class="fold-box">
+<summary><h2>H&auml;ufige Fehler</h2><span class="quiz-box-hint">3 Fehler &middot; zum Aufklappen klicken</span></summary>
+<div class="fold-body">
         <div class="fehler-item">
   <div class="fehler-title">Fehler: Funktion aufgerufen statt &uuml;bergeben</div>
   <p><code>setTimeout(speichern(), 1000)</code> f&uuml;hrt <code>speichern</code> sofort aus und &uuml;bergibt das Ergebnis.</p>
@@ -412,10 +417,14 @@ console.log(counter2()); // 1</code></pre>
   <p><code>[10, 2, 5].sort()</code> ergibt <code>[10, 2, 5]</code>.</p>
           <p class="fehler-fix">Zahlen immer mit Vergleichsfunktion sortieren: <code>sort((a, b) =&gt; a - b)</code>.</p>
 </div>
+</div>
+</details>
       </section>
 
       <section class="section section-aufgaben">
-        <h2>Aufgaben</h2>
+<details class="fold-box">
+<summary><h2>Aufgaben</h2><span class="quiz-box-hint">3 Aufgaben + Bonus &middot; zum Aufklappen klicken</span></summary>
+<div class="fold-body">
         <div class="aufgaben-list">
           <div class="aufgabe">
   <div class="aufgabe-header">
@@ -446,6 +455,8 @@ console.log(counter2()); // 1</code></pre>
   <p>Schreiben Sie eine Funktion <code>makeKonto(startbetrag)</code>, die ein Objekt mit den Methoden <code>einzahlen(betrag)</code>, <code>abheben(betrag)</code> und <code>kontostand()</code> zur&uuml;ckgibt. Der Kontostand selbst soll von au&szlig;en nicht ver&auml;nderbar sein.</p>
 </div>
         </div>
+</div>
+</details>
       </section>
 
       <section class="section section-quiz">

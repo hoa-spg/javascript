@@ -57,6 +57,9 @@
         <a class="nav-link" href="4.3-typescript-generics.html"><span class="ln">4.3</span>Generics, DOM &amp; fetch</a>
       </div>
     </nav>
+    <div class="sidebar-footer">
+      <a class="sidebar-home" href="https://hoa-spg.github.io/">&larr; Kursseite</a>
+    </div>
   </aside>
 
   <main class="main-content">
@@ -271,7 +274,9 @@ npm run dev</code></pre>
       </section>
 
       <section class="section section-fehler">
-        <h2>H&auml;ufige Fehler</h2>
+<details class="fold-box">
+<summary><h2>H&auml;ufige Fehler</h2><span class="quiz-box-hint">3 Fehler &middot; zum Aufklappen klicken</span></summary>
+<div class="fold-body">
         <div class="fehler-item">
   <div class="fehler-title">Fehler: Property 'value' does not exist on type 'HTMLElement'</div>
   <p><code>document.getElementById("name").value</code> &ndash; TypeScript wei&szlig; nur, dass es irgendein Element ist.</p>
@@ -287,10 +292,14 @@ npm run dev</code></pre>
   <p><code>const zahl = ("5" as any) as number</code> l&auml;sst sich &uuml;bersetzen, ist zur Laufzeit aber immer noch ein String.</p>
           <p class="fehler-fix"><code>as</code> nur f&uuml;r Daten von au&szlig;en (z.&nbsp;B. <code>fetch</code>) verwenden; Werte im eigenen Code richtig umwandeln (<code>Number("5")</code>).</p>
 </div>
+</div>
+</details>
       </section>
 
       <section class="section section-aufgaben">
-        <h2>Aufgaben</h2>
+<details class="fold-box">
+<summary><h2>Aufgaben</h2><span class="quiz-box-hint">3 Aufgaben + Bonus &middot; zum Aufklappen klicken</span></summary>
+<div class="fold-body">
         <div class="aufgaben-list">
           <div class="aufgabe">
   <div class="aufgabe-header">
@@ -321,6 +330,8 @@ npm run dev</code></pre>
   <p>Stellen Sie die Todo-App aus Lektion 2.2 auf TypeScript um: ein Interface f&uuml;r ein Todo, ein Typ f&uuml;r den State, typisierte Mutatoren und DOM-Referenzen.</p>
 </div>
         </div>
+</div>
+</details>
       </section>
 
       <section class="section section-quiz">

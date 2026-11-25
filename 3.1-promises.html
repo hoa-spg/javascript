@@ -57,6 +57,9 @@
         <a class="nav-link" href="4.3-typescript-generics.html"><span class="ln">4.3</span>Generics, DOM &amp; fetch</a>
       </div>
     </nav>
+    <div class="sidebar-footer">
+      <a class="sidebar-home" href="https://hoa-spg.github.io/">&larr; Kursseite</a>
+    </div>
   </aside>
 
   <main class="main-content">
@@ -378,7 +381,9 @@ Promise.allSettled([p1, p2])
       </section>
 
       <section class="section section-fehler">
-        <h2>H&auml;ufige Fehler</h2>
+<details class="fold-box">
+<summary><h2>H&auml;ufige Fehler</h2><span class="quiz-box-hint">3 Fehler &middot; zum Aufklappen klicken</span></summary>
+<div class="fold-body">
         <div class="fehler-item">
   <div class="fehler-title">Fehler: return in der Kette vergessen</div>
   <p>Im <code>then</code> wird <code>response.json()</code> aufgerufen, aber nicht zur&uuml;ckgegeben &ndash; der n&auml;chste Schritt bekommt <code>undefined</code>.</p>
@@ -394,10 +399,14 @@ Promise.allSettled([p1, p2])
   <p><code>fetch</code> wirft bei 404 oder 500 <strong>keinen</strong> Fehler &ndash; nur bei Netzwerkproblemen.</p>
           <p class="fehler-fix"><code>response.ok</code> pr&uuml;fen und bei Bedarf selbst einen Error werfen.</p>
 </div>
+</div>
+</details>
       </section>
 
       <section class="section section-aufgaben">
-        <h2>Aufgaben</h2>
+<details class="fold-box">
+<summary><h2>Aufgaben</h2><span class="quiz-box-hint">3 Aufgaben + Bonus &middot; zum Aufklappen klicken</span></summary>
+<div class="fold-body">
         <div class="aufgaben-list">
           <div class="aufgabe">
   <div class="aufgabe-header">
@@ -428,6 +437,8 @@ Promise.allSettled([p1, p2])
   <p>Laden Sie die Todos 1 bis 5 parallel mit <code>Promise.all</code> und geben Sie alle Titel als Liste aus. Was passiert, wenn eine der URLs falsch ist? Probieren Sie dasselbe mit <code>Promise.allSettled</code>.</p>
 </div>
         </div>
+</div>
+</details>
       </section>
 
       <section class="section section-quiz">

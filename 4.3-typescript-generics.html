@@ -344,34 +344,35 @@ npm run dev</code></pre>
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 1</span> Was bedeutet <code>&lt;T&gt;</code> in <code>function erstes&lt;T&gt;(liste: T[]): T</code>?</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>Die Funktion arbeitet nur mit Texten</span></label></li>
       <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-1"> <span>Einen Platzhalter für einen Typ, der erst beim Aufruf feststeht</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>Ein HTML-Tag</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>Dass die Funktion asynchron ist</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>Ein HTML-Tag</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>Die Funktion arbeitet nur mit Texten</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
     <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Mit einem <code>number[]</code> liefert die Funktion eine <code>number</code>, mit einem <code>string[]</code> einen <code>string</code> – ohne Typinformation zu verlieren.</div>
   </div>
-  <div class="quiz-frage" data-multi="0">
-    <p class="quiz-q"><span class="quiz-num">Frage 2</span> Welchen Rückgabetyp hat <code>async function lade()</code>, die ein <code>Todo</code> liefert?</p>
+  <div class="quiz-frage" data-multi="1">
+    <p class="quiz-q"><span class="quiz-num">Frage 2</span> <code>async function lade()</code> liefert ein <code>Todo</code>. Was stimmt?</p>
+    <p class="quiz-hint">Mehrere Antworten sind richtig.</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span><code>Todo</code></span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-2"> <span><code>Promise&lt;Todo&gt;</code></span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span><code>async Todo</code></span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span><code>Todo[]</code></span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-2"> <span>Der Rückgabetyp ist <code>Promise&lt;Todo&gt;</code></span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-2"> <span>Der Rückgabetyp ist <code>Todo</code></span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-2"> <span>Mit <code>await lade()</code> bekommt der Aufrufer das <code>Todo</code> selbst</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-2"> <span>Der Rückgabetyp ist <code>async Todo</code></span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
-    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Eine <code>async</code>-Funktion liefert immer ein Promise. <code>: Todo</code> führt zum Fehler „must be the global Promise&lt;T&gt; type“.</div>
+    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Eine <code>async</code>-Funktion gibt immer ein Promise zurück, hier also <code>Promise&lt;Todo&gt;</code>. Der Aufrufer bekommt das <code>Todo</code> selbst mit <code>await lade()</code>. <code>async Todo</code> ist keine gültige Typangabe.</div>
   </div>
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 3</span> Was prüft <code>const todo = await response.json() as Todo;</code>?</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Ob der Server wirklich ein Todo geschickt hat</span></label></li>
       <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-3"> <span>Nichts – <code>as</code> ist ein Versprechen an den Compiler, keine Kontrolle zur Laufzeit</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Ob die Antwort gültiges JSON ist</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Ob der Statuscode 200 ist</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Ob die Antwort gültiges JSON ist</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Ob der Server wirklich ein Todo geschickt hat</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
@@ -389,17 +390,18 @@ npm run dev</code></pre>
     <p class="quiz-feedback" hidden></p>
     <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> <code>getElementById</code> liefert nur ein allgemeines <code>HTMLElement</code> (ohne <code>value</code>) oder <code>null</code>.</div>
   </div>
-  <div class="quiz-frage" data-multi="0">
-    <p class="quiz-q"><span class="quiz-num">Frage 5</span> Was erzeugt <code>Partial&lt;Todo&gt;</code>?</p>
+  <div class="quiz-frage" data-multi="1">
+    <p class="quiz-q"><span class="quiz-num">Frage 5</span> Was trifft auf <code>Partial&lt;Todo&gt;</code> zu?</p>
+    <p class="quiz-hint">Mehrere Antworten sind richtig.</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span>Einen Typ mit nur einer Eigenschaft von <code>Todo</code></span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-5"> <span>Einen Typ, in dem alle Eigenschaften von <code>Todo</code> optional sind</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span>Ein Array von Todos</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span>Einen Typ ohne die Eigenschaft <code>id</code></span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-5"> <span>Einen Typ mit nur einer Eigenschaft von <code>Todo</code></span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-5"> <span>Einen Typ, in dem alle Eigenschaften von <code>Todo</code> optional sind</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-5"> <span>Auch ein leeres Objekt <code>{}</code> passt zum Typ <code>Partial&lt;Todo&gt;</code></span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-5"> <span>Ein Array von Todos</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
-    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Praktisch z. B. für Updates, bei denen nur einzelne Felder geändert werden. Eine Eigenschaft weglassen würde man mit <code>Omit&lt;Todo, "id"&gt;</code>.</div>
+    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> <code>Partial&lt;Todo&gt;</code> ist ein Typ, in dem alle Eigenschaften von <code>Todo</code> optional sind. Deshalb passt auch ein leeres Objekt <code>{}</code> dazu. Es ist kein Array und entfernt keine Eigenschaften.</div>
   </div>
   <div class="quiz-summary"><span class="quiz-score"></span><button type="button" class="quiz-reset">Zur&uuml;cksetzen</button></div>
 </div>

@@ -317,49 +317,51 @@ const theme = getCookie('theme');</code></pre>
         <details class="quiz-box">
 <summary><h2>Quiz</h2><span class="quiz-box-hint">5 Fragen &middot; zum Aufklappen klicken</span></summary>
 <div class="quiz" id="quiz-1">
-  <div class="quiz-frage" data-multi="0">
-    <p class="quiz-q"><span class="quiz-num">Frage 1</span> Was gehört <strong>nicht</strong> in ein Cookie?</p>
+  <div class="quiz-frage" data-multi="1">
+    <p class="quiz-q"><span class="quiz-num">Frage 1</span> Welche Daten sind typische, sinnvolle Inhalte eines Cookies?</p>
+    <p class="quiz-hint">Mehrere Antworten sind richtig.</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>Eine Session-ID</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>Die gewählte Sprache</span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-1"> <span>Ein Passwort im Klartext</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>Der Cookie-Consent-Status</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-1"> <span>Ein Passwort im Klartext</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-1"> <span>Eine Session-ID</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-1"> <span>Der Cookie-Consent-Status</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-1"> <span>Die gewählte Sprache</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
-    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Keine Passwörter oder sensiblen Klartextdaten. Oft steht nur eine ID im Cookie, die eigentlichen Daten liegen am Server.</div>
+    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Session-ID, gewählte Sprache und Cookie-Consent-Status sind typische Cookie-Inhalte. Ein Passwort im Klartext gehört nie in ein Cookie – Cookies werden bei jeder Anfrage mitgeschickt und liegen lesbar auf dem Rechner.</div>
   </div>
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 2</span> Was ist ein <strong>Third-Party-Cookie</strong>?</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Ein Cookie, das drei Tage gültig ist</span></label></li>
       <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-2"> <span>Ein Cookie einer eingebundenen fremden Domain, z. B. eines Werbe- oder Analyse-Skripts</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Ein Cookie, das nur über HTTPS gesendet wird</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Ein Cookie, das drei Tage gültig ist</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Ein Cookie der aktuell besuchten Domain</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
     <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Third-Party-Cookies ermöglichen seitenübergreifendes Tracking und werden in modernen Browsern stark eingeschränkt.</div>
   </div>
-  <div class="quiz-frage" data-multi="0">
-    <p class="quiz-q"><span class="quiz-num">Frage 3</span> Was bewirkt das Cookie-Attribut <code>HttpOnly</code>?</p>
+  <div class="quiz-frage" data-multi="1">
+    <p class="quiz-q"><span class="quiz-num">Frage 3</span> Was trifft auf das Cookie-Attribut <code>HttpOnly</code> zu?</p>
+    <p class="quiz-hint">Mehrere Antworten sind richtig.</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Das Cookie wird nur über HTTP, nicht über HTTPS gesendet</span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-3"> <span>Das Cookie ist für JavaScript nicht lesbar, nur für den Server</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Das Cookie wird beim Schließen des Browsers gelöscht</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Das Cookie schützt gegen CSRF</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-3"> <span>Eingeschleuster JavaScript-Code kann das Cookie nicht über <code>document.cookie</code> auslesen</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-3"> <span>Das Cookie wird nur über HTTP, nicht über HTTPS gesendet</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-3"> <span>Das Cookie schützt gegen CSRF</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-3"> <span>Das Cookie ist für JavaScript nicht lesbar, nur für den Server</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
-    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> <code>HttpOnly</code> schützt z. B. Session-Cookies davor, von eingeschleustem JavaScript gestohlen zu werden. Nur über HTTPS bedeutet <code>Secure</code>, gegen CSRF hilft <code>SameSite</code>.</div>
+    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Ein <code>HttpOnly</code>-Cookie ist für JavaScript nicht lesbar, nur der Server bekommt es. Eingeschleuster JavaScript-Code kann es deshalb nicht über <code>document.cookie</code> auslesen. Nur über HTTPS bedeutet <code>Secure</code>, gegen CSRF hilft <code>SameSite</code>.</div>
   </div>
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 4</span> Warum liefert <code>document.cookie.theme</code> den Wert <code>undefined</code>?</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Weil Cookies nur auf dem Server lesbar sind</span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-4"> <span>Weil <code>document.cookie</code> ein String ist, den man selbst zerlegen muss</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Weil man <code>document.cookies</code> schreiben muss</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Weil das Cookie abgelaufen ist</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Weil Cookies nur auf dem Server lesbar sind</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Weil man <code>document.cookies</code> schreiben muss</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-4"> <span>Weil <code>document.cookie</code> ein String ist, den man selbst zerlegen muss</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
@@ -368,10 +370,10 @@ const theme = getCookie('theme');</code></pre>
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 5</span> <code>document.cookie = "theme=; Max-Age=0"</code> löscht das Cookie nicht. Was ist die wahrscheinliche Ursache?</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span><code>Max-Age</code> muss negativ sein</span></label></li>
       <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-5"> <span>Das Cookie wurde mit einem anderen <code>Path</code> (z. B. <code>Path=/</code>) gesetzt – beim Löschen muss derselbe Path angegeben werden</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span>Cookies kann man mit JavaScript nicht löschen</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span>Der Wert darf nicht leer sein</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span><code>Max-Age</code> muss negativ sein</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>

@@ -452,9 +452,9 @@ Promise.allSettled([p1, p2])
     <p class="quiz-q"><span class="quiz-num">Frage 1</span> Welche drei Zustände kann ein Promise haben?</p>
     <ul class="quiz-opts">
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>started, running, stopped</span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-1"> <span>pending, fulfilled, rejected</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>open, closed, error</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>waiting, done, cancelled</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>open, closed, error</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-1"> <span>pending, fulfilled, rejected</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
@@ -463,46 +463,48 @@ Promise.allSettled([p1, p2])
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 2</span> Im <code>then</code> wird <code>response.json()</code> aufgerufen, aber nicht zurückgegeben. Was bekommt das nächste <code>then</code>?</p>
     <ul class="quiz-opts">
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Das Response-Objekt</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Die JSON-Daten</span></label></li>
       <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-2"> <span><code>undefined</code></span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Das Response-Objekt</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Einen Fehler</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
     <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> In einer Promise-Kette muss jeder Schritt sein Ergebnis mit <code>return</code> weitergeben.</div>
   </div>
-  <div class="quiz-frage" data-multi="0">
-    <p class="quiz-q"><span class="quiz-num">Frage 3</span> Was liefert <code>const data = response.json();</code> (ohne <code>await</code>)?</p>
+  <div class="quiz-frage" data-multi="1">
+    <p class="quiz-q"><span class="quiz-num">Frage 3</span> <code>const data = response.json();</code> (ohne <code>await</code>) – was stimmt?</p>
+    <p class="quiz-hint">Mehrere Antworten sind richtig.</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Die geparsten Daten</span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-3"> <span>Ein Promise</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Einen String</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span><code>null</code></span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-3"> <span><code>data</code> ist ein Promise</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-3"> <span>Die Daten selbst bekommt man mit <code>await response.json()</code></span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-3"> <span><code>data</code> enthält die geparsten Daten</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-3"> <span><code>data</code> ist ein String</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
-    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Richtig ist <code>const data = await response.json();</code> in einer <code>async</code>-Funktion.</div>
+    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> <code>response.json()</code> liefert ein Promise, weil das Lesen und Parsen des Bodys Zeit braucht. Die Daten selbst bekommt man mit <code>await response.json()</code> oder in einem <code>.then(…)</code>.</div>
   </div>
-  <div class="quiz-frage" data-multi="0">
-    <p class="quiz-q"><span class="quiz-num">Frage 4</span> Wirft <code>fetch</code> einen Fehler, wenn der Server mit Status 404 antwortet?</p>
+  <div class="quiz-frage" data-multi="1">
+    <p class="quiz-q"><span class="quiz-num">Frage 4</span> Der Server antwortet auf einen <code>fetch</code>-Aufruf mit Status 404. Was stimmt?</p>
+    <p class="quiz-hint">Mehrere Antworten sind richtig.</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Ja, bei jedem Status außer 200</span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-4"> <span>Nein – nur bei Netzwerkproblemen; man prüft <code>response.ok</code> selbst</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Ja, aber nur bei <code>await</code></span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Nein, fetch wirft nie Fehler</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-4"> <span><code>fetch</code> wirft bei jedem Status außer 200 einen Fehler</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-4"> <span><code>fetch</code> wirft nie Fehler, auch nicht bei Netzwerkproblemen</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-4"> <span><code>fetch</code> wirft keinen Fehler – das passiert nur bei Netzwerkproblemen</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-4"> <span>Man prüft selbst <code>response.ok</code> (bzw. <code>response.status</code>)</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
-    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Auch 404 oder 500 sind für <code>fetch</code> eine erfolgreiche Antwort. Bei <code>!response.ok</code> wirft man bei Bedarf selbst einen Error.</div>
+    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> <code>fetch</code> wirft nur bei Netzwerkproblemen einen Fehler, nicht bei HTTP-Fehlerstatus wie 404 oder 500. Ob die Anfrage erfolgreich war, prüft man selbst mit <code>response.ok</code> bzw. <code>response.status</code>.</div>
   </div>
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 5</span> Was ist der Unterschied zwischen <code>Promise.all</code> und <code>Promise.allSettled</code>?</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span>Es gibt keinen</span></label></li>
       <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-5"> <span><code>all</code> schlägt fehl, sobald ein Promise rejected wird; <code>allSettled</code> wartet auf alle und liefert jedes Ergebnis mit Status</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span><code>all</code> läuft nacheinander, <code>allSettled</code> parallel</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span>Es gibt keinen</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span><code>allSettled</code> bricht beim ersten Erfolg ab</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span><code>all</code> läuft nacheinander, <code>allSettled</code> parallel</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>

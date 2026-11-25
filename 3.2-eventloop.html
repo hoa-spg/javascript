@@ -278,9 +278,9 @@ console.log(6);</code></pre>
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 1</span> In welcher Reihenfolge erscheinen die Ausgaben?<br><code>console.log("A"); setTimeout(() =&gt; console.log("B"), 0); Promise.resolve().then(() =&gt; console.log("C")); console.log("D");</code></p>
     <ul class="quiz-opts">
+      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-1"> <span>A, D, C, B</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>A, B, C, D</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>A, D, B, C</span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-1"> <span>A, D, C, B</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>A, C, D, B</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
@@ -290,50 +290,52 @@ console.log(6);</code></pre>
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 2</span> In welche Warteschlange kommen die Callbacks von <code>then</code>/<code>catch</code>?</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Task Queue (Macrotasks)</span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-2"> <span>Microtask Queue</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Direkt auf den Call Stack</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>In die Web APIs</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-2"> <span>Microtask Queue</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Task Queue (Macrotasks)</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
     <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> <code>setTimeout</code> und DOM-Events landen in der Task Queue, Promise-Callbacks und <code>queueMicrotask</code> in der Microtask Queue.</div>
   </div>
-  <div class="quiz-frage" data-multi="0">
-    <p class="quiz-q"><span class="quiz-num">Frage 3</span> Was bedeutet <code>setTimeout(fn, 0)</code>?</p>
+  <div class="quiz-frage" data-multi="1">
+    <p class="quiz-q"><span class="quiz-num">Frage 3</span> Was trifft auf <code>setTimeout(fn, 0)</code> zu?</p>
+    <p class="quiz-hint">Mehrere Antworten sind richtig.</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span><code>fn</code> wird sofort synchron ausgeführt</span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-3"> <span><code>fn</code> wird so bald wie möglich ausgeführt – sobald der Stack leer ist und alle Microtasks erledigt sind</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span><code>fn</code> wird nie ausgeführt</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span><code>fn</code> wird in einem eigenen Thread ausgeführt</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-3"> <span>Ein bereits wartender <code>then</code>-Callback läuft vor <code>fn</code></span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-3"> <span><code>fn</code> wird sofort synchron ausgeführt</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-3"> <span><code>fn</code> wird so bald wie möglich ausgeführt – sobald der Stack leer ist und alle Microtasks erledigt sind</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-3"> <span><code>fn</code> wird in einem eigenen Thread ausgeführt</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
-    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> 0 ms heißt „so bald wie möglich“, nicht „jetzt“.</div>
+    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> <code>fn</code> kommt in die Task Queue und läuft, sobald der Call Stack leer ist und alle Microtasks erledigt sind. Ein bereits wartender <code>then</code>-Callback (Microtask) läuft deshalb vor <code>fn</code>. Synchron oder in einem eigenen Thread läuft <code>fn</code> nicht.</div>
   </div>
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 4</span> <code>let daten; fetch(url).then(r =&gt; daten = r); console.log(daten);</code> – was wird ausgegeben?</p>
     <ul class="quiz-opts">
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Die Response</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Ein Fehler</span></label></li>
       <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-4"> <span><code>undefined</code></span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Ein Promise</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Ein Fehler</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
     <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Das <code>then</code> läuft erst später. Mit dem Ergebnis arbeitet man innerhalb von <code>then</code> bzw. nach <code>await</code> weiter.</div>
   </div>
-  <div class="quiz-frage" data-multi="0">
-    <p class="quiz-q"><span class="quiz-num">Frage 5</span> Ein Klick startet eine lange Rechenschleife, und die Seite reagiert sekundenlang nicht. Warum?</p>
+  <div class="quiz-frage" data-multi="1">
+    <p class="quiz-q"><span class="quiz-num">Frage 5</span> Ein Klick startet eine lange Rechenschleife, und die Seite reagiert sekundenlang nicht. Welche Aussagen dazu sind richtig?</p>
+    <p class="quiz-hint">Mehrere Antworten sind richtig.</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span>Weil der Browser Klicks nur einmal pro Sekunde verarbeitet</span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-5"> <span>Weil JavaScript single-threaded ist: Solange der Call Stack belegt ist, kann der Event Loop nichts anderes abarbeiten</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span>Weil Schleifen in JavaScript asynchron laufen</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span>Weil die Microtask Queue voll ist</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-5"> <span>Weil der Browser Klicks nur einmal pro Sekunde verarbeitet</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-5"> <span>Weil JavaScript single-threaded ist: Solange der Call Stack belegt ist, kann der Event Loop nichts anderes abarbeiten</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-5"> <span>Auch das Neuzeichnen der Seite muss warten, bis die Schleife fertig ist</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-5"> <span>Weil Schleifen in JavaScript asynchron laufen</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
-    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Abhilfe: Arbeit in kleinere Stücke teilen (z. B. mit <code>setTimeout</code>) oder einen Web Worker verwenden.</div>
+    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> JavaScript ist single-threaded: Solange die Schleife den Call Stack belegt, kann der Event Loop nichts anderes abarbeiten – weder weitere Klicks noch das Neuzeichnen der Seite. Schleifen laufen synchron, und mit der Microtask Queue hat das nichts zu tun.</div>
   </div>
   <div class="quiz-summary"><span class="quiz-score"></span><button type="button" class="quiz-reset">Zur&uuml;cksetzen</button></div>
 </div>

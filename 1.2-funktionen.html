@@ -466,25 +466,26 @@ console.log(counter2()); // 1</code></pre>
         <details class="quiz-box">
 <summary><h2>Quiz</h2><span class="quiz-box-hint">5 Fragen &middot; zum Aufklappen klicken</span></summary>
 <div class="quiz" id="quiz-1">
-  <div class="quiz-frage" data-multi="0">
-    <p class="quiz-q"><span class="quiz-num">Frage 1</span> Was passiert bei <code>setTimeout(speichern(), 1000)</code>?</p>
+  <div class="quiz-frage" data-multi="1">
+    <p class="quiz-q"><span class="quiz-num">Frage 1</span> <code>setTimeout(speichern(), 1000)</code> – was stimmt?</p>
+    <p class="quiz-hint">Mehrere Antworten sind richtig.</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span><code>speichern</code> wird nach einer Sekunde aufgerufen</span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-1"> <span><code>speichern</code> wird sofort aufgerufen und nur sein Rückgabewert an <code>setTimeout</code> übergeben</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span><code>speichern</code> wird jede Sekunde aufgerufen</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>Es gibt einen Syntaxfehler</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-1"> <span><code>speichern</code> wird nach einer Sekunde aufgerufen</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-1"> <span><code>speichern</code> wird sofort aufgerufen und nur sein Rückgabewert an <code>setTimeout</code> übergeben</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-1"> <span>Richtig wäre <code>setTimeout(speichern, 1000)</code> – ohne Klammern hinter <code>speichern</code></span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-1"> <span><code>speichern</code> wird jede Sekunde aufgerufen</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
-    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Mit <code>()</code> wird eine Funktion aufgerufen, ohne <code>()</code> übergeben. Richtig: <code>setTimeout(speichern, 1000)</code> oder <code>setTimeout(() =&gt; speichern(), 1000)</code>.</div>
+    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Die Klammern rufen <code>speichern</code> sofort auf; an <code>setTimeout</code> geht nur der Rückgabewert. Richtig ist <code>setTimeout(speichern, 1000)</code>: Dann wird die Funktion selbst übergeben und nach einer Sekunde aufgerufen. Ein Syntaxfehler entsteht nicht.</div>
   </div>
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 2</span> Was gibt <code>[10, 2, 5].sort()</code> zurück?</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span><code>[2, 5, 10]</code></span></label></li>
       <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-2"> <span><code>[10, 2, 5]</code></span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span><code>[10, 5, 2]</code></span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Einen Fehler</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span><code>[10, 5, 2]</code></span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span><code>[2, 5, 10]</code></span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
@@ -493,10 +494,10 @@ console.log(counter2()); // 1</code></pre>
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 3</span> Eine Funktion wird mit weniger Argumenten aufgerufen, als sie Parameter hat. Was passiert?</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Es gibt einen Fehler wie in Java</span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-3"> <span>Die fehlenden Parameter sind <code>undefined</code></span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Die fehlenden Parameter sind <code>0</code></span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Die Funktion wird nicht ausgeführt</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Die fehlenden Parameter sind <code>0</code></span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-3"> <span>Die fehlenden Parameter sind <code>undefined</code></span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Es gibt einen Fehler wie in Java</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
@@ -505,8 +506,8 @@ console.log(counter2()); // 1</code></pre>
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 4</span> Warum sollte man Methoden in Objekten nicht als Arrow-Function schreiben?</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Weil Arrow-Functions keine Parameter haben dürfen</span></label></li>
       <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-4"> <span>Weil Arrow-Functions kein eigenes <code>this</code> haben</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Weil Arrow-Functions keine Parameter haben dürfen</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Weil Arrow-Functions langsamer sind</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Weil Arrow-Functions nicht in Objekten erlaubt sind</span></label></li>
     </ul>
@@ -514,17 +515,18 @@ console.log(counter2()); // 1</code></pre>
     <p class="quiz-feedback" hidden></p>
     <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> In einer Methode soll <code>this</code> auf das Objekt zeigen. Eine Arrow-Function übernimmt <code>this</code> aus der Umgebung.</div>
   </div>
-  <div class="quiz-frage" data-multi="0">
-    <p class="quiz-q"><span class="quiz-num">Frage 5</span> Was ist eine <strong>Closure</strong>?</p>
+  <div class="quiz-frage" data-multi="1">
+    <p class="quiz-q"><span class="quiz-num">Frage 5</span> Was trifft auf eine <strong>Closure</strong> zu?</p>
+    <p class="quiz-hint">Mehrere Antworten sind richtig.</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span>Eine Funktion, die sich selbst aufruft</span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-5"> <span>Eine Funktion, die auf Variablen ihrer umgebenden Funktion zugreift – auch nachdem diese beendet ist</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span>Das Schließen des Browserfensters per JavaScript</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span>Eine Funktion ohne Rückgabewert</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-5"> <span>Eine Funktion, die sich selbst aufruft</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-5"> <span>Mit einer Closure lässt sich z. B. ein Zähler bauen, auf den nur die innere Funktion zugreifen kann</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-5"> <span>Das Schließen des Browserfensters per JavaScript</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-5"> <span>Eine Funktion, die auf Variablen ihrer umgebenden Funktion zugreift – auch nachdem diese beendet ist</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
-    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Beim Counter-Beispiel „merkt“ sich die innere Funktion die Variable <code>count</code>, obwohl die äußere Funktion längst fertig ist.</div>
+    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Eine Closure ist eine Funktion, die auf Variablen ihrer umgebenden Funktion zugreift – auch nachdem diese beendet ist. Damit lassen sich Variablen „privat“ halten, z. B. ein Zähler, an den nur die innere Funktion herankommt. Mit Selbstaufruf, Browserfenstern oder Rückgabewerten hat der Begriff nichts zu tun.</div>
   </div>
   <div class="quiz-summary"><span class="quiz-score"></span><button type="button" class="quiz-reset">Zur&uuml;cksetzen</button></div>
 </div>

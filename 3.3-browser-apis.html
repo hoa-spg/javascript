@@ -338,10 +338,10 @@ history.pushState({}, '', '?page=2');</code></pre>
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 1</span> Was ist <strong>CORS</strong>?</p>
     <ul class="quiz-opts">
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>Ein Verschlüsselungsverfahren für fetch</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>Ein Angriff, bei dem fremde Seiten Daten stehlen</span></label></li>
       <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-1"> <span>Die kontrollierte Ausnahme von der Same-Origin-Policy: Der Server erlaubt per Response-Header Cross-Origin-Zugriffe</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>Eine Browser-Einstellung, die man im Client abschalten kann</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>Ein Verschlüsselungsverfahren für fetch</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
@@ -352,8 +352,8 @@ history.pushState({}, '', '?page=2');</code></pre>
     <ul class="quiz-opts">
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Mit <code>mode: 'no-cors'</code> im fetch</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Mit eigenen Request-Headern im Client</span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-2"> <span>Der Server sendet <code>Access-Control-Allow-Origin</code> – oder man verwendet einen Proxy</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Indem man die Seite mit <code>http://</code> statt <code>https://</code> lädt</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-2"> <span>Der Server sendet <code>Access-Control-Allow-Origin</code> – oder man verwendet einen Proxy</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
@@ -362,9 +362,9 @@ history.pushState({}, '', '?page=2');</code></pre>
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 3</span> <code>localStorage.setItem('s', settings)</code> mit einem Objekt speichert <code>"[object Object]"</code>. Wie macht man es richtig?</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span><code>localStorage.setObject('s', settings)</code></span></label></li>
       <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-3"> <span>Beim Speichern <code>JSON.stringify(settings)</code>, beim Lesen <code>JSON.parse(…)</code></span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Mit <code>sessionStorage</code> statt <code>localStorage</code></span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span><code>localStorage.setObject('s', settings)</code></span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Mit <code>settings.toString()</code></span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
@@ -374,10 +374,10 @@ history.pushState({}, '', '?page=2');</code></pre>
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 4</span> Was unterscheidet <code>sessionStorage</code> von <code>localStorage</code>?</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span><code>sessionStorage</code> wird an den Server geschickt</span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-4"> <span><code>sessionStorage</code> gilt nur für den aktuellen Tab und ist nach dem Schließen weg, <code>localStorage</code> bleibt dauerhaft</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span><code>sessionStorage</code> kann Objekte speichern</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Es gibt keinen Unterschied</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-4"> <span><code>sessionStorage</code> gilt nur für den aktuellen Tab und ist nach dem Schließen weg, <code>localStorage</code> bleibt dauerhaft</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span><code>sessionStorage</code> wird an den Server geschickt</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
@@ -388,9 +388,9 @@ history.pushState({}, '', '?page=2');</code></pre>
     <p class="quiz-hint">Mehrere Antworten sind richtig.</p>
     <ul class="quiz-opts">
       <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-5"> <span>Der Header <code>'Content-Type': 'application/json'</code></span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-5"> <span>Ein mit <code>JSON.stringify</code> erzeugter Body</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-5"> <span><code>mode: 'no-cors'</code></span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-5"> <span>Der Query-String <code>?post=true</code></span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-5"> <span><code>mode: 'no-cors'</code></span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-5"> <span>Ein mit <code>JSON.stringify</code> erzeugter Body</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>

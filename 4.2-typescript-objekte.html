@@ -347,9 +347,9 @@ const formen: Form[] = [new Rechteck(2, 3), new Rechteck(1, 1)];</code></pre>
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 1</span> Was meldet TypeScript bei <code>anna.altr = 18</code>, wenn der Typ <code>Person</code> nur <code>alter</code> kennt?</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>Nichts, es wird eine neue Eigenschaft angelegt</span></label></li>
       <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-1"> <span>Einen Fehler – erlaubt sind nur die Eigenschaften, die im Typ stehen</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>Eine Warnung, die man ignorieren kann</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>Nichts, es wird eine neue Eigenschaft angelegt</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>Es wird automatisch <code>alter</code> gesetzt</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
@@ -359,50 +359,52 @@ const formen: Form[] = [new Rechteck(2, 3), new Rechteck(1, 1)];</code></pre>
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 2</span> Was bedeutet <code>email?: string</code> in einem Interface?</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Die Eigenschaft ist schreibgeschützt</span></label></li>
       <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-2"> <span>Die Eigenschaft ist optional – ihr Wert ist <code>string</code> oder <code>undefined</code></span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Die Eigenschaft ist privat</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Die Eigenschaft muss eine gültige E-Mail sein</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Die Eigenschaft ist schreibgeschützt</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
     <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Deshalb meldet TypeScript bei <code>anna.email.toUpperCase()</code> „possibly undefined“. Vorher prüfen: <code>if (anna.email !== undefined)</code>.</div>
   </div>
-  <div class="quiz-frage" data-multi="0">
+  <div class="quiz-frage" data-multi="1">
     <p class="quiz-q"><span class="quiz-num">Frage 3</span> Was bewirkt <code>readonly id: number</code>?</p>
+    <p class="quiz-hint">Mehrere Antworten sind richtig.</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Die Eigenschaft ist optional</span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-3"> <span>Die Eigenschaft kann nach dem Erzeugen nicht mehr geändert werden</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Die Eigenschaft wird nicht in JSON übernommen</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Die Eigenschaft ist zur Laufzeit gesperrt</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-3"> <span>Weist man ihr später einen neuen Wert zu, meldet TypeScript einen Fehler</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-3"> <span>Die Eigenschaft ist zur Laufzeit gesperrt</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-3"> <span>Die Eigenschaft ist optional</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-3"> <span>Die Eigenschaft kann nach dem Erzeugen nicht mehr geändert werden</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
-    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> <code>readonly</code> prüft TypeScript beim Übersetzen. Wie alle Typen existiert es zur Laufzeit nicht.</div>
+    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Eine <code>readonly</code>-Eigenschaft bekommt ihren Wert beim Erzeugen und kann danach nicht mehr geändert werden: Eine spätere Zuweisung meldet TypeScript als Fehler. Zur Laufzeit gibt es keine Sperre – die Typen sind dann verschwunden.</div>
   </div>
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 4</span> Welche Faustregel gilt im Kurs für <code>interface</code> und <code>type</code>?</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span><code>type</code> für Objekte, <code>interface</code> für Union-Typen</span></label></li>
       <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-4"> <span><code>interface</code> für Objekte, <code>type</code> für alles andere (z. B. Union-Typen)</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Nur <code>interface</code> verwenden, <code>type</code> ist veraltet</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span><code>type</code> für Objekte, <code>interface</code> für Union-Typen</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Nur <code>type</code> verwenden, <code>interface</code> gibt es nur in Java</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Nur <code>interface</code> verwenden, <code>type</code> ist veraltet</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
     <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Für Objekte sind beide fast gleichwertig. Union-Typen wie <code>"rot" | "gelb"</code> gehen aber nur mit <code>type</code>.</div>
   </div>
-  <div class="quiz-frage" data-multi="0">
+  <div class="quiz-frage" data-multi="1">
     <p class="quiz-q"><span class="quiz-num">Frage 5</span> Was verspricht eine Klasse mit <code>class Kreis implements Form</code>?</p>
+    <p class="quiz-hint">Mehrere Antworten sind richtig.</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span>Sie erbt den Code der Klasse <code>Form</code></span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-5"> <span>Sie hat alle Eigenschaften und Methoden, die das Interface <code>Form</code> verlangt – sonst meldet TypeScript einen Fehler</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span>Sie darf keine eigenen Methoden haben</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span>Sie wird zur Laufzeit gegen <code>Form</code> geprüft</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-5"> <span>Sie hat alle Eigenschaften und Methoden, die das Interface <code>Form</code> verlangt – sonst meldet TypeScript einen Fehler</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-5"> <span>Sie wird zur Laufzeit gegen <code>Form</code> geprüft</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-5"> <span>Sie erbt den Code der Klasse <code>Form</code></span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-5"> <span>Sie darf zusätzlich eigene Eigenschaften und Methoden haben</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
-    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Wie in Java: <code>implements</code> ist ein Vertrag, <code>extends</code> ist Vererbung.</div>
+    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Mit <code>implements</code> verspricht die Klasse, alle Eigenschaften und Methoden zu haben, die das Interface verlangt – sonst meldet TypeScript einen Fehler. Darüber hinaus darf sie eigene Eigenschaften und Methoden haben. Code wird nicht geerbt, und zur Laufzeit wird nichts geprüft.</div>
   </div>
   <div class="quiz-summary"><span class="quiz-score"></span><button type="button" class="quiz-reset">Zur&uuml;cksetzen</button></div>
 </div>

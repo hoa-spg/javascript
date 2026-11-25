@@ -394,37 +394,39 @@ ALTER TABLE "MyTable"
         <details class="quiz-box">
 <summary><h2>Quiz</h2><span class="quiz-box-hint">5 Fragen &middot; zum Aufklappen klicken</span></summary>
 <div class="quiz" id="quiz-1">
-  <div class="quiz-frage" data-multi="0">
-    <p class="quiz-q"><span class="quiz-num">Frage 1</span> Was ist ein <strong>ORM</strong> wie Prisma?</p>
+  <div class="quiz-frage" data-multi="1">
+    <p class="quiz-q"><span class="quiz-num">Frage 1</span> Was trifft auf ein ORM wie Prisma zu?</p>
+    <p class="quiz-hint">Mehrere Antworten sind richtig.</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>Eine Datenbank, die im Browser läuft</span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-1"> <span>Eine Schicht, die Tabellen auf Objekte abbildet, sodass man die Datenbank mit Code statt mit SQL anspricht</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>Ein CSS-Framework</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>Ein Ersatz für fetch</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-1"> <span>Eine Datenbank, die im Browser läuft</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-1"> <span>Eine Schicht, die Tabellen auf Objekte abbildet, sodass man die Datenbank mit Code statt mit SQL anspricht</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-1"> <span>Ein Ersatz für fetch</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-1"> <span>Statt SQL von Hand zu schreiben, ruft man Methoden wie <code>prisma.user.findMany()</code> auf</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
-    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> ORM steht für Object-Relational Mapping. Prisma generiert aus dem Schema einen typisierten Client.</div>
+    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Ein ORM bildet Tabellen auf Objekte ab. Statt SQL von Hand zu schreiben, ruft man Methoden wie <code>prisma.user.findMany()</code> auf. Es läuft nicht im Browser und ersetzt weder CSS noch <code>fetch</code>.</div>
   </div>
-  <div class="quiz-frage" data-multi="0">
-    <p class="quiz-q"><span class="quiz-num">Frage 2</span> Wo läuft Prisma?</p>
+  <div class="quiz-frage" data-multi="1">
+    <p class="quiz-q"><span class="quiz-num">Frage 2</span> Wo läuft Prisma, und wie kommt der Browser an die Daten?</p>
+    <p class="quiz-hint">Mehrere Antworten sind richtig.</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Im Browser</span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-2"> <span>In Node.js auf dem Server – der Browser greift per fetch auf eine API zu, die Prisma verwendet</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>In der Datenbank selbst</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Im CSS</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-2"> <span>Prisma läuft in Node.js auf dem Server</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-2"> <span>Prisma läuft im Browser</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-2"> <span>Prisma läuft in der Datenbank selbst</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-2"> <span>Der Browser greift per <code>fetch</code> auf eine API zu, die Prisma verwendet</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
-    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Datenbank-Zugangsdaten dürfen nie in den Browser gelangen. Deshalb sitzt Prisma hinter einer API.</div>
+    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Prisma läuft in Node.js auf dem Server. Der Browser greift per <code>fetch</code> auf eine API zu, die Prisma verwendet – direkt kommt er nie an die Datenbank. Prisma läuft weder in der Datenbank selbst noch im Browser.</div>
   </div>
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 3</span> Was liefert <code>const users = prisma.user.findMany();</code> ohne <code>await</code>?</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Ein Array mit allen Usern</span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-3"> <span>Ein Promise</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Den ersten User</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span><code>null</code></span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Ein Array mit allen Usern</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-3"> <span>Den ersten User</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-3"> <span>Ein Promise</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
@@ -433,9 +435,9 @@ ALTER TABLE "MyTable"
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 4</span> Ein neues Feld im Schema ist im Code unbekannt (<code>Unknown argument</code>). Was fehlt?</p>
     <ul class="quiz-opts">
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Ein <code>import</code> des Feldes</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Ein Neustart des Rechners</span></label></li>
       <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-4"> <span><code>npx prisma generate</code> – der Client muss nach jeder Schema-Änderung neu erzeugt werden</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Ein <code>import</code> des Feldes</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span>Ein neuer Datenbankbenutzer</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
@@ -446,9 +448,9 @@ ALTER TABLE "MyTable"
     <p class="quiz-q"><span class="quiz-num">Frage 5</span> Nach dem Umbenennen einer Spalte im Schema sind alle Werte weg. Wie verhindert man das?</p>
     <ul class="quiz-opts">
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span>Mit <code>npx prisma db pull</code></span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-5"> <span>Migration mit <code>--create-only</code> erstellen und das erzeugte <code>DROP</code>/<code>ADD</code> durch <code>RENAME COLUMN</code> ersetzen</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span>Gar nicht – Umbenennen löscht immer die Daten</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span>Die Spalte zuerst im Browser umbenennen</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span>Gar nicht – Umbenennen löscht immer die Daten</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-5"> <span>Migration mit <code>--create-only</code> erstellen und das erzeugte <code>DROP</code>/<code>ADD</code> durch <code>RENAME COLUMN</code> ersetzen</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>

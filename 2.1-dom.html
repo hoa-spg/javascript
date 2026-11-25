@@ -338,25 +338,26 @@ button.addEventListener('click', () =&gt; {
         <details class="quiz-box">
 <summary><h2>Quiz</h2><span class="quiz-box-hint">5 Fragen &middot; zum Aufklappen klicken</span></summary>
 <div class="quiz" id="quiz-1">
-  <div class="quiz-frage" data-multi="0">
-    <p class="quiz-q"><span class="quiz-num">Frage 1</span> Was liefert <code>document.querySelectorAll('li')</code>?</p>
+  <div class="quiz-frage" data-multi="1">
+    <p class="quiz-q"><span class="quiz-num">Frage 1</span> Was trifft auf <code>document.querySelectorAll('li')</code> zu?</p>
+    <p class="quiz-hint">Mehrere Antworten sind richtig.</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>Das erste <code>&lt;li&gt;</code>-Element</span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-1"> <span>Eine Liste (NodeList) aller passenden Elemente</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span>Den Text aller <code>&lt;li&gt;</code>-Elemente</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-1"> <span><code>null</code>, wenn es mehrere gibt</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-1"> <span>Um alle Elemente zu ändern, muss man die Liste durchlaufen – <code>.textContent</code> direkt auf der Liste bewirkt nichts</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-1"> <span>Eine Liste (NodeList) aller passenden Elemente</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-1"> <span>Das erste <code>&lt;li&gt;</code>-Element</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-1"> <span>Den Text aller <code>&lt;li&gt;</code>-Elemente</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
-    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> Für das erste Element gibt es <code>querySelector</code>. Die Liste muss man durchlaufen, um jedes Element zu ändern – eine Zuweisung an die Liste selbst bewirkt nichts.</div>
+    <div class="quiz-erklaerung" hidden><strong>Erkl&auml;rung:</strong> <code>querySelectorAll</code> liefert eine Liste (<code>NodeList</code>) aller passenden Elemente – auch wenn es nur eines oder keines gibt. Eigenschaften wie <code>textContent</code> muss man deshalb für jedes Element einzeln setzen, indem man die Liste durchläuft.</div>
   </div>
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 2</span> Warum ist <code>element.innerHTML = eingabe</code> mit Benutzereingaben gefährlich?</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Weil es langsamer ist als <code>textContent</code></span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-2"> <span>Weil der String als HTML interpretiert wird und eingeschleuster Code ausgeführt werden kann (XSS)</span></label></li>
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Weil es nur in Chrome funktioniert</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Weil es die CSS-Klassen löscht</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-2"> <span>Weil der String als HTML interpretiert wird und eingeschleuster Code ausgeführt werden kann (XSS)</span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Weil es langsamer ist als <code>textContent</code></span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-2"> <span>Weil es nur in Chrome funktioniert</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
@@ -367,9 +368,9 @@ button.addEventListener('click', () =&gt; {
     <p class="quiz-hint">Mehrere Antworten sind richtig.</p>
     <ul class="quiz-opts">
       <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-3"> <span>Tippfehler in der ID</span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-3"> <span>Das Script läuft, bevor das Element existiert (kein <code>defer</code>)</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-3"> <span>Man muss <code>getElementById('#titel')</code> schreiben</span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="checkbox" name="quiz-1-3"> <span>Das Element hat zusätzlich eine Klasse</span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="checkbox" name="quiz-1-3"> <span>Das Script läuft, bevor das Element existiert (kein <code>defer</code>)</span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
     <p class="quiz-feedback" hidden></p>
@@ -378,9 +379,9 @@ button.addEventListener('click', () =&gt; {
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 4</span> Beim <code>submit</code> eines Formulars sind alle Änderungen sofort wieder weg. Was fehlt im Handler?</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span><code>return true;</code></span></label></li>
-      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-4"> <span><code>event.preventDefault();</code></span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span><code>event.stop();</code></span></label></li>
+      <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-4"> <span><code>event.preventDefault();</code></span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span><code>return true;</code></span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-4"> <span><code>form.reset();</code></span></label></li>
     </ul>
     <div class="quiz-actions"><button type="button" class="quiz-check" disabled>Antwort pr&uuml;fen</button><button type="button" class="quiz-reveal">L&ouml;sung zeigen</button></div>
@@ -390,8 +391,8 @@ button.addEventListener('click', () =&gt; {
   <div class="quiz-frage" data-multi="0">
     <p class="quiz-q"><span class="quiz-num">Frage 5</span> Wie reagiert man auf einen Klick auf einen Button?</p>
     <ul class="quiz-opts">
-      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span><code>button.click = () =&gt; { … }</code></span></label></li>
       <li class="quiz-opt" data-correct="1"><label><input type="radio" name="quiz-1-5"> <span><code>button.addEventListener('click', () =&gt; { … })</code></span></label></li>
+      <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span><code>button.click = () =&gt; { … }</code></span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span><code>button.on('click')</code></span></label></li>
       <li class="quiz-opt" data-correct="0"><label><input type="radio" name="quiz-1-5"> <span><code>document.click(button)</code></span></label></li>
     </ul>
